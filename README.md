@@ -1,4 +1,4 @@
-# BaseframeUtils
+# LittleRecord
 
 这是一个完整Android的记账APP，简洁高效，助力生活。
 
