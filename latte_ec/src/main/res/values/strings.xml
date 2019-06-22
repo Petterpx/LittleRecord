@@ -1,0 +1,13 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">LatteEc</string>
+    <string name="sign_up">注册</string>
+    <string name="sign_in">登录</string>
+    <string name="sign_up_email">请输入邮箱</string>
+    <string name="sign_up_pswd">请输入密码</string>
+    <string name="sign_up_name">姓名</string>
+    <string name="sign_up_phone">手机号码</string>
+    <string name="sign_up_re_pswd">重复密码</string>
+    <string name="sign_up_hint">已经注册了？请登录</string>
+    <string name="sign_in_hint">还没有账户？请注册</string>
+    <string name="delegate_dicover_faxian">发现</string>
+</resources>

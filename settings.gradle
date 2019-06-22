@@ -1,0 +1,1 @@
+include ':app', ':latte_core', ':latte_ec', ':latte_ui', ':example'

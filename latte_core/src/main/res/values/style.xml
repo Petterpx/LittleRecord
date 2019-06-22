@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <!--&lt;!&ndash;取消边框&ndash;&gt;-->
+        <item name="android:windowFrame">@null</item>
+        <!--&lt;!&ndash;&lt;!&ndash;悬浮&ndash;&gt;&ndash;&gt;-->
+        <item name="android:windowIsFloating">true</item>
+        <!--&lt;!&ndash;半透明&ndash;&gt;-->
+        <item name="android:windowIsTranslucent">false</item>
+        <!--&lt;!&ndash;取消标题显示&ndash;&gt;-->
+        <item name="android:windowNoTitle">true</item>
+        <!--&lt;!&ndash;允许模糊&ndash;&gt;-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--全屏幕-->
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
+
+    <!--透明Activity-->
+    <style name="Theme.AppCompat.Translucent">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+    </style>
+
+    <style name="anim_panel_up_from_bottom" parent="android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+    </style>
+
+
+</resources>
