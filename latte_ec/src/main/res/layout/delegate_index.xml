@@ -7,26 +7,27 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:background="@drawable/index">
+        android:background="@drawable/delegate_index_top">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="#D48265"
+            app:contentScrim="@color/app_main"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <androidx.appcompat.widget.Toolbar
-                android:id="@+id/goods_detail_toolbar"
+                android:id="@+id/index_bar"
                 android:layout_width="match_parent"
-                android:layout_gravity="top"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
                 app:layout_collapseMode="pin">
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_detail_title_text"
-                    android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:gravity="center_horizontal"
                     android:text="Index"
                     android:textColor="@android:color/white"
                     android:textSize="20sp" />
@@ -34,20 +35,24 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fb_index_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/delegate_index_top_add"
+        app:backgroundTint="#faad14"
+        app:borderWidth="0dp"
+        app:elevation="8dp"
+        app:pressedTranslationZ="16dp"
+        tools:ignore="RtlHardcoded" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_index_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rv_index_list"/>
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

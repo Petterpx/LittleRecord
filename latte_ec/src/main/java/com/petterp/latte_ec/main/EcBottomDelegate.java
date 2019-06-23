@@ -6,7 +6,7 @@ import com.petterp.latte_core.delegates.bottom.BaseBottomDelegate;
 import com.petterp.latte_core.delegates.bottom.BottomItemDelegate;
 import com.petterp.latte_core.delegates.bottom.BottomTabBean;
 import com.petterp.latte_core.delegates.bottom.ItemBuilder;
-import com.petterp.latte_ec.main.index.IndexDelegate;
+import com.petterp.latte_ec.main.index.DetailDelegate;
 
 import java.util.LinkedHashMap;
 
@@ -19,10 +19,9 @@ public class EcBottomDelegate extends BaseBottomDelegate {
     @Override
     public LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder) {
         final LinkedHashMap<BottomTabBean,BottomItemDelegate> items=new LinkedHashMap<>();
-        items.put(new BottomTabBean("{fa-home}","item1"),new IndexDelegate());
-        items.put(new BottomTabBean("{fa-home}","item2"),new IndexDelegate());
-        items.put(new BottomTabBean("{fa-home}","item3"),new IndexDelegate());
-        items.put(new BottomTabBean("{fa-home}","item4"),new IndexDelegate());
+        items.put(new BottomTabBean("{fa-home}","明细"),new DetailDelegate());
+        items.put(new BottomTabBean("{fa-home}","分析"),new DetailDelegate());
+        items.put(new BottomTabBean("{fa-home}","我的"),new DetailDelegate());
         return builder.addItems(items).build();
     }
 

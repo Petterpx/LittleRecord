@@ -35,4 +35,5 @@ dependencies {
     api project(path: ':latte_core')
     api project(path: ':latte_ui')
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

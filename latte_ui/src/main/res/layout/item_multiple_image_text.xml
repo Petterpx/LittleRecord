@@ -13,7 +13,7 @@
         android:layout_weight="4"
         android:background="@android:color/white" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_multiple"
         android:layout_width="match_parent"
         android:layout_height="0dp"
