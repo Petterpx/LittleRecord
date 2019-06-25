@@ -24,7 +24,7 @@ import retrofit2.http.Url;
 /**
  * @author Petterp on 2019/4/20
  * Summary:
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 public interface RxRestService {
 

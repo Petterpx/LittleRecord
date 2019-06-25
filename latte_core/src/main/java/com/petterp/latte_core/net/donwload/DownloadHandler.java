@@ -18,7 +18,7 @@ import retrofit2.Response;
 /**
  * @author Petterp on 2019/4/18
  * Summary:
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 public class DownloadHandler {
     private final String URL;
@@ -67,7 +67,7 @@ public class DownloadHandler {
                            //拿到请求体
                            final ResponseBody responseBody=response.body();
 
-                           final  SaveFileTask task=new SaveFileTask(REQUEST,SUCCESS);
+                           final SaveFileTask task=new SaveFileTask(REQUEST,SUCCESS);
                            //以线程池方式执行
                            task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,DOWNLOAD_DIR,EXTENSION,response,NAME);
 

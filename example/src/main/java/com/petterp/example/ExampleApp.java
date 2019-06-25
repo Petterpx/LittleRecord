@@ -5,6 +5,7 @@ import android.os.Handler;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.petterp.latte_core.app.Latte;
+import com.petterp.latte_core.net.interceptors.DebugInterceptor;
 import com.petterp.latte_ec.icon.FontEcModule;
 
 
@@ -21,9 +22,11 @@ public class ExampleApp extends Application {
                 .withIcon(new FontEcModule())
                 .withLoaderDelayed(1000)
                 .withApiHost("http://101.132.64.249:80")
+//                .withInterceptor(new DebugInterceptor("index",R.raw.test))
+                .withWeChatAppId("")
+                .withWeChatAppSecret("")
                 .withHandler(handler)
                 .withJavascriptInterface("latte")
-                .withLaucherMode(false)
                 .configure();
 //        LitePal.initialize(getApplicationContext());
 //        initStetho();

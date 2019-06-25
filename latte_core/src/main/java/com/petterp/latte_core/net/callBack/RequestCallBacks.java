@@ -12,7 +12,7 @@ import retrofit2.Response;
 /**
  * @author Petterp on 2019/4/18
  * Summary:
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 public class RequestCallBacks implements Callback<String> {
     private final IRequest REQUEST;
@@ -20,12 +20,10 @@ public class RequestCallBacks implements Callback<String> {
     private final IFailure FAILURE;
     private final IError ERROR;
     private final LoaderStyle LOADER_STYLE;
-    /**
-     * 定义Handler对象时，定义为静态,避免一些内存泄露问题，比如Threadlocal的键key弱引用
-     */
+    //定义Hadnler对象时，定义为静态,避免一些内存泄露问题，比如Threadlocal的键key弱引用
     private static final Handler HANDLER=new Handler();
 
-    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error,LoaderStyle loaderStyle) {
+    public RequestCallBacks(IRequest request, ISuccess success, IFailure failure, IError error, LoaderStyle loaderStyle) {
         this.REQUEST = request;
         this.SUCCESS = success;
         this.FAILURE = failure;

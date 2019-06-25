@@ -22,7 +22,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener,ILau
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new EcBottomDelegate();
+        return new ExampleDelegate();
     }
 
     //隐藏actionbar
@@ -53,6 +53,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener,ILau
      * @param tag
      */
     public void onLauncherFinish(OnLauncherFinishTag tag) {
+
         if (tag == OnLauncherFinishTag.SIGNED) {
 //            getSupportDelegate().pop();
 //            getSupportDelegate().pop();

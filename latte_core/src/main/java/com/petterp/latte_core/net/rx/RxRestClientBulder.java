@@ -15,7 +15,7 @@ import okhttp3.RequestBody;
 /**
  * @author Petterp on 2019/4/18
  * Summary:回调接口
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 public class RxRestClientBulder {
     //如果是建造者模式，不能用fianl赋值

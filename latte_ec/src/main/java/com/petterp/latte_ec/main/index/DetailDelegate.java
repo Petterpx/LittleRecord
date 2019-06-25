@@ -2,6 +2,7 @@ package com.petterp.latte_ec.main.index;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.petterp.latte_core.delegates.bottom.BottomItemDelegate;
+import com.petterp.latte_core.net.RestClient;
+import com.petterp.latte_core.net.callBack.ISuccess;
+import com.petterp.latte_core.util.log.LatteLogger;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ui.recyclear.ItemType;
@@ -87,6 +91,7 @@ public class DetailDelegate extends BottomItemDelegate {
             }
         });
         hideview();
+
     }
 
     @Override

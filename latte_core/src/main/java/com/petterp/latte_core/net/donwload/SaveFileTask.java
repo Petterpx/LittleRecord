@@ -17,7 +17,7 @@ import okhttp3.ResponseBody;
 /**
  * @author Petterp on 2019/4/18
  * Summary:下载的异步框架
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 //三个泛型参数，Object类型，无进度，返回它的File
 public class SaveFileTask extends AsyncTask<Object,Void,File> {

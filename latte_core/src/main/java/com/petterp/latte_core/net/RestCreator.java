@@ -16,7 +16,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 /**
  * @author Petterp on 2019/4/17
  * Summary:内部类holder单例模式
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 public class RestCreator {
 
@@ -44,7 +44,8 @@ public class RestCreator {
         //简化版建造者模式，网络请求->惰性初始Okhttp->返回String类型
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASEE_URL)
-                .client(OKhttpHolder.OK_HTTP_CLIENT)
+                //模拟拦截器
+//                .client(OKhttpHolder.OK_HTTP_CLIENT)
                 .addConverterFactory(ScalarsConverterFactory.create())      //返回String类型
                 .build();
     }
@@ -85,7 +86,7 @@ public class RestCreator {
         private static final String BASE_URL = Latte.getConfiguration(ConfigKeys.API_HOST);
         private static final Retrofit RETROFIT_CLIENT = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .client(OKhttpHolder.OK_HTTP_CLIENT)
+//                .client(OKhttpHolder.OK_HTTP_CLIENT)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
     }

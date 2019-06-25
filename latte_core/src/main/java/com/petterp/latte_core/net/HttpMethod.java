@@ -3,7 +3,7 @@ package com.petterp.latte_core.net;
 /**
  * @author Petterp on 2019/4/17
  * Summary: 便于以后的判断使用，配合 RestService接口
- * email：1509492795@qq.com
+ * 邮箱：1509492795@qq.com
  */
 public enum HttpMethod {
     GET,
