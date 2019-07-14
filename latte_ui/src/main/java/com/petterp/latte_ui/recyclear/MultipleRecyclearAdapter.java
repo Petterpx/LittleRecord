@@ -29,12 +29,12 @@ public class MultipleRecyclearAdapter extends
 
 
     /**
-     *  确保初始化一次Banner，防止重复加载
+     * 确保初始化一次Banner，防止重复加载
      */
     private boolean mIsInitBanner = false;
 
     /**
-     *    设置图片加载策略
+     * 设置图片加载策略
      */
     public static final RequestOptions REQUEST_OPTIONS =
             new RequestOptions()
@@ -46,7 +46,8 @@ public class MultipleRecyclearAdapter extends
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
-     *在这里加载一些布局
+     * 在这里加载一些布局
+     *
      * @param data A new list is created out of this one to avoid mutable list
      */
     protected MultipleRecyclearAdapter(List<MultipleItemEntity> data) {
@@ -57,6 +58,7 @@ public class MultipleRecyclearAdapter extends
 
     /**
      * //传入数据
+     *
      * @param data
      * @return
      */
@@ -139,7 +141,8 @@ public class MultipleRecyclearAdapter extends
 
 
     /**
-     *  传入我们现有的ViewHolder
+     * 传入我们现有的ViewHolder
+     *
      * @param view
      * @return
      */

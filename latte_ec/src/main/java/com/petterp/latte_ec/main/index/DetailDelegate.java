@@ -14,12 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.delegates.bottom.BottomItemDelegate;
-import com.petterp.latte_core.net.RestClient;
-import com.petterp.latte_core.net.callBack.ISuccess;
-import com.petterp.latte_core.util.log.LatteLogger;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.main.add.AddDelegate;
 import com.petterp.latte_ui.recyclear.ItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
@@ -42,7 +41,7 @@ public class DetailDelegate extends BottomItemDelegate {
     FloatingActionButton floatingActionButton = null;
     @BindView(R2.id.rv_index_list)
     RecyclerView recyclerView = null;
-    boolean mode=true;
+    boolean mode = true;
 
     @Override
     public Object setLayout() {
@@ -67,9 +66,7 @@ public class DetailDelegate extends BottomItemDelegate {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                list.add(itemEntity);
-                adapter.notifyDataSetChanged();
-                hideview();
+                getParentDelegate().getSupportDelegate().start(new AddDelegate());
             }
         });
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -100,12 +97,12 @@ public class DetailDelegate extends BottomItemDelegate {
     }
 
     /**
-     *判断RecyclearView是否处于底部
+     * 判断RecyclearView是否处于底部
      */
     private void hideview() {
-        if (!recyclerView.canScrollVertically(1)&&!recyclerView.canScrollVertically(-1)) {
+        if (!recyclerView.canScrollVertically(1) && !recyclerView.canScrollVertically(-1)) {
             Toast.makeText(_mActivity, "不可滑动", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
 
         }
     }

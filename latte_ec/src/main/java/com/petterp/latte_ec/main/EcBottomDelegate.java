@@ -25,11 +25,19 @@ public class EcBottomDelegate extends BaseBottomDelegate {
         return builder.addItems(items).build();
     }
 
+    /**
+     * 默认显示页面
+     * @return
+     */
     @Override
     public int setIndexDelegate() {
         return 0;
     }
 
+    /**
+     * 点击之后的颜色
+     * @return
+     */
     @Override
     public int setClickedColor() {
         return Color.parseColor("#ffff8800");

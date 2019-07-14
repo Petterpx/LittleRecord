@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.Utils;
+import com.example.rxretifoit.net.RestUrlInfo;
 import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
@@ -74,6 +75,7 @@ public class Configurator {
      */
     public final Configurator withApiHost(String host) {
         LATTE_CONFIGS.put(ConfigKeys.API_HOST.name(), host);
+        RestUrlInfo.setURL(host);
         return this;
     }
 

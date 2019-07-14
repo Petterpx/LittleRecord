@@ -29,7 +29,6 @@
     <inspection_tool class="AlibabaBooleanPropertyShouldNotStartWithIs" enabled="false" level="CRITICAL" enabled_by_default="false" />
     <inspection_tool class="AlibabaClassCastExceptionWithSubListToArrayList" enabled="false" level="CRITICAL" enabled_by_default="false" />
     <inspection_tool class="AlibabaClassCastExceptionWithToArray" enabled="false" level="CRITICAL" enabled_by_default="false" />
-    <inspection_tool class="AlibabaClassMustHaveAuthor" enabled="false" level="MAJOR" enabled_by_default="false" />
     <inspection_tool class="AlibabaClassNamingShouldBeCamel" enabled="false" level="MAJOR" enabled_by_default="false" />
     <inspection_tool class="AlibabaCollectionInitShouldAssignCapacity" enabled="false" level="MAJOR" enabled_by_default="false" />
     <inspection_tool class="AlibabaCommentsMustBeJavadocFormat" enabled="false" level="MAJOR" enabled_by_default="false" />

@@ -1,53 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--明细的头部信息-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="#91C7AE"
+    android:background="@drawable/delegate_index_top"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dp_10"
     android:paddingStart="@dimen/dp_10"
     tools:ignore="RtlSymmetry">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/item_detail_top_surplus"
+        android:textColor="@android:color/white"
         android:textSize="18sp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-150"
+        android:textColor="@android:color/white"
         android:id="@+id/item_detail_top_surplus"
         android:textSize="25sp"
         tools:ignore="HardcodedText" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="100dp"
+            android:textColor="@android:color/white"
             android:id="@+id/item_detail_top_consume"
             android:text="月收入"
             android:textSize="18sp"
             android:layout_marginEnd="100dp"
             tools:ignore="HardcodedText" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
+            android:textColor="@android:color/white"
             android:layout_height="wrap_content"
             android:text="月支出"
             android:id="@+id/item_detail_top_income"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
-    </LinearLayout>
-</LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

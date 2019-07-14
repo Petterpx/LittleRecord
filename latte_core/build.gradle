@@ -40,8 +40,7 @@ dependencies {
     //Banner依赖 图片轮播
     api 'com.bigkoo:ConvenientBanner:2.1.4'
     api 'androidx.recyclerview:recyclerview:1.0.0'
-    //Loading框架
-    api 'com.wang.avi:library:2.1.3'
+
 
     //RecyclerView依赖库
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.45'
@@ -54,12 +53,7 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar:3.0.0-beta03'
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0-beta03'
 
-    //网络框架依赖
-    api 'com.squareup.okhttp3:okhttp:3.12.1'
-    api 'com.squareup.retrofit2:retrofit:2.5.0'
 
-    // retrofit converter-sclars独立包引入
-    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
 
     //Fragment库
     api 'me.yokeyword:fragmentation:1.3.7'
@@ -96,4 +90,6 @@ dependencies {
     //litepal
     api 'org.litepal.android:java:3.0.0'
 
+    //网络请求加AvLoader
+    api 'com.github.Petterpx:RxRetifoitUtils:v1.4'
 }

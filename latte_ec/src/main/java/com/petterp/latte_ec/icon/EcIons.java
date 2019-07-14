@@ -9,7 +9,9 @@ import com.joanzapata.iconify.Icon;
 public enum EcIons implements Icon {
     icon_scan('\ue618'),
     icon_news('\ue717'),
-    icon_ali_pay('\ue65f');
+    icon_ali_pay('\ue65f'),
+    icon_back('\ue63b'),
+    icon_award('\ue8bc');
     private char character;
 
     EcIons(char character) {

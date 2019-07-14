@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
  * Summary:简单Holder
  * 邮箱：1509492795@qq.com
  */
-class MultipleViewHolder extends BaseViewHolder {
+public class MultipleViewHolder extends BaseViewHolder {
     private MultipleViewHolder(View view) {
         super(view);
     }

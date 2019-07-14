@@ -8,10 +8,10 @@ import android.webkit.WebViewClient;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.rxretifoit.ui.LatteLoader;
 import com.petterp.latte_core.delegates.IPageLoadListener;
 import com.petterp.latte_core.delegates.web.WebDelegate;
 import com.petterp.latte_core.delegates.web.route.Router;
-import com.petterp.latte_core.ui.loader.LatteLoader;
 import com.petterp.latte_core.util.log.LatteLogger;
 
 /**

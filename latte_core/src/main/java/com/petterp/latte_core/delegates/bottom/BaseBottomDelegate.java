@@ -37,7 +37,7 @@ public abstract class BaseBottomDelegate extends LatteDelegate implements View.O
     private final ArrayList<BottomTabBean> TAB_BEANS = new ArrayList<>();
     //存储映射
     private final LinkedHashMap<BottomTabBean, BottomItemDelegate> ITEMS = new LinkedHashMap<>();
-    //当前点击位置
+    //当前点击位置，默认为0
     private int mCurrentDelegate = 0;
     //点击之后的颜色
     private int mClickedColor = Color.RED;
