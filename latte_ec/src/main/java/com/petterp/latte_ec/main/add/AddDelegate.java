@@ -1,16 +1,26 @@
 package com.petterp.latte_ec.main.add;
 
+import android.graphics.Rect;
+import android.net.sip.SipRegistrationListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.main.add.TopViewPager.ConsumeFragment;
@@ -32,14 +42,18 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
     Toolbar toolbar = null;
     @BindView(R2.id.vp_index_add)
     ViewPager viewPager = null;
-    @BindView(R2.id.text_index_add_consume)
-    TextView tvConsume = null;
-    @BindView(R2.id.text_index_add_income)
-    TextView tvIncome = null;
-    @OnClick(R2.id.delegate_index_add_back)
+    @BindView(R2.id.tl_add_vp)
+    TabLayout tabLayout=null;
+    @BindView(R2.id.edit_add_remark)
+    AppCompatEditText editText=null;
+    @BindView(R2.id.in_compile_item)
+    LinearLayoutCompat layoutCompat=null;
+
+    @OnClick(R2.id.it_index_add_back)
     void addBack(){
         getSupportDelegate().pop();
     }
+
 
     @Override
     public Object setLayout() {
@@ -48,12 +62,38 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+        //初始化tablayout+Viewapger
+        initViewPager();
+        //处理键盘冲突
+        initEditKey();
+    }
+
+    private void initViewPager() {
         List<Fragment> list = new ArrayList<>();
         list.add(new ConsumeFragment());
         list.add(new ConsumeFragment());
-        ConsumePagerAdapter adapter = new ConsumePagerAdapter(getChildFragmentManager(), list);
+        String [] sums={"支出","收入"};
+        ConsumePagerAdapter adapter = new ConsumePagerAdapter(getChildFragmentManager(), list,sums);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(this);
+        tabLayout.addTab(tabLayout.newTab().setText("支出"));
+        tabLayout.addTab(tabLayout.newTab().setText("收入"));
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void initEditKey() {
+        //处理键盘弹出冲突
+        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                layoutCompat.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                layoutCompat.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -68,11 +108,6 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
 
     @Override
     public void onPageSelected(int position) {
-        if (position == 0) {
-            setTvColor(tvConsume);
-        } else {
-            setTvColor(tvIncome);
-        }
     }
 
     @Override
@@ -81,8 +116,6 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
     }
 
     private void setTvColor(TextView textView) {
-        tvConsume.setBackgroundColor(getResources().getColor(R.color.app_title_color));
-        tvIncome.setBackgroundColor(getResources().getColor(R.color.app_title_color));
-        textView.setBackgroundResource(R.drawable.delegate_add_up);
+
     }
 }

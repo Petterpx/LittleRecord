@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content">
 
             <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/delegate_index_add_back"
+                android:id="@+id/it_index_add_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -27,31 +28,18 @@
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 
-            <LinearLayout
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl_add_vp"
+                apptabIndicatorFullWidth="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true">
-
-                <TextView
-                    android:id="@+id/text_index_add_consume"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dp_10"
-                    android:background="@drawable/delegate_add_up"
-                    android:padding="15dp"
-                    android:text="@string/delegate_index_add_consume"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/text_index_add_income"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="15dp"
-                    android:text="@string/delegate_index_add_income"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp" />
-            </LinearLayout>
+                android:layout_centerInParent="true"
+                app:tabIndicatorColor="@android:color/white"
+                app:tabIndicatorHeight="2dp"
+                app:tabMode="scrollable"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabTextAppearance="@style/TabLayoutTextStyle"
+                app:tabTextColor="@android:color/white" />
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
 
@@ -64,39 +52,29 @@
         android:padding="8dp"
         android:paddingBottom="20dp" />
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#F7F8F9"
-        android:paddingTop="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="15dp">
 
-        <EditText
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_add_remark"
             android:layout_width="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:lines="1"
+            android:paddingLeft="@dimen/dp_10"
             android:background="#F7F8F9"
             android:hint="@string/delegate_index_add_remark"
             android:paddingEnd="15dp"
             android:paddingRight="15dp"
             android:textSize="20sp"
             tools:ignore="RtlSymmetry" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="15dp"
-            android:paddingEnd="15dp"
-            android:paddingRight="15dp"
-            android:text="0"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="25sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_index_add"
-            android:background="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-</LinearLayout>
+        <include
+            android:id="@+id/in_compile_item"
+            layout="@layout/arrow_add_consume_compile" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

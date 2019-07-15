@@ -5,4 +5,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
 </resources>
