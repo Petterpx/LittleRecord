@@ -1,10 +1,14 @@
 package com.petterp.latte_core.delegates.bottom;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.petterp.latte_core.R;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.delegates.LatteDelegate;
@@ -39,4 +43,5 @@ public abstract class BottomItemDelegate extends LatteDelegate implements View.O
     public boolean onKey(View v, int keyCode, KeyEvent event) {
         return false;
     }
+
 }

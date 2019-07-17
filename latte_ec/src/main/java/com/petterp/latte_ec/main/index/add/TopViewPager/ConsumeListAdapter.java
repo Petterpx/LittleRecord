@@ -1,4 +1,4 @@
-package com.petterp.latte_ec.main.add.TopViewPager;
+package com.petterp.latte_ec.main.index.add.TopViewPager;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;

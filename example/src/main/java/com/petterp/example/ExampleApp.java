@@ -7,6 +7,8 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_ec.icon.FontEcModule;
 
+import org.litepal.LitePal;
+
 
 /**
  * 配置信息层
@@ -25,7 +27,8 @@ public class ExampleApp extends Application {
                 .withJavascriptInterface("latte")
                 .withLaucherMode(false)
                 .configure();
-//        LitePal.initialize(getApplicationContext());
+        //初始化LitePal
+        LitePal.initialize(getApplicationContext());
 //        initStetho();
 //        DatabaseManager.getInstance().init(this);
 //        //开启极光推送

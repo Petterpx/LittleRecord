@@ -1,7 +1,6 @@
-package com.petterp.latte_ec.main.add.BootomCompile;
+package com.petterp.latte_ec.main.index.add.BootomCompile;
 
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
@@ -19,12 +18,11 @@ import java.text.DecimalFormat;
  */
 public class CompileItemClcikList extends SimpleClickListener {
     private final LatteDelegate DELEGATE;
-    private final IEditListener IMONEY;
+    private final IaddInform IMONEY;
     private final StringBuilder TEXT_BUILDER;
     private final DecimalFormat DECI_FORMAT;
-    private Double mode = 0.0;
 
-    public CompileItemClcikList(LatteDelegate DELEGATE, IEditListener editListener) {
+    public CompileItemClcikList(LatteDelegate DELEGATE, IaddInform editListener) {
         this.DELEGATE = DELEGATE;
         this.IMONEY = editListener;
         TEXT_BUILDER = new StringBuilder();
@@ -35,7 +33,6 @@ public class CompileItemClcikList extends SimpleClickListener {
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         final MultipleItemEntity entity = (MultipleItemEntity) baseQuickAdapter.getData().get(position);
         final String NAME = entity.getField(MultipleFidls.NAME);
-        Toast.makeText(DELEGATE.getContext(), NAME, Toast.LENGTH_SHORT).show();
         switch (NAME) {
             case "0":
                 setMoneyzery();
@@ -71,8 +68,8 @@ public class CompileItemClcikList extends SimpleClickListener {
                 if (TEXT_BUILDER.length() < 14) {
                     String res = TEXT_BUILDER.toString();
                     if (res.contains("+")) {
-                        int id=res.indexOf("+");
-                        String[] values = {res.substring(0,id),res.substring(id+1)};
+                        int id = res.indexOf("+");
+                        String[] values = {res.substring(0, id), res.substring(id + 1)};
                         TEXT_BUILDER.delete(0, TEXT_BUILDER.length());
                         res = DECI_FORMAT.format(Double.parseDouble(values[0]) + Double.parseDouble(values[1]));
                         TEXT_BUILDER.delete(0, TEXT_BUILDER.length()).append(res).append("+");
@@ -85,9 +82,9 @@ public class CompileItemClcikList extends SimpleClickListener {
             case ".":
                 if (TEXT_BUILDER.length() < 14) {
                     String res = TEXT_BUILDER.toString();
-                    if (res.contains("+")){
-                        int p=res.indexOf("+");
-                        res=res.substring(p+1);
+                    if (res.contains("+")) {
+                        int p = res.indexOf("+");
+                        res = res.substring(p + 1);
                     }
                     if (!res.contains(".")) {
                         TEXT_BUILDER.append(".");
@@ -96,21 +93,21 @@ public class CompileItemClcikList extends SimpleClickListener {
                 }
                 break;
             case "X":
-                if (TEXT_BUILDER.length()>0){
-                    TEXT_BUILDER.delete(TEXT_BUILDER.length()-1,TEXT_BUILDER.length());
+                if (TEXT_BUILDER.length() > 0) {
+                    TEXT_BUILDER.delete(TEXT_BUILDER.length() - 1, TEXT_BUILDER.length());
                     IMONEY.setMoney(TEXT_BUILDER.toString());
                 }
                 break;
             case "清零":
-                IMONEY.setMoney("");
-                mode = 0.0;
+                IMONEY.setMoney("0");
+                TEXT_BUILDER.setLength(0);
                 break;
             case "再记":
-                IMONEY.setMoney("");
-                mode = 0.0;
+                IMONEY.setMoney("0");
+                TEXT_BUILDER.setLength(0);
                 break;
             case "保存":
-
+                setSave();
                 break;
         }
     }
@@ -118,44 +115,37 @@ public class CompileItemClcikList extends SimpleClickListener {
     private void setMoney(int id) {
         if (TEXT_BUILDER.length() < 14) {
             String res = TEXT_BUILDER.toString();
-            if (res.contains("+")){
-                int p=res.indexOf("+");
-                res=res.substring(p+1);
+            if (res.contains("+")) {
+                int p = res.indexOf("+");
+                res = res.substring(p + 1);
             }
             //判断小数点后位置
             int position = res.indexOf(".");
             //如果不包含 .
-            if (position == -1||res.length() - position <= 2) {
+            if (position == -1 || res.length() - position <= 2) {
                 TEXT_BUILDER.append(id);
                 res = TEXT_BUILDER.toString();
                 IMONEY.setMoney(res);
-                //避免转型失败，相加
-                if (!TEXT_BUILDER.toString().contains("+")) {
-                    mode = Double.parseDouble(res);
-                }
             }
         }
     }
 
     private void setMoneyzery() {
-        if (mode != 0 && TEXT_BUILDER.length() < 14) {
+        int length = TEXT_BUILDER.length();
+        if (length < 14 &&length>0) {
             String res = TEXT_BUILDER.toString();
             //判断是否带+号
-            if (res.contains("+")){
-                int p=res.indexOf("+");
-                res=res.substring(p+1);
+            if (res.contains("+")) {
+                int p = res.indexOf("+");
+                res = res.substring(p + 1);
             }
             //判断小数点后位置
             int position = res.indexOf(".");
             //如果不包含 .
-            if (position == -1||res.length() - position <= 2) {
+            if (position == -1 || res.length() - position <= 2) {
                 TEXT_BUILDER.append(0);
                 res = TEXT_BUILDER.toString();
                 IMONEY.setMoney(res);
-                //避免转型失败，相加
-                if (!res.contains("+")) {
-                    mode = Double.parseDouble(res);
-                }
             }
         }
     }
@@ -173,6 +163,27 @@ public class CompileItemClcikList extends SimpleClickListener {
     @Override
     public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
 
+    }
+
+    /**
+     * 保存
+     */
+    private void setSave() {
+        String res = TEXT_BUILDER.toString();
+        if (!res.equals("")) {
+            if (res.contains("+")) {
+                if (res.endsWith("+")) {
+                    res = res.replace("+", "");
+                } else {
+                    int id = res.indexOf("+");
+                    String[] values = {res.substring(0, id), res.substring(id + 1)};
+                    res = DECI_FORMAT.format(Double.parseDouble(values[0]) + Double.parseDouble(values[1]));
+                }
+            }
+            double money = Double.parseDouble(res);
+            IMONEY.setSave(money);
+            TEXT_BUILDER.setLength(0);
+        }
     }
 
 }

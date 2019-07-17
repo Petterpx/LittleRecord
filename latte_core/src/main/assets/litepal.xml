@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
-    <dbname value="Test"/>
+    <dbname value="Record"/>
     <version value="1"/>
     <list>
-
+        <mapping class="com.petterp.latte_core.util.litepal.IncomeInfo"/>
+        <mapping class="com.petterp.latte_core.util.litepal.OutputInfo"/>
     </list>
 </litepal>

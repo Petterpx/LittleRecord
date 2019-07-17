@@ -1,4 +1,4 @@
-package com.petterp.latte_ec.main.add;
+package com.petterp.latte_ec.main.index.add;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,13 +19,15 @@ import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
+import com.petterp.latte_core.util.litepal.OutputInfo;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
-import com.petterp.latte_ec.main.add.BootomCompile.CompileItemClcikList;
-import com.petterp.latte_ec.main.add.BootomCompile.CompileListAdapter;
-import com.petterp.latte_ec.main.add.BootomCompile.CompileListItemType;
-import com.petterp.latte_ec.main.add.TopViewPager.ConsumeFragment;
-import com.petterp.latte_ec.main.add.TopViewPager.ConsumePagerAdapter;
+import com.petterp.latte_ec.main.index.add.BootomCompile.CompileItemClcikList;
+import com.petterp.latte_ec.main.index.add.BootomCompile.CompileListAdapter;
+import com.petterp.latte_ec.main.index.add.BootomCompile.CompileListItemType;
+import com.petterp.latte_ec.main.index.add.BootomCompile.IaddInform;
+import com.petterp.latte_ec.main.index.add.TopViewPager.ConsumeFragment;
+import com.petterp.latte_ec.main.index.add.TopViewPager.ConsumePagerAdapter;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -41,7 +43,7 @@ import butterknife.OnClick;
  *
  * @author Petterp
  */
-public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChangeListener {
+public class AddDelegate extends LatteDelegate implements IaddInform {
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
     @BindView(R2.id.vp_index_add)
@@ -53,9 +55,9 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
     @BindView(R2.id.in_compile_item)
     LinearLayoutCompat layoutCompat = null;
     @BindView(R2.id.rv_add_compile)
-    RecyclerView recyclerView=null;
+    RecyclerView recyclerView = null;
     @BindView(R2.id.tv_add_compile_money)
-    AppCompatTextView tvmoney=null;
+    AppCompatTextView tvmoney = null;
 
 
     @OnClick(R2.id.it_index_add_back)
@@ -75,9 +77,9 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
         initViewPager();
         //处理键盘冲突
         initEditKey();
-        String[] values=getResources().getStringArray(R.array.index_add_compile_values);
-        List<MultipleItemEntity> list=new ArrayList<>();
-        for (int i = 0; i <16; i++) {
+        String[] values = getResources().getStringArray(R.array.index_add_compile_values);
+        List<MultipleItemEntity> list = new ArrayList<>();
+        for (int i = 0; i < 16; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(CompileListItemType.ITEM_COMPILE)
                     .setField(MultipleFidls.NAME, values[i])
@@ -85,11 +87,11 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
                     .build();
             list.add(itemEntity);
         }
-        CompileListAdapter adapter=new CompileListAdapter(list);
+        CompileListAdapter adapter = new CompileListAdapter(list);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnItemTouchListener(new CompileItemClcikList(this, res -> tvmoney.setText(res)));
+        recyclerView.addOnItemTouchListener(new CompileItemClcikList(this, this));
         //设置Rv分割线
         RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
                 .color(Color.parseColor("#F0F1F2"))
@@ -104,7 +106,7 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
         String[] sums = {"支出", "收入"};
         ConsumePagerAdapter adapter = new ConsumePagerAdapter(getChildFragmentManager(), list, sums);
         viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(this);
+//        viewPager.addOnPageChangeListener(this);
         tabLayout.addTab(tabLayout.newTab().setText("支出"));
         tabLayout.addTab(tabLayout.newTab().setText("收入"));
         tabLayout.setupWithViewPager(viewPager);
@@ -131,16 +133,14 @@ public class AddDelegate extends LatteDelegate implements ViewPager.OnPageChange
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+    public void setMoney(String res) {
+        tvmoney.setText(res);
     }
 
     @Override
-    public void onPageSelected(int position) {
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
+    public void setSave(Double money) {
+        String remark = Objects.requireNonNull(editText.getText()).toString().trim();
+        new OutputInfo(System.currentTimeMillis(), money, remark, "petterp").save();
+        getSupportDelegate().pop();
     }
 }

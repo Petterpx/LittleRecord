@@ -1,4 +1,4 @@
-package com.petterp.latte_ec.main.add.BootomCompile;
+package com.petterp.latte_ec.main.index.add.BootomCompile;
 
 /**
  * @author by Petterp

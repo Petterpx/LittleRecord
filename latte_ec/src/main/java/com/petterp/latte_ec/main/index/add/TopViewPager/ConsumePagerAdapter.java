@@ -1,4 +1,4 @@
-package com.petterp.latte_ec.main.add.TopViewPager;
+package com.petterp.latte_ec.main.index.add.TopViewPager;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

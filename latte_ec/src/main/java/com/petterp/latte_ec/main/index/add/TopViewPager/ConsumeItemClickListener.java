@@ -1,11 +1,9 @@
-package com.petterp.latte_ec.main.add.TopViewPager;
+package com.petterp.latte_ec.main.index.add.TopViewPager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
@@ -13,10 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_ec.R;
-import com.petterp.latte_ui.recyclear.MultipleFidls;
-import com.petterp.latte_ui.recyclear.MultipleItemEntity;
-
-import java.lang.ref.SoftReference;
 
 public class ConsumeItemClickListener extends SimpleClickListener {
     private Context context;

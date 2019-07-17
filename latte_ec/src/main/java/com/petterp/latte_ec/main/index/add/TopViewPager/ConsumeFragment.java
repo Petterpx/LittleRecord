@@ -1,4 +1,4 @@
-package com.petterp.latte_ec.main.add.TopViewPager;
+package com.petterp.latte_ec.main.index.add.TopViewPager;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

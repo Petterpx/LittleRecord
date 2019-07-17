@@ -2,6 +2,7 @@ package com.petterp.latte_core.app;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.petterp.latte_core.delegates.web.event.Event;
 import com.petterp.latte_core.delegates.web.event.EventManager;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.HashMap;

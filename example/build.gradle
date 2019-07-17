@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.petterp.baseframeutils"
+        applicationId "com.petterp.record"
         minSdkVersion 15
         targetSdkVersion 28
         multiDexEnabled true

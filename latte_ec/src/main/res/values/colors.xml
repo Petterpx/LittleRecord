@@ -9,4 +9,5 @@
     <color name="app_title_color">#ff0099cc</color>
     <color name="index_add_text_color">#757575</color>
     <color name="index_add_icon_color">@android:color/holo_blue_dark</color>
+    <color name="app_back">#F1F1F1</color>
 </resources>

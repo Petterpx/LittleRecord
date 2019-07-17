@@ -1,12 +1,9 @@
-package com.petterp.latte_ec.main.add.BootomCompile;
+package com.petterp.latte_ec.main.index.add.BootomCompile;
 
 import android.graphics.Color;
 
-import androidx.appcompat.widget.AppCompatTextView;
-
 import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_ec.R;
-import com.petterp.latte_ec.main.add.TopViewPager.ConsumeListItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 import com.petterp.latte_ui.recyclear.MultipleRecyclearAdapter;
