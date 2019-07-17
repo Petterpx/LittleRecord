@@ -7,4 +7,6 @@
     <color name="app_main">@android:color/holo_orange_dark</color>
     <color name="vp_item_background_to">#DCE7EC</color>
     <color name="app_title_color">#ff0099cc</color>
+    <color name="index_add_text_color">#757575</color>
+    <color name="index_add_icon_color">@android:color/holo_blue_dark</color>
 </resources>

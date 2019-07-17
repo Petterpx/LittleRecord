@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.joanzapata.iconify.widget.IconTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:textSize="20sp"
+    android:id="@+id/ic_add_compile_list"
+    android:background="@android:color/white"
+    android:textStyle="bold"
+    android:gravity="center"
+    android:orientation="vertical">
+
+</com.joanzapata.iconify.widget.IconTextView>

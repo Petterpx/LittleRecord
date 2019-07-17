@@ -62,11 +62,11 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edit_add_remark"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="5dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:lines="1"
             android:paddingLeft="@dimen/dp_10"
+            android:layout_marginBottom="5dp"
             android:background="#F7F8F9"
             android:hint="@string/delegate_index_add_remark"
             android:paddingEnd="15dp"

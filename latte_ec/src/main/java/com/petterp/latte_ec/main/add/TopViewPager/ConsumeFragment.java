@@ -25,6 +25,7 @@ public class ConsumeFragment extends Fragment {
 
     @BindView(R2.id.rv_add_vp_consume)
     RecyclerView mRecyclerView = null;
+    private  ConsumeListAdapter  adapter;
 
     @Nullable
     @Override
@@ -37,11 +38,12 @@ public class ConsumeFragment extends Fragment {
                     .setItemType(ConsumeListItemType.ITEM_CONSUME_LIST)
                     .setField(MultipleFidls.NAME, "{icon-award}")
                     .setField(MultipleFidls.TITLE, "三餐")
-                    .setField(MultipleFidls.ID, i)
+                    .setField(MultipleFidls.ID, ""+i)
                     .build();
             list.add(itemEntity);
         }
-        ConsumeListAdapter adapter=new ConsumeListAdapter(list);
+        adapter = new ConsumeListAdapter(list);
+
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);

@@ -16,7 +16,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -41,8 +41,6 @@ dependencies {
 
     //MD风格包
     api 'com.google.android.material:material:1.0.0'
-    //Banner依赖 图片轮播
-    api 'com.bigkoo:ConvenientBanner:2.1.4'
     api 'androidx.recyclerview:recyclerview:1.0.0'
 
 
@@ -71,12 +69,7 @@ dependencies {
     api 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    //动态权限处理
-    api 'com.github.hotchemi:permissionsdispatcher:2.4.0'
-    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
 
-    //单元测试等工具类
-    api 'com.blankj:utilcode:1.24.2'
 
     //RecyclerView分割线
     api 'com.github.fondesa:recycler-view-divider:3.0.0'
@@ -88,8 +81,6 @@ dependencies {
     //Json依赖
     api 'com.alibaba:fastjson:1.2.57'
 
-    //二维码扫描
-    api 'me.dm7.barcodescanner:zbar:1.9.13'
 
     //litepal
     api 'org.litepal.android:java:3.0.0'

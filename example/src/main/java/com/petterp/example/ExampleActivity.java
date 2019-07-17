@@ -9,17 +9,14 @@ import androidx.appcompat.app.ActionBar;
 import com.petterp.latte_core.activity.ProxyActivity;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.delegates.LatteDelegate;
-import com.petterp.latte_ec.launcher.LauncherDelegate;
 import com.petterp.latte_ec.main.EcBottomDelegate;
 import com.petterp.latte_ec.sign.ISignListener;
-import com.petterp.latte_ui.launcher.ILauncherListener;
-import com.petterp.latte_ui.launcher.OnLauncherFinishTag;
 
 
 /**
  * 主Activity,处理回调，全局view入口
  */
-public class ExampleActivity extends ProxyActivity implements ISignListener,ILauncherListener {
+public class ExampleActivity extends ProxyActivity implements ISignListener {
 
     @Override
     public LatteDelegate setRootDelegate() {
@@ -47,25 +44,6 @@ public class ExampleActivity extends ProxyActivity implements ISignListener,ILau
         Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
     }
 
-
-    /**
-     * 回调接口-> LauncherScrollDelegate ，登录了怎样怎样，没有登录怎样怎样
-     *
-     * @param tag
-     */
-    public void onLauncherFinish(OnLauncherFinishTag tag) {
-
-        if (tag == OnLauncherFinishTag.SIGNED) {
-//            getSupportDelegate().pop();
-//            getSupportDelegate().pop();
-//            getSupportDelegate().startWithPop(new EcBottomDelgate());
-//            getSupportDelegate().startWithPop(new EcBottomDelgate());
-        } else {
-            //退栈并启动
-            getSupportDelegate().startWithPop(new EcBottomDelegate());
-//            LatteLoader.showLoading(this);
-        }
-    }
 
     @Override
     protected void onPause() {

@@ -1,5 +1,8 @@
 package com.petterp.latte_ec.main.add.TopViewPager;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.joanzapata.iconify.widget.IconTextView;
@@ -12,6 +15,8 @@ import com.petterp.latte_ui.recyclear.MultipleViewHolder;
 import java.util.List;
 
 public class ConsumeListAdapter extends MultipleRecyclearAdapter {
+    private boolean mode = true;
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -24,6 +29,7 @@ public class ConsumeListAdapter extends MultipleRecyclearAdapter {
         addItemType(ConsumeListItemType.ITEM_CONSUME_LIST, R.layout.item_vp_consume_list);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
         super.convert(holder, entity);
@@ -35,9 +41,22 @@ public class ConsumeListAdapter extends MultipleRecyclearAdapter {
                 String iconVal = entity.getField(MultipleFidls.NAME);
                 icon.setText(iconVal);
                 title.setText(titleVal);
+                icon.setTextColor(R.color.index_add_text_color);
+                title.setTextColor(R.color.index_add_text_color);
+                icon.setBackgroundResource(R.drawable.item_vp_add_to);
+                if (mode) {
+                    if (entity.getField(MultipleFidls.ID).equals("0")) {
+                        icon.setTextColor(Color.WHITE);
+                        icon.setBackgroundResource(R.drawable.item_vp_add_up);
+                        title.setTextColor(Color.parseColor("#ff0099cc"));
+                        mode = false;
+                    }
+                }
                 break;
             default:
                 break;
         }
     }
+
+
 }

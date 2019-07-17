@@ -7,19 +7,18 @@
     android:orientation="vertical">
 
     <com.joanzapata.iconify.widget.IconTextView
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:gravity="center"
         android:id="@+id/tv_item_vp_consume_icon"
-        android:layout_height="50dp"
-        android:background="@drawable/item_vp_add_to"
+        android:layout_height="40dp"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:id="@+id/tv_item_vp_consume_title"
         android:gravity="center"
         android:text="三餐"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

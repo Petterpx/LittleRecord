@@ -5,15 +5,12 @@ import android.widget.ImageView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.bigkoo.convenientbanner.ConvenientBanner;
-import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.petterp.latte_ui.R;
-import com.petterp.latte_ui.banner.BannerCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +22,7 @@ import java.util.List;
  */
 public class MultipleRecyclearAdapter extends
         BaseMultiItemQuickAdapter<MultipleItemEntity,
-                MultipleViewHolder> implements BaseQuickAdapter.SpanSizeLookup, OnItemClickListener {
+                MultipleViewHolder> implements BaseQuickAdapter.SpanSizeLookup{
 
 
     /**
@@ -104,15 +101,6 @@ public class MultipleRecyclearAdapter extends
                         .into((ImageView) holder.getView(R.id.img_multiple));
                 holder.setText(R.id.tv_multiple, text);
                 break;
-            case ItemType.BANNER:
-                //如果没有进行初始化
-                if (!mIsInitBanner) {
-                    bannerImages = entity.getField(MultipleFidls.BANNERS);
-                    final ConvenientBanner<String> convenientBanner = holder.getView(R.id.banner_recycler_item);
-                    BannerCreator.setDefault(convenientBanner, bannerImages, this);
-                    mIsInitBanner = true;
-                }
-                break;
             default:
                 break;
         }
@@ -133,12 +121,6 @@ public class MultipleRecyclearAdapter extends
         isFirstOnly(false);
 
     }
-
-    @Override
-    public void onItemClick(int position) {
-
-    }
-
 
     /**
      * 传入我们现有的ViewHolder
