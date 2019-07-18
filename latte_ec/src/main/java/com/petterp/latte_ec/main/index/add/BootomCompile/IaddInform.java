@@ -1,5 +1,7 @@
 package com.petterp.latte_ec.main.index.add.BootomCompile;
 
+import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
 /**
  * 通知金额改变
  * @author by Petterp

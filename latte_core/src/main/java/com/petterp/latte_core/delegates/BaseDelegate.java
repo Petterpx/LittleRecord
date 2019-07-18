@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.petterp.latte_core.R;
 import com.petterp.latte_core.activity.ProxyActivity;
 
 import butterknife.ButterKnife;
@@ -203,6 +204,9 @@ public abstract class BaseDelegate extends Fragment implements ISupportFragment 
         //沉浸式状态栏
         ImmersionBar.with(this)
                 .titleBar(getToolbar())
+                .autoDarkModeEnable(true)
+//                .transparentNavigationBar()
+//                .navigationBarColorTransform(R.color.design_default_color_primary_dark)
                 .keyboardEnable(true).init();
     }
 

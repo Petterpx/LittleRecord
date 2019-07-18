@@ -1,5 +1,6 @@
 package com.petterp.latte_ec.main.index.add;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -19,18 +20,27 @@ import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
-import com.petterp.latte_core.util.litepal.OutputInfo;
+import com.petterp.latte_core.util.litepal.BillInfo;
+import com.petterp.latte_core.util.litepal.EveryBillCollect;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.litepaldemo.Book;
+import com.petterp.latte_ec.main.index.IndexFidls;
+import com.petterp.latte_ec.main.index.IndexItemType;
 import com.petterp.latte_ec.main.index.add.BootomCompile.CompileItemClcikList;
 import com.petterp.latte_ec.main.index.add.BootomCompile.CompileListAdapter;
 import com.petterp.latte_ec.main.index.add.BootomCompile.CompileListItemType;
 import com.petterp.latte_ec.main.index.add.BootomCompile.IaddInform;
-import com.petterp.latte_ec.main.index.add.TopViewPager.ConsumeFragment;
-import com.petterp.latte_ec.main.index.add.TopViewPager.ConsumePagerAdapter;
+import com.petterp.latte_ec.main.index.add.TopViewPager.RecordFragment;
+import com.petterp.latte_ec.main.index.add.TopViewPager.RecordListItemType;
+import com.petterp.latte_ec.main.index.add.TopViewPager.RecordPagerAdapter;
+import com.petterp.latte_ec.main.index.updateIndex.IaddData;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
+import org.litepal.LitePal;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +53,7 @@ import butterknife.OnClick;
  *
  * @author Petterp
  */
-public class AddDelegate extends LatteDelegate implements IaddInform {
+public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
     @BindView(R2.id.vp_index_add)
@@ -59,12 +69,23 @@ public class AddDelegate extends LatteDelegate implements IaddInform {
     @BindView(R2.id.tv_add_compile_money)
     AppCompatTextView tvmoney = null;
 
+    private IaddData iaddData;
+    //默认为消费状态
+    private int mode = RecordItems.CONSUME_ITEMS;
+    //默认为消费三餐
+    private String mkind = "三餐";
+    @SuppressLint("SimpleDateFormat")
+    //时间转化
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @OnClick(R2.id.it_index_add_back)
     void addBack() {
         getSupportDelegate().pop();
     }
 
+    public AddDelegate(IaddData iaddData) {
+        this.iaddData = iaddData;
+    }
 
     @Override
     public Object setLayout() {
@@ -77,6 +98,11 @@ public class AddDelegate extends LatteDelegate implements IaddInform {
         initViewPager();
         //处理键盘冲突
         initEditKey();
+        //初始化自定义键盘
+        initKeyBorad();
+    }
+
+    private void initKeyBorad() {
         String[] values = getResources().getStringArray(R.array.index_add_compile_values);
         List<MultipleItemEntity> list = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
@@ -101,15 +127,46 @@ public class AddDelegate extends LatteDelegate implements IaddInform {
 
     private void initViewPager() {
         List<Fragment> list = new ArrayList<>();
-        list.add(new ConsumeFragment());
-        list.add(new ConsumeFragment());
+        List<MultipleItemEntity> itemEntities = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            MultipleItemEntity itemEntity = MultipleItemEntity.builder()
+                    .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
+                    .setField(MultipleFidls.NAME, "{icon-award}")
+                    .setField(IndexFidls.KIND, "三餐")
+                    .setField(MultipleFidls.ID, "" + i)
+                    .build();
+            itemEntities.add(itemEntity);
+        }
+
+
+        list.add(new RecordFragment(this, itemEntities));
+        list.add(new RecordFragment(this, itemEntities));
         String[] sums = {"支出", "收入"};
-        ConsumePagerAdapter adapter = new ConsumePagerAdapter(getChildFragmentManager(), list, sums);
+        RecordPagerAdapter adapter = new RecordPagerAdapter(getChildFragmentManager(), list, sums);
         viewPager.setAdapter(adapter);
-//        viewPager.addOnPageChangeListener(this);
         tabLayout.addTab(tabLayout.newTab().setText("支出"));
         tabLayout.addTab(tabLayout.newTab().setText("收入"));
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    mode = RecordItems.CONSUME_ITEMS;
+                } else {
+                    mode = RecordItems.INCOME_ITEMS;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void initEditKey() {
@@ -140,7 +197,67 @@ public class AddDelegate extends LatteDelegate implements IaddInform {
     @Override
     public void setSave(Double money) {
         String remark = Objects.requireNonNull(editText.getText()).toString().trim();
-        new OutputInfo(System.currentTimeMillis(), money, remark, "petterp").save();
+        //获取时间
+        Long time = System.currentTimeMillis();
+        //当前位置是支出还是收入
+        String bill;
+        //当前时间 年-月-日
+        String timeday = simpleDateFormat.format(time);
+        //判断是否已经存入当天数据
+        List<EveryBillCollect> collects = LitePal.
+                where("time=?", timeday)
+                .select("consume", "income", "sum")
+                .find(EveryBillCollect.class);
+        if (mode == RecordItems.CONSUME_ITEMS) {
+            if (collects.size() > 0) {
+                //修改数据
+                EveryBillCollect collect = new EveryBillCollect();
+                collect.setSum(collects.get(0).getSum()+1);
+                collect.setConsume(collects.get(0).getConsume()+money);
+                collect.updateAll("time=?", timeday);
+            }else{
+                EveryBillCollect collect = new EveryBillCollect(timeday,"petterp",money,0.0,1);
+                collect.save();
+            }
+            money = -1 * money;
+            bill = "支出";
+            BillInfo info = new BillInfo(System.currentTimeMillis(),timeday, money, remark, "petterp", mkind,"支出");
+            info.save();
+        } else {
+            if (collects.size() > 0) {
+                //修改数据
+                EveryBillCollect collect = new EveryBillCollect();
+                collect.setSum(collects.get(0).getSum()+1);
+                collect.setIncome(collects.get(0).getIncome()+money);
+                collect.updateAll("time=?", timeday);
+            }else{
+                EveryBillCollect collect = new EveryBillCollect(timeday,"petterp",0.0,money,1);
+                collect.save();
+            }
+            BillInfo info = new BillInfo(System.currentTimeMillis(), timeday,money, remark, "petterp", mkind,"收入");
+            info.save();
+            bill = "收入";
+        }
+        MultipleItemEntity itemEntity = MultipleItemEntity.builder()
+                .setItemType(IndexItemType.INDEX_DETAIL_LIST)
+                .setField(IndexFidls.BILL, bill)
+                .setField(IndexFidls.KIND, mkind)
+                .setField(IndexFidls.CONSUME_I, money)
+                .setField(IndexFidls.TIME, time)
+                .build();
+        //接口->主页adapter添加数据
+        iaddData.addData(itemEntity,money);
         getSupportDelegate().pop();
+    }
+
+
+    /**
+     * 获取选择的种类
+     *
+     * @param res
+     */
+    @Override
+    public void kindData(String res) {
+        mkind = res;
     }
 }

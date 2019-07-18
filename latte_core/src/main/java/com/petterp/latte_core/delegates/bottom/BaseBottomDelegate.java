@@ -43,7 +43,7 @@ public abstract class BaseBottomDelegate extends LatteDelegate implements View.O
     private int mClickedColor = Color.RED;
 
     @BindView(R2.id.bottom_bar)
-    LinearLayoutCompat mBottomBar = null;
+    LinearLayoutView mBottomBar = null;
 
     @Override
     public Object setLayout() {

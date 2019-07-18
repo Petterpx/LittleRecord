@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:textColor="@android:color/black"
+        android:text="123"
         android:textSize="18sp"
         tools:ignore="RtlHardcoded" />
 </androidx.appcompat.widget.LinearLayoutCompat>

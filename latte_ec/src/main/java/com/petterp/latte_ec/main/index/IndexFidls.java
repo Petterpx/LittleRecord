@@ -10,5 +10,5 @@ public enum  IndexFidls {
     CONSUME,
     KIND,
     CONSUME_I,
-    MODE
+    BILL
 }

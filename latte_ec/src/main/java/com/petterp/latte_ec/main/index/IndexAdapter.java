@@ -38,12 +38,13 @@ public class IndexAdapter extends MultipleRecyclearAdapter {
             case IndexItemType.INDEX_DETAIL_HEADER:
                 holder.setText(R.id.tv_index_rv_time, entity.getField(IndexFidls.TIME));
                 holder.setText(R.id.tv_index_rv_day, entity.getField(IndexFidls.DAY));
-                holder.setText(R.id.tv_index_rv_consume, entity.getField("支出:" + IndexFidls.CONSUME));
+                double consume=entity.getField(IndexFidls.CONSUME);
+                holder.setText(R.id.tv_index_rv_consume, "支出: " + Math.abs(consume));
                 break;
             case IndexItemType.INDEX_DETAIL_LIST:
                 holder.setText(R.id.tv_index_rv_kind, entity.getField(IndexFidls.KIND));
-                holder.setText(R.id.tv_index_rv_consume_i, entity.getField(IndexFidls.CONSUME_I));
-                if (entity.getField(IndexFidls.MODE)) {
+                holder.setText(R.id.tv_index_rv_consume_i, entity.getField(IndexFidls.CONSUME_I)+"");
+                if (entity.getField(IndexFidls.BILL).equals("支出")) {
                     holder.setTextColor(R.id.it_index_rv_dot, Color.RED);
                 } else {
                     holder.setTextColor(R.id.it_index_rv_dot, Color.GREEN);
