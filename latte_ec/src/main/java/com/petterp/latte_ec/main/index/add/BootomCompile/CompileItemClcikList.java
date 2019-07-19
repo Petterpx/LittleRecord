@@ -21,6 +21,7 @@ public class CompileItemClcikList extends SimpleClickListener {
     private final IaddInform IMONEY;
     private final StringBuilder TEXT_BUILDER;
     private final DecimalFormat DECI_FORMAT;
+    private final int SUM_LENGTH=20;
 
     public CompileItemClcikList(LatteDelegate DELEGATE, IaddInform editListener) {
         this.DELEGATE = DELEGATE;
@@ -65,25 +66,32 @@ public class CompileItemClcikList extends SimpleClickListener {
                 setMoney(9);
                 break;
             case "+":
-                if (TEXT_BUILDER.length() < 14) {
+                if (TEXT_BUILDER.length() < SUM_LENGTH) {
                     String res = TEXT_BUILDER.toString();
-                    if (res.contains("+")) {
+                    if ((res.length()-res.replace("+","").length())==1) {
                         int id = res.indexOf("+");
                         String[] values = {res.substring(0, id), res.substring(id + 1)};
-                        TEXT_BUILDER.delete(0, TEXT_BUILDER.length());
-                        res = DECI_FORMAT.format(Double.parseDouble(values[0]) + Double.parseDouble(values[1]));
-                        TEXT_BUILDER.delete(0, TEXT_BUILDER.length()).append(res).append("+");
-                    } else {
+                        if (isNumber(values[0])&&isNumber(values[1])){
+                            res = DECI_FORMAT.format(Double.parseDouble(values[0]) + Double.parseDouble(values[1]));
+                            TEXT_BUILDER.setLength(0);
+                            TEXT_BUILDER.append(res).append("+");
+                        }
+                        IMONEY.setMoney(TEXT_BUILDER.toString());
+
+                    } else if (!res.contains("+")&&res.length()>0){
                         TEXT_BUILDER.append("+");
+                        IMONEY.setMoney(TEXT_BUILDER.toString());
                     }
-                    IMONEY.setMoney(TEXT_BUILDER.toString());
                 }
                 break;
             case ".":
-                if (TEXT_BUILDER.length() < 14) {
+                if (TEXT_BUILDER.length() < SUM_LENGTH) {
                     String res = TEXT_BUILDER.toString();
+                    //是否包含
                     if (res.contains("+")) {
+                        //计算位置
                         int p = res.indexOf("+");
+                        //计算有无 "." ->这里是为了相加时左右都为小数情况下
                         res = res.substring(p + 1);
                     }
                     if (!res.contains(".")) {
@@ -113,7 +121,7 @@ public class CompileItemClcikList extends SimpleClickListener {
     }
 
     private void setMoney(int id) {
-        if (TEXT_BUILDER.length() < 14) {
+        if (TEXT_BUILDER.length() < SUM_LENGTH) {
             String res = TEXT_BUILDER.toString();
             if (res.contains("+")) {
                 int p = res.indexOf("+");
@@ -132,7 +140,7 @@ public class CompileItemClcikList extends SimpleClickListener {
 
     private void setMoneyzery() {
         int length = TEXT_BUILDER.length();
-        if (length < 14 &&length>0) {
+        if (length < SUM_LENGTH &&length>0) {
             String res = TEXT_BUILDER.toString();
             //判断是否带+号
             if (res.contains("+")) {
@@ -171,8 +179,9 @@ public class CompileItemClcikList extends SimpleClickListener {
     private void setSave() {
         String res = TEXT_BUILDER.toString();
         if (!res.equals("")) {
+            //如果包含"+"
             if (res.contains("+")) {
-                if (res.endsWith("+")) {
+                if (res.endsWith("+")||res.startsWith("+")) {
                     res = res.replace("+", "");
                 } else {
                     int id = res.indexOf("+");
@@ -186,4 +195,23 @@ public class CompileItemClcikList extends SimpleClickListener {
         }
     }
 
+
+    /**
+     * 判断是否可转为Double
+     * @param obj
+     * @return
+     */
+    private boolean isNumber (Object obj) {
+        if (obj instanceof Number) {
+            return true;
+        } else if (obj instanceof String){
+            try{
+                Double.parseDouble((String)obj);
+                return true;
+            }catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
 }

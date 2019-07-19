@@ -3,6 +3,7 @@ package com.petterp.latte_ec.main.index.add;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
 import com.petterp.latte_core.util.litepal.BillInfo;
 import com.petterp.latte_core.util.litepal.EveryBillCollect;
+import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.litepaldemo.Book;
@@ -69,19 +71,19 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
     @BindView(R2.id.tv_add_compile_money)
     AppCompatTextView tvmoney = null;
 
-    private IaddData iaddData;
     //默认为消费状态
     private int mode = RecordItems.CONSUME_ITEMS;
     //默认为消费三餐
     private String mkind = "三餐";
+
     @SuppressLint("SimpleDateFormat")
-    //时间转化
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @OnClick(R2.id.it_index_add_back)
     void addBack() {
         getSupportDelegate().pop();
     }
+
+    private IaddData iaddData;
 
     public AddDelegate(IaddData iaddData) {
         this.iaddData = iaddData;
@@ -100,6 +102,7 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
         initEditKey();
         //初始化自定义键盘
         initKeyBorad();
+        Log.e("Demo", "add执行");
     }
 
     private void initKeyBorad() {
@@ -137,8 +140,6 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
                     .build();
             itemEntities.add(itemEntity);
         }
-
-
         list.add(new RecordFragment(this, itemEntities));
         list.add(new RecordFragment(this, itemEntities));
         String[] sums = {"支出", "收入"};
@@ -196,58 +197,51 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
 
     @Override
     public void setSave(Double money) {
+        //获取备注
         String remark = Objects.requireNonNull(editText.getText()).toString().trim();
-        //获取时间
-        Long time = System.currentTimeMillis();
         //当前位置是支出还是收入
         String bill;
         //当前时间 年-月-日
-        String timeday = simpleDateFormat.format(time);
+        String timeday = TimeUtils.getDate();
+        String day = TimeUtils.getday();
         //判断是否已经存入当天数据
-        List<EveryBillCollect> collects = LitePal.
-                where("time=?", timeday)
+        List<EveryBillCollect> collects
+                = LitePal.where("time=?", timeday)
                 .select("consume", "income", "sum")
                 .find(EveryBillCollect.class);
+        EveryBillCollect collect = new EveryBillCollect();
         if (mode == RecordItems.CONSUME_ITEMS) {
-            if (collects.size() > 0) {
-                //修改数据
-                EveryBillCollect collect = new EveryBillCollect();
-                collect.setSum(collects.get(0).getSum()+1);
-                collect.setConsume(collects.get(0).getConsume()+money);
-                collect.updateAll("time=?", timeday);
-            }else{
-                EveryBillCollect collect = new EveryBillCollect(timeday,"petterp",money,0.0,1);
-                collect.save();
-            }
             money = -1 * money;
             bill = "支出";
-            BillInfo info = new BillInfo(System.currentTimeMillis(),timeday, money, remark, "petterp", mkind,"支出");
-            info.save();
+            if (collects.size() > 0) {
+                collect.setConsume(collects.get(0).getConsume() + money);
+                collect.setSum(collects.get(0).getSum() + 1);
+            } else {
+                new EveryBillCollect(timeday, day, "petterp", money, 0.0, 1).save();
+            }
         } else {
             if (collects.size() > 0) {
-                //修改数据
-                EveryBillCollect collect = new EveryBillCollect();
-                collect.setSum(collects.get(0).getSum()+1);
-                collect.setIncome(collects.get(0).getIncome()+money);
-                collect.updateAll("time=?", timeday);
-            }else{
-                EveryBillCollect collect = new EveryBillCollect(timeday,"petterp",0.0,money,1);
-                collect.save();
+                collect.setIncome(collects.get(0).getIncome() + money);
+                collect.setSum(collects.get(0).getSum() + 1);
+            } else {
+                new EveryBillCollect(timeday, day, "petterp", 0.0, money, 1).save();
             }
-            BillInfo info = new BillInfo(System.currentTimeMillis(), timeday,money, remark, "petterp", mkind,"收入");
-            info.save();
             bill = "收入";
         }
+        //修改数据
+        collect.updateAll("time=?", timeday);
+        BillInfo info = new BillInfo(System.currentTimeMillis(), timeday, money, remark, "petterp", mkind, bill);
+        info.save();
+        getSupportDelegate().pop();
+
         MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                 .setItemType(IndexItemType.INDEX_DETAIL_LIST)
                 .setField(IndexFidls.BILL, bill)
                 .setField(IndexFidls.KIND, mkind)
                 .setField(IndexFidls.CONSUME_I, money)
-                .setField(IndexFidls.TIME, time)
                 .build();
         //接口->主页adapter添加数据
         iaddData.addData(itemEntity,money);
-        getSupportDelegate().pop();
     }
 
 

@@ -2,6 +2,7 @@ package com.petterp.example;
 
 import android.app.Application;
 import android.os.Handler;
+import android.util.Log;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.petterp.latte_core.app.Latte;
@@ -17,6 +18,7 @@ public class ExampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.e("demo","application");
         Handler handler=new Handler();
         Latte.init(this)
                 .withIcon(new FontAwesomeModule())

@@ -11,6 +11,9 @@ public class EveryBillCollect extends LitePalSupport {
     //只保留 年-月-日
     private String time;
 
+    //周几
+    private String day;
+
     //操作人
     private String name;
 
@@ -23,13 +26,15 @@ public class EveryBillCollect extends LitePalSupport {
     //今日添加次数
     private int sum;
 
-    public EveryBillCollect(String time, String name, Double consume, Double income, int sum) {
+    public EveryBillCollect(String time, String day, String name, Double consume, Double income, int sum) {
         this.time = time;
+        this.day = day;
         this.name = name;
         this.consume = consume;
         this.income = income;
         this.sum = sum;
     }
+
     public EveryBillCollect(){
 
     }
@@ -40,6 +45,14 @@ public class EveryBillCollect extends LitePalSupport {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 
     public String getName() {

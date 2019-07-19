@@ -20,8 +20,8 @@ public class EcBottomDelegate extends BaseBottomDelegate {
     public LinkedHashMap<BottomTabBean, BottomItemDelegate> setItems(ItemBuilder builder) {
         final LinkedHashMap<BottomTabBean,BottomItemDelegate> items=new LinkedHashMap<>();
         items.put(new BottomTabBean("{fa-home}","明细"),new IndexDelegate());
-        items.put(new BottomTabBean("{fa-home}","分析"),new IndexDelegate());
-        items.put(new BottomTabBean("{fa-home}","我的"),new IndexDelegate());
+//        items.put(new BottomTabBean("{fa-home}","分析"),new IndexDelegate());
+//        items.put(new BottomTabBean("{fa-home}","我的"),new IndexDelegate());
         return builder.addItems(items).build();
     }
 
