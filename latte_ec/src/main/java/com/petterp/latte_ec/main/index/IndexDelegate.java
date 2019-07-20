@@ -43,7 +43,7 @@ import butterknife.BindView;
  * Summary:明细界面 ->Index
  * 邮箱：1509492795@qq.com
  */
-public class IndexDelegate extends BottomItemDelegate implements IaddData{
+public class IndexDelegate extends BottomItemDelegate implements IaddData {
     @BindView(R2.id.index_bar)
     Toolbar toolbar = null;
     @BindView(R2.id.fb_index_top)
@@ -51,22 +51,23 @@ public class IndexDelegate extends BottomItemDelegate implements IaddData{
     @BindView(R2.id.rv_index_list)
     RecyclerView recyclerView = null;
     @BindView(R2.id.tv_index_tob_surplus)
-    AppCompatTextView tvSurplus=null;
+    AppCompatTextView tvSurplus = null;
     @BindView(R2.id.tv_index_tob_consume)
-    AppCompatTextView tvConsume=null;
+    AppCompatTextView tvConsume = null;
     @BindView(R2.id.tv_index_tob_income)
-    AppCompatTextView tvIncome=null;
+    AppCompatTextView tvIncome = null;
     //数据
     private List<MultipleItemEntity> list;
     //index适配器
     private IndexAdapter adapter;
     //本月收入
-    private double consumeMoney=0.0;
+    private double consumeMoney = 0.0;
     //本月消费
-    private double incomeMoney=0.0;
+    private double incomeMoney = 0.0;
     //当前位置
-    private int postion=1;
-    private DecimalFormat decimalFormat=new DecimalFormat("0.00");
+    private int postion = 1;
+    private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
     @Override
     public Object setLayout() {
         return R.layout.delegate_index;
@@ -115,20 +116,19 @@ public class IndexDelegate extends BottomItemDelegate implements IaddData{
     private void initRvData() {
         list.clear();
         //降序获取数据
-        List<EveryBillCollect> collects = LitePal.
-                select("consume", "time", "day","income")
-                .order("time desc")
+        List<EveryBillCollect> collects = LitePal
+                .order("dateinfo desc")
                 .find(EveryBillCollect.class);
         int collectSize = collects.size();
         for (int i = 0; i < collectSize; i++) {
             //如果是当天改为今天
             String day = collects.get(i).getDay();
-            if (day.equals(TimeUtils.getday())) {
+            if (day.equals(TimeUtils.build().getday())) {
                 day = "今天";
             }
             MultipleItemEntity itemHeader = MultipleItemEntity.builder()
                     .setItemType(IndexItemType.INDEX_DETAIL_HEADER)
-                    .setField(IndexFidls.TIME, collects.get(i).getTime())
+                    .setField(IndexFidls.TIME, collects.get(i).getDateMonth())
                     .setField(IndexFidls.DAY, day)
                     .setField(IndexFidls.CONSUME, collects.get(i).getConsume())
                     .build();
@@ -136,11 +136,11 @@ public class IndexDelegate extends BottomItemDelegate implements IaddData{
             list.add(itemHeader);
             //获取相应时间的具体item
             List<BillInfo> billInfos = LitePal.
-                    where("timeday=?", collects.get(i).getTime())
+                    where("timeday=?", collects.get(i).getDateinfo())
                     .find(BillInfo.class);
             int billInfoSize = billInfos.size();
-            if (i==0){
-                postion=billInfoSize+1;
+            if (i == 0) {
+                postion = billInfoSize + 1;
             }
             for (int j = 0; j < billInfoSize; j++) {
                 MultipleItemEntity itemEntity = MultipleItemEntity.builder()
@@ -152,16 +152,18 @@ public class IndexDelegate extends BottomItemDelegate implements IaddData{
                 //添加具体item
                 list.add(itemEntity);
             }
-            consumeMoney+=collects.get(i).getConsume();
-            incomeMoney+=collects.get(i).getIncome();
+            if (TimeUtils.build().getYearMonth().equals(collects.get(i).getDateMonth())) {
+                consumeMoney += collects.get(i).getConsume();
+                incomeMoney += collects.get(i).getIncome();
+            }
         }
         //初始化tooblar信息
         initTop();
     }
 
     @SuppressLint("SetTextI18n")
-    private void initTop(){
-        tvConsume.setText("月支出："+ consumeMoney);
+    private void initTop() {
+        tvConsume.setText("月支出：" + consumeMoney);
         tvIncome.setText("月收入：" + incomeMoney);
         tvSurplus.setText(decimalFormat.format(incomeMoney + consumeMoney));
     }
@@ -185,17 +187,17 @@ public class IndexDelegate extends BottomItemDelegate implements IaddData{
 
     @Override
     public void addData(MultipleItemEntity entity, double money) {
-        if (list.size()==0){
+        if (list.size() == 0) {
             initRvData();
-        }else{
-            list.add(postion,entity);
-            postion+=1;
-            double consume = list.get(0).getField(IndexFidls.CONSUME);
-            list.get(0).setFild(IndexFidls.CONSUME, Double.parseDouble(decimalFormat.format(consume + Math.abs(money))));
-            if (entity.getField(IndexFidls.BILL).equals("收入")){
-                incomeMoney+=money;
-            }else{
-                consumeMoney+=money;
+        } else {
+            list.add(postion, entity);
+            postion += 1;
+            if (entity.getField(IndexFidls.BILL).equals("收入")) {
+                incomeMoney += money;
+            } else {
+                consumeMoney += money;
+                double consume = list.get(0).getField(IndexFidls.CONSUME);
+                list.get(0).setFild(IndexFidls.CONSUME, Double.parseDouble(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
             }
             initTop();
         }

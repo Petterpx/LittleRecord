@@ -1,5 +1,7 @@
 package com.petterp.latte_core.util.litepal;
 
+import com.petterp.latte_core.util.time.TimeUtils;
+
 import org.litepal.crud.LitePalSupport;
 
 /**
@@ -25,9 +27,9 @@ public class BillInfo extends LitePalSupport {
     //消费还是支出
     private String bill;
 
-    public BillInfo(long time, String timeday, double money, String remark, String name, String kind, String bill) {
+    public BillInfo(long time, double money, String remark, String name, String kind, String bill) {
         this.time = time;
-        this.timeday = timeday;
+        this.timeday = TimeUtils.build().getDate(time);
         this.money = money;
         this.remark = remark;
         this.name = name;

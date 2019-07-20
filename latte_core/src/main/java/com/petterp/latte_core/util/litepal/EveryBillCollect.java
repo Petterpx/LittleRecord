@@ -1,5 +1,7 @@
 package com.petterp.latte_core.util.litepal;
 
+import com.petterp.latte_core.util.time.TimeUtils;
+
 import org.litepal.crud.LitePalSupport;
 
 /**
@@ -9,10 +11,14 @@ import org.litepal.crud.LitePalSupport;
  */
 public class EveryBillCollect extends LitePalSupport {
     //只保留 年-月-日
-    private String time;
+    private String dateinfo;
 
     //周几
     private String day;
+
+    private String dateMonth;
+
+    private long datetime;
 
     //操作人
     private String name;
@@ -26,25 +32,27 @@ public class EveryBillCollect extends LitePalSupport {
     //今日添加次数
     private int sum;
 
-    public EveryBillCollect(String time, String day, String name, Double consume, Double income, int sum) {
-        this.time = time;
-        this.day = day;
+    public EveryBillCollect(){
+
+    }
+
+    public EveryBillCollect(long datetime, String name, Double consume, Double income, int sum) {
+        this.dateinfo = TimeUtils.build().getDate(datetime);
+        this.day = TimeUtils.build().getday(datetime);
+        this.dateMonth=TimeUtils.build().getYearMonth(datetime);
+        this.datetime = datetime;
         this.name = name;
         this.consume = consume;
         this.income = income;
         this.sum = sum;
     }
 
-    public EveryBillCollect(){
-
+    public String getDateinfo() {
+        return dateinfo;
     }
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateinfo(String dateinfo) {
+        this.dateinfo = dateinfo;
     }
 
     public String getDay() {
@@ -53,6 +61,22 @@ public class EveryBillCollect extends LitePalSupport {
 
     public void setDay(String day) {
         this.day = day;
+    }
+
+    public String getDateMonth() {
+        return dateMonth;
+    }
+
+    public void setDateMonth(String dateMonth) {
+        this.dateMonth = dateMonth;
+    }
+
+    public long getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(long datetime) {
+        this.datetime = datetime;
     }
 
     public String getName() {

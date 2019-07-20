@@ -23,6 +23,7 @@ import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
 import com.petterp.latte_core.util.litepal.BillInfo;
 import com.petterp.latte_core.util.litepal.EveryBillCollect;
+import com.petterp.latte_core.util.time.SystemClock;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
@@ -202,11 +203,10 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
         //当前位置是支出还是收入
         String bill;
         //当前时间 年-月-日
-        String timeday = TimeUtils.getDate();
-        String day = TimeUtils.getday();
+        String timeday = TimeUtils.build().getDate();
         //判断是否已经存入当天数据
         List<EveryBillCollect> collects
-                = LitePal.where("time=?", timeday)
+                = LitePal.where("dateinfo=?", timeday)
                 .select("consume", "income", "sum")
                 .find(EveryBillCollect.class);
         EveryBillCollect collect = new EveryBillCollect();
@@ -217,20 +217,21 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
                 collect.setConsume(collects.get(0).getConsume() + money);
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
-                new EveryBillCollect(timeday, day, "petterp", money, 0.0, 1).save();
+                new EveryBillCollect(SystemClock.now(), "petterp", money, 0.0, 1).save();
             }
         } else {
             if (collects.size() > 0) {
                 collect.setIncome(collects.get(0).getIncome() + money);
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
-                new EveryBillCollect(timeday, day, "petterp", 0.0, money, 1).save();
+                new EveryBillCollect(SystemClock.now(), "petterp", 0.0, money, 1).save();
             }
             bill = "收入";
         }
         //修改数据
-        collect.updateAll("time=?", timeday);
-        BillInfo info = new BillInfo(System.currentTimeMillis(), timeday, money, remark, "petterp", mkind, bill);
+        collect.updateAll("dateinfo=?", timeday);
+
+        BillInfo info = new BillInfo(SystemClock.now(), money, remark, "petterp", mkind, bill);
         info.save();
         getSupportDelegate().pop();
 
@@ -241,6 +242,7 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
                 .setField(IndexFidls.CONSUME_I, money)
                 .build();
         //接口->主页adapter添加数据
+        Log.e("demo","asdasdads"+money);
         iaddData.addData(itemEntity,money);
     }
 
