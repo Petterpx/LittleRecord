@@ -32,10 +32,7 @@ import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 import org.litepal.LitePal;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -195,13 +192,13 @@ public class IndexDelegate extends BottomItemDelegate implements IaddData{
             postion+=1;
             double consume = list.get(0).getField(IndexFidls.CONSUME);
             list.get(0).setFild(IndexFidls.CONSUME, Double.parseDouble(decimalFormat.format(consume + Math.abs(money))));
+            if (entity.getField(IndexFidls.BILL).equals("收入")){
+                incomeMoney+=money;
+            }else{
+                consumeMoney+=money;
+            }
+            initTop();
         }
-        if (entity.getField(IndexFidls.BILL).equals("收入")){
-            incomeMoney+=money;
-        }else{
-            consumeMoney+=money;
-        }
-        initTop();
         adapter.notifyDataSetChanged();
     }
 
