@@ -16,7 +16,7 @@ public class CallbackManager {
     public static CallbackManager getInstance(){
         return Holder.INSTANCE;
     }
-    public CallbackManager addCallback(Object tag,IGlobalCallback callback){
+    public <T> CallbackManager addCallback(Object tag, IGlobalCallback<T> callback){
         CALLBACKS.put(tag,callback);
         return this;
     }

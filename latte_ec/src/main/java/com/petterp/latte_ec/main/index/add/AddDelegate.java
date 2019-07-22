@@ -20,6 +20,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_core.util.callback.CallbackType;
+import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
 import com.petterp.latte_core.util.litepal.BillInfo;
 import com.petterp.latte_core.util.litepal.EveryBillCollect;
@@ -242,7 +245,6 @@ public class AddDelegate extends LatteDelegate implements IaddInform, Ikind {
                 .setField(IndexFidls.CONSUME_I, money)
                 .build();
         //接口->主页adapter添加数据
-        Log.e("demo","asdasdads"+money);
         iaddData.addData(itemEntity,money);
     }
 
