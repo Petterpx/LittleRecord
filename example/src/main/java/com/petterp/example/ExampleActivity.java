@@ -10,8 +10,8 @@ import androidx.appcompat.app.ActionBar;
 import com.petterp.latte_core.activity.ProxyActivity;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.delegates.LatteDelegate;
-import com.petterp.latte_ec.main.EcBottomDelegate;
-import com.petterp.latte_ec.sign.ISignListener;
+import com.petterp.latte_ec.view.home.HomeDelegate;
+import com.petterp.latte_ec.view.sign.ISignListener;
 
 
 /**
@@ -21,7 +21,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener {
 
     @Override
     public LatteDelegate setRootDelegate() {
-        return new EcBottomDelegate();
+        return new HomeDelegate();
     }
 
     //隐藏actionbar
@@ -34,6 +34,7 @@ public class ExampleActivity extends ProxyActivity implements ISignListener {
             actionBar.hide();
         }
         Latte.getConfigurator().withActivity(this);
+        //绑定EvenBus
     }
 
     @Override

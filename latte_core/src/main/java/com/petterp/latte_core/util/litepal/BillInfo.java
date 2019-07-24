@@ -11,46 +11,44 @@ import org.litepal.crud.LitePalSupport;
  */
 public class BillInfo extends LitePalSupport {
     //插入时间->戳
-    private long time;
-
-    //插入时间-日
-    private String timeday;
-
+    private long longDate;
+    //插入时间 年-月-日
+    private String dateRes;
     //相应金额
     private double money;
     //备注
     private String remark;
     //操作人
     private String name;
-    //类别
+    //选择的条目
     private String kind;
     //消费还是支出
-    private String bill;
+    private String category;
 
-    public BillInfo(long time, double money, String remark, String name, String kind, String bill) {
-        this.time = time;
-        this.timeday = TimeUtils.build().getDate(time);
+    public BillInfo(long longDate, String dateRes, double money, String remark, String name, String kind, String category) {
+        this.longDate = longDate;
+        this.dateRes = dateRes;
         this.money = money;
         this.remark = remark;
         this.name = name;
         this.kind = kind;
-        this.bill = bill;
+        this.category = category;
     }
 
-    public long getTime() {
-        return time;
+    public long getLongDate() {
+        return longDate;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setLongDate(long longDate) {
+        this.longDate = longDate;
     }
 
-    public String getTimeday() {
-        return timeday;
+    public String getDateRes() {
+        return dateRes;
     }
 
-    public void setTimeday(String timeday) {
-        this.timeday = timeday;
+    public void setDateRes(String dateRes) {
+        this.dateRes = dateRes;
     }
 
     public double getMoney() {
@@ -85,11 +83,11 @@ public class BillInfo extends LitePalSupport {
         this.kind = kind;
     }
 
-    public String getBill() {
-        return bill;
+    public String getCategory() {
+        return category;
     }
 
-    public void setBill(String bill) {
-        this.bill = bill;
+    public void setCategory(String category) {
+        this.category = category;
     }
 }

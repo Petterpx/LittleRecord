@@ -11,14 +11,10 @@ import org.litepal.crud.LitePalSupport;
  */
 public class EveryBillCollect extends LitePalSupport {
     //只保留 年-月-日
-    private String dateinfo;
+    private String dateRes;
 
-    //周几
-    private String day;
-
-    private String dateMonth;
-
-    private long datetime;
+    //时间戳
+    private long longDate;
 
     //操作人
     private String name;
@@ -36,47 +32,29 @@ public class EveryBillCollect extends LitePalSupport {
 
     }
 
-    public EveryBillCollect(long datetime, String name, Double consume, Double income, int sum) {
-        this.dateinfo = TimeUtils.build().getDate(datetime);
-        this.day = TimeUtils.build().getday(datetime);
-        this.dateMonth=TimeUtils.build().getYearMonth(datetime);
-        this.datetime = datetime;
+    public EveryBillCollect(String dateRes, long longDate, String name, Double consume, Double income, int sum) {
+        this.dateRes = dateRes;
+        this.longDate = longDate;
         this.name = name;
         this.consume = consume;
         this.income = income;
         this.sum = sum;
     }
 
-    public String getDateinfo() {
-        return dateinfo;
+    public String getDateRes() {
+        return dateRes;
     }
 
-    public void setDateinfo(String dateinfo) {
-        this.dateinfo = dateinfo;
+    public void setDateRes(String dateRes) {
+        this.dateRes = dateRes;
     }
 
-    public String getDay() {
-        return day;
+    public long getLongDate() {
+        return longDate;
     }
 
-    public void setDay(String day) {
-        this.day = day;
-    }
-
-    public String getDateMonth() {
-        return dateMonth;
-    }
-
-    public void setDateMonth(String dateMonth) {
-        this.dateMonth = dateMonth;
-    }
-
-    public long getDatetime() {
-        return datetime;
-    }
-
-    public void setDatetime(long datetime) {
-        this.datetime = datetime;
+    public void setLongDate(long longDate) {
+        this.longDate = longDate;
     }
 
     public String getName() {

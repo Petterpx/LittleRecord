@@ -9,7 +9,7 @@
     </style>
     <style name="SplashTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/app_laucher</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>

@@ -11,6 +11,8 @@ import androidx.appcompat.widget.ContentFrameLayout;
 import com.petterp.latte_core.R;
 import com.petterp.latte_core.delegates.LatteDelegate;
 
+import org.greenrobot.eventbus.EventBus;
+
 import me.yokeyword.fragmentation.ExtraTransaction;
 import me.yokeyword.fragmentation.ISupportActivity;
 import me.yokeyword.fragmentation.SupportActivityDelegate;
@@ -50,6 +52,7 @@ public abstract class ProxyActivity extends AppCompatActivity implements ISuppor
         //优化内存
         System.gc();
         System.runFinalization();
+
     }
 
     @Override

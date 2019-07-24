@@ -8,6 +8,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_ec.icon.FontEcModule;
 
+import org.greenrobot.eventbus.EventBus;
 import org.litepal.LitePal;
 
 

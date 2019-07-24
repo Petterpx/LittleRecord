@@ -2,7 +2,7 @@
 <resources>
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+        <item name="windowNoTitle">false</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
     <style name="TabLayoutTextStyle">

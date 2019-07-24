@@ -1,0 +1,145 @@
+package com.petterp.latte_ec.view.home;
+
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_ec.R;
+import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.MessageItems;
+import com.petterp.latte_ec.model.home.IHomeTitleFields;
+import com.petterp.latte_ec.presenter.HomePresenter;
+import com.petterp.latte_ec.view.add.AddDelegate;
+import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
+
+import butterknife.BindView;
+
+/**
+ * 首页delegate
+ *
+ * @author by Petterp
+ * @date 2019-07-23
+ */
+public class HomeDelegate extends LatteDelegate implements IHomeView {
+
+    @BindView(R2.id.index_bar)
+    Toolbar toolbar = null;
+    @BindView(R2.id.fb_index_top)
+    FloatingActionButton floatingActionButton = null;
+    @BindView(R2.id.rv_index_list)
+    RecyclerView recyclerView = null;
+    @BindView(R2.id.tv_index_tob_surplus)
+    AppCompatTextView tvSurplus = null;
+    @BindView(R2.id.tv_index_tob_consume)
+    AppCompatTextView tvConsume = null;
+    @BindView(R2.id.tv_index_tob_income)
+    AppCompatTextView tvIncome = null;
+
+    //控制层
+    private HomePresenter mPresenter;
+    private HomeAdapter homeAdapter;
+
+    @Override
+    public Object setLayout() {
+        return R.layout.delegate_index;
+    }
+
+
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+        //建立连接
+        mPresenter = new HomePresenter(this);
+        //初始化view
+        mPresenter.showInfo();
+        //注册EvenBus
+        EventBus.getDefault().register(this);
+    }
+
+
+    @Override
+    public void setTitleinfo(HashMap<IHomeTitleFields, String> map) {
+        tvConsume.setText(map.get(IHomeTitleFields.CONSUME));
+        tvIncome.setText(map.get(IHomeTitleFields.INCOME));
+        tvSurplus.setText(map.get(IHomeTitleFields.SUR_PLUS));
+    }
+
+    @Override
+    public void showRv(List<MultipleItemEntity> list) {
+        homeAdapter = new HomeAdapter(list);
+        View view = View.inflate(getContext(), R.layout.arrow_rv_foot_view, null);
+        //添加尾部
+        homeAdapter.addFooterView(view);
+        recyclerView.setAdapter(homeAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //设置Rv分割线
+        RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
+                .color(Color.parseColor("#F0F1F2"))
+                .size(2)
+                .build().addTo(recyclerView);
+        //Rv滑动监听
+        recyclerView.addOnScrollListener(new HomeRvoScrollListener(mPresenter));
+        //Rv点击事件
+        recyclerView.addOnItemTouchListener(new IndexItemClickListener(getContext()));
+    }
+
+
+    @Override
+    public void updateRv() {
+        homeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void hideFloatButton() {
+        floatingActionButton.hide();
+    }
+
+    @Override
+    public void showFloatButton() {
+        floatingActionButton.show();
+    }
+
+    @Override
+    public void FloatButtonListener() {
+        floatingActionButton.setOnClickListener(view -> {
+            //启动AddDelegate，并传入home控制层
+            getSupportDelegate().start(new AddDelegate());
+        });
+    }
+
+
+    @Override
+    public View getToolbar() {
+        return toolbar;
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getKeyInfo(MessageItems messageItems){
+        mPresenter.addModel(messageItems.getItemEntity());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //解除EvenBus绑定
+        EventBus.getDefault().unregister(this);
+    }
+}

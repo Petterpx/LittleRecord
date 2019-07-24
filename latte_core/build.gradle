@@ -87,4 +87,7 @@ dependencies {
 
     //网络请求加AvLoader
     api 'com.github.Petterpx:RxRetifoitUtils:v1.4'
+
+    //EvenBus
+    api 'org.greenrobot:eventbus:3.1.1'
 }
