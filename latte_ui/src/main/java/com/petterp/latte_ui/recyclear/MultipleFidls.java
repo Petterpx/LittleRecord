@@ -17,5 +17,6 @@ public enum  MultipleFidls {
     SPAN_SIZE,
     ID,
     NAME,
-    TAG
+    TAG,
+    Color
 }

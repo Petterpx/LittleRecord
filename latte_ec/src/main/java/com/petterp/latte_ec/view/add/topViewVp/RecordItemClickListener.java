@@ -9,19 +9,14 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.joanzapata.iconify.widget.IconTextView;
+import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_ec.R;
-import com.petterp.latte_ec.main.index.add.Ikind;
-import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 public class RecordItemClickListener extends SimpleClickListener {
     public int mode = 0;
-    private AddPresenter mPresenter;
 
-    public RecordItemClickListener(AddPresenter mPresenter) {
-        this.mPresenter = mPresenter;
-    }
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -34,7 +29,7 @@ public class RecordItemClickListener extends SimpleClickListener {
         iconTextView.setTextColor(Color.WHITE);
         textView.setTextColor(Color.parseColor("#ff0099cc"));
         mode = position;
-        mPresenter.setTitleRvKind(entity.getField(MultipleFidls.NAME));
+        CallbackManager.getInstance().getCallback(RecordCallbackFields.ADD_RV_KIND).executeCallback(entity.getField(MultipleFidls.NAME));
     }
 
     @Override

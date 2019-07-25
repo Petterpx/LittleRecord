@@ -1,5 +1,6 @@
 package com.petterp.latte_ec.view.add;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -18,14 +19,20 @@ import androidx.viewpager.widget.ViewPager;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_core.util.callback.IGlobalCallback;
+import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
-import com.petterp.latte_ec.main.index.add.BootomCompile.CompileListAdapter;
-import com.petterp.latte_ec.main.index.add.TopViewPager.RecordPagerAdapter;
 import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileItemClcikList;
+import com.petterp.latte_ec.view.add.BootomCompile.CompileListAdapter;
+import com.petterp.latte_ec.view.add.topViewVp.RecordCallbackFields;
 import com.petterp.latte_ec.view.add.topViewVp.RecordFragment;
 import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
+import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +44,7 @@ import butterknife.BindView;
  * @author by Petterp
  * @date 2019-07-24
  */
-public class AddDelegate extends LatteDelegate implements IAddView {
+public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallback<String> {
 
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
@@ -54,6 +61,7 @@ public class AddDelegate extends LatteDelegate implements IAddView {
     @BindView(R2.id.tv_add_compile_money)
     AppCompatTextView tvMoney = null;
     private AddPresenter mPresenter;
+    private CompileListAdapter adapter;
 
     @Override
     public Object setLayout() {
@@ -67,6 +75,23 @@ public class AddDelegate extends LatteDelegate implements IAddView {
         mPresenter = new AddPresenter(this);
         //初始化View
         mPresenter.showInfo();
+        //处理键盘冲突
+        initEditKey();
+    }
+
+    private void initEditKey() {
+        //处理键盘弹出冲突
+        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
+            @Override
+            public void keyBoardShow(int height) {
+                layoutCompat.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void keyBoardHide(int height) {
+                layoutCompat.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -84,15 +109,17 @@ public class AddDelegate extends LatteDelegate implements IAddView {
         //关联Tablayout
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new RecordOnPageChangeListener(mPresenter));
+        //注册CallBack
+        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);
     }
 
     @Override
     public void bottomKeyInfo() {
-        CompileListAdapter adapter = new CompileListAdapter(mPresenter.getkeyRvList());
+        adapter = new CompileListAdapter(mPresenter.getkeyRvList());
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnItemTouchListener(new CompileItemClcikList(mPresenter,getParentDelegate()));
+        recyclerView.addOnItemTouchListener(new CompileItemClcikList(mPresenter, this));
         //设置Rv分割线
         RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
                 .color(Color.parseColor("#F0F1F2"))
@@ -110,10 +137,36 @@ public class AddDelegate extends LatteDelegate implements IAddView {
         return Objects.requireNonNull(editText.getText()).toString();
     }
 
+    @Override
+    public void updateKeyColor(boolean mode) {
+        adapter.notifyItemChanged(15);
+        if (mode) {
+            tvMoney.setTextColor(Color.parseColor("#F93A30"));
+        } else {
+            tvMoney.setTextColor(Color.parseColor("#06F985"));
+        }
+    }
+
 
     @Override
     public Toolbar getToolbar() {
         return toolbar;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //解除EvenBus绑定
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * TopRv 点击的kind
+     *
+     * @param kind
+     */
+    @Override
+    public void executeCallback(@Nullable String kind) {
+        mPresenter.setTitleRvKind(kind);
+    }
 }

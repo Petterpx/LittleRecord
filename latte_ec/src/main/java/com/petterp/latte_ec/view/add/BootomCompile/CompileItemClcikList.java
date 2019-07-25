@@ -1,15 +1,16 @@
 package com.petterp.latte_ec.view.add.BootomCompile;
 
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.time.SystemClock;
-import com.petterp.latte_ec.main.index.IndexItemType;
 import com.petterp.latte_ec.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.presenter.AddPresenter;
+import com.petterp.latte_ec.view.home.HomeItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -198,13 +199,14 @@ public class CompileItemClcikList extends SimpleClickListener {
             }
             double money = Double.parseDouble(res);
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
-                    .setItemType(IndexItemType.INDEX_DETAIL_LIST)
+                    .setItemType(HomeItemType.HOME_DETAIL_LIST)
                     .setField(IHomeRvFields.CATEGORY, mPresenter.getTitleMode())
-                    .setField(MultipleFidls.NAME,mPresenter.getTitleRvKind())
                     .setField(IHomeRvFields.CONSUME_I, money)
+                    .setField(IHomeRvFields.KIND,mPresenter.getTitleRvKind())
                     .setField(IHomeRvFields.REMARK,mPresenter.getRemarkInfo())
                     .setField(IHomeRvFields.LONG_TIME, SystemClock.now())
                     .build();
+            Log.e("demo","---------"+mPresenter.getTitleRvKind());
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));
 //            mPresenter.setBootomKey(TEXT_BUILDER.toString());

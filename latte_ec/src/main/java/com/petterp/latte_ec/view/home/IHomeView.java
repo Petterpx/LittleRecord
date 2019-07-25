@@ -1,6 +1,6 @@
 package com.petterp.latte_ec.view.home;
 
-import com.petterp.latte_ec.model.home.IHomeTitleFields;
+import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ public interface IHomeView {
     /**
      * 设置内部内容
      */
-    void setTitleinfo(HashMap<IHomeTitleFields,String> map);
+    void setTitleinfo(HashMap<IHomeRvFields,String> map);
 
 
     /**
@@ -34,11 +34,4 @@ public interface IHomeView {
      */
     void updateRv();
 
-
-    /**
-     *floatButton点击事件
-     */
-    void hideFloatButton();
-
-    void showFloatButton();
 }

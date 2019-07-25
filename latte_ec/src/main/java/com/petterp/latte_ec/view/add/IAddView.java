@@ -28,4 +28,9 @@ public interface IAddView {
      */
     String getEditRemark();
 
+    /**
+     *动态刷新Key-颜色
+     */
+    void updateKeyColor(boolean mode);
+
 }

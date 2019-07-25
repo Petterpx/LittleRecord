@@ -46,47 +46,58 @@ public class AddPresenter {
     public List<MultipleItemEntity> getIncomeRvList() {
         return model.getIncomeRvList();
     }
-    public List<MultipleItemEntity> getkeyRvList(){
+
+    public List<MultipleItemEntity> getkeyRvList() {
         return model.getKeyRvList();
     }
 
     /**
      * 获取备注信息
      */
-    public String getRemarkInfo(){
+    public String getRemarkInfo() {
         if (mView != null) {
-           return mView.getEditRemark();
+            return mView.getEditRemark();
         }
         return null;
     }
 
     /**
      * 设置当前支出还是收入
+     *
      * @param mode
      */
-    public void setTitleMode(String mode){
+    public void setTitleMode(String mode) {
         model.setTitleMode(mode);
     }
 
     /**
      * 实时更新当前键盘值
+     *
      * @param res
      */
-    public void setBootomKey(String res){
+    public void setBootomKey(String res) {
         if (mView != null) {
             mView.setKeyRes(res);
         }
     }
 
-    public String getTitleMode(){
-       return model.getTitleMode();
+    public String getTitleMode() {
+        return model.getTitleMode();
     }
 
-    public void setTitleRvKind(String kind){
+    public void setTitleRvKind(String kind) {
         model.setTitleRvKind(kind);
     }
 
-    public String getTitleRvKind(){
+    public String getTitleRvKind() {
         return model.getTitleRvKind();
+    }
+
+    public void setKeyRvSaveColor(boolean mode) {
+        //更改颜色
+        model.setKeyRvSaveColor(mode);
+        if (mView != null) {
+            mView.updateKeyColor(mode);
+        }
     }
 }

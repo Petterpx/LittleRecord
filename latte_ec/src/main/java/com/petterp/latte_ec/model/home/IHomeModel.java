@@ -30,6 +30,6 @@ public interface IHomeModel {
      * 获取Titlebar数据
      * @return
      */
-    HashMap<IHomeTitleFields,String> getTitleInfo();
+    HashMap<IHomeRvFields,String> getTitleInfo();
     
 }

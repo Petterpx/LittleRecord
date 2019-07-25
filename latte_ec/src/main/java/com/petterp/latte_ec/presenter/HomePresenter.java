@@ -1,8 +1,10 @@
 package com.petterp.latte_ec.presenter;
 
+import android.util.Log;
+
 import com.petterp.latte_ec.model.home.IHomeImpl;
 import com.petterp.latte_ec.model.home.IHomeModel;
-import com.petterp.latte_ec.model.home.IHomeTitleFields;
+import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.view.home.IHomeView;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -41,7 +43,7 @@ public class HomePresenter {
         }
     }
 
-    private HashMap<IHomeTitleFields,String> getTitleinfo(){
+    private HashMap<IHomeRvFields,String> getTitleinfo(){
         return iModel.getTitleInfo();
     }
 
@@ -65,21 +67,6 @@ public class HomePresenter {
         }
     }
 
-
-    public void showFlootButton(){
-        if (iView != null) {
-            iView.showFloatButton();
-        }
-    }
-
-    /**
-     * 隐藏flootbutton
-     */
-    public void hideFlootButton(){
-        if (iView != null) {
-            iView.hideFloatButton();
-        }
-    }
 
 
     //更新Rv内容

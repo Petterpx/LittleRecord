@@ -6,6 +6,7 @@ import com.petterp.latte_ec.model.add.IAddTitleItems;
 import com.petterp.latte_ec.presenter.AddPresenter;
 
 /**
+ * 监听Top ViewPager滑动
  * @author by Petterp
  * @date 2019-07-24
  */
@@ -26,8 +27,10 @@ public class RecordOnPageChangeListener implements ViewPager.OnPageChangeListene
     public void onPageSelected(int position) {
         if (position == 0) {
             mPresenter.setTitleMode(IAddTitleItems.CONSUME_ITEMS);
+            mPresenter.setKeyRvSaveColor(true);
         } else {
             mPresenter.setTitleMode(IAddTitleItems.INCOME_ITEMS);
+            mPresenter.setKeyRvSaveColor(false);
         }
     }
 

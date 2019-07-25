@@ -1,23 +1,30 @@
 package com.petterp.latte_ec.view.home;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.MessageItems;
-import com.petterp.latte_ec.model.home.IHomeTitleFields;
+import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.presenter.HomePresenter;
 import com.petterp.latte_ec.view.add.AddDelegate;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
@@ -31,6 +38,7 @@ import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 首页delegate
@@ -38,7 +46,7 @@ import butterknife.BindView;
  * @author by Petterp
  * @date 2019-07-23
  */
-public class HomeDelegate extends LatteDelegate implements IHomeView {
+public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrListener, IHomeRvListener {
 
     @BindView(R2.id.index_bar)
     Toolbar toolbar = null;
@@ -52,6 +60,20 @@ public class HomeDelegate extends LatteDelegate implements IHomeView {
     AppCompatTextView tvConsume = null;
     @BindView(R2.id.tv_index_tob_income)
     AppCompatTextView tvIncome = null;
+    @BindView(R2.id.drawer_layout)
+    DrawerLayout drawerLayout = null;
+    @BindView(R2.id.cord_layout)
+    CoordinatorLayout right = null;
+    @BindView(R2.id.tv_layout)
+    TextView left = null;
+    @BindView(R2.id.ic_toolbar_data_home)
+    IconTextView dataTooblar;
+
+    @SuppressLint("WrongConstant")
+    @OnClick(R2.id.ic_toolbar_drawer_home)
+    void startDrawer() {
+        drawerLayout.openDrawer(Gravity.START);
+    }
 
     //控制层
     private HomePresenter mPresenter;
@@ -69,16 +91,18 @@ public class HomeDelegate extends LatteDelegate implements IHomeView {
         mPresenter = new HomePresenter(this);
         //初始化view
         mPresenter.showInfo();
+        //侧滑监听
+        drawerLayout.addDrawerListener(new HomeDrawerListener(getProxyActivity(), this));
         //注册EvenBus
         EventBus.getDefault().register(this);
     }
 
 
     @Override
-    public void setTitleinfo(HashMap<IHomeTitleFields, String> map) {
-        tvConsume.setText(map.get(IHomeTitleFields.CONSUME));
-        tvIncome.setText(map.get(IHomeTitleFields.INCOME));
-        tvSurplus.setText(map.get(IHomeTitleFields.SUR_PLUS));
+    public void setTitleinfo(HashMap<IHomeRvFields, String> map) {
+        tvConsume.setText(map.get(IHomeRvFields.CONSUME));
+        tvIncome.setText(map.get(IHomeRvFields.INCOME));
+        tvSurplus.setText(map.get(IHomeRvFields.SUR_PLUS));
     }
 
     @Override
@@ -95,9 +119,9 @@ public class HomeDelegate extends LatteDelegate implements IHomeView {
                 .size(2)
                 .build().addTo(recyclerView);
         //Rv滑动监听
-        recyclerView.addOnScrollListener(new HomeRvoScrollListener(mPresenter));
+        recyclerView.addOnScrollListener(new HomeRvoScrollListener(this));
         //Rv点击事件
-        recyclerView.addOnItemTouchListener(new IndexItemClickListener(getContext()));
+//        recyclerView.addOnItemTouchListener(new IndexItemClickListener(getContext()));
     }
 
 
@@ -106,20 +130,16 @@ public class HomeDelegate extends LatteDelegate implements IHomeView {
         homeAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void hideFloatButton() {
-        floatingActionButton.hide();
-    }
 
     @Override
-    public void showFloatButton() {
-        floatingActionButton.show();
+    public void setHomeOffset(int r, int b) {
+        right.layout(left.getRight(), 0, left.getRight() + r, b);
     }
 
     @Override
     public void FloatButtonListener() {
         floatingActionButton.setOnClickListener(view -> {
-            //启动AddDelegate，并传入home控制层
+            //启动AddDelegate
             getSupportDelegate().start(new AddDelegate());
         });
     }
@@ -132,14 +152,27 @@ public class HomeDelegate extends LatteDelegate implements IHomeView {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKeyInfo(MessageItems messageItems){
+    public void getKeyInfo(MessageItems messageItems) {
         mPresenter.addModel(messageItems.getItemEntity());
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //解除EvenBus绑定
-        EventBus.getDefault().unregister(this);
+    public void showFlootButton() {
+        floatingActionButton.show();
+    }
+
+    @Override
+    public void hideFlootButton() {
+        floatingActionButton.hide();
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        boolean mode=super.onBackPressedSupport();
+        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+            drawerLayout.closeDrawer(Gravity.LEFT);
+            return true;
+        }
+        return mode;
     }
 }

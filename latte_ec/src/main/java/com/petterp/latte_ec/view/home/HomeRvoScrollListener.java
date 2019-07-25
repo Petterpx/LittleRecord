@@ -11,20 +11,21 @@ import com.petterp.latte_ec.presenter.HomePresenter;
  * @date 2019-07-24
  */
 public class HomeRvoScrollListener extends RecyclerView.OnScrollListener {
-    private HomePresenter homePresenter;
 
-    HomeRvoScrollListener(HomePresenter homePresenter) {
-        this.homePresenter = homePresenter;
+    private IHomeRvListener iHomeRvListener;
+
+    public HomeRvoScrollListener(IHomeRvListener iHomeRvListener) {
+        this.iHomeRvListener = iHomeRvListener;
     }
 
     @Override
     public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
         if (dy > 0) {
-            homePresenter.showFlootButton();
+            iHomeRvListener.hideFlootButton();
         }
         if (dy < 0) {
-            homePresenter.hideFlootButton();
+            iHomeRvListener.showFlootButton();
         }
     }
 }

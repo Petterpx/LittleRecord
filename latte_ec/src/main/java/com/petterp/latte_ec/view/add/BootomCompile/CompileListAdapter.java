@@ -36,8 +36,12 @@ public class CompileListAdapter extends MultipleRecyclearAdapter {
                 IconTextView icon = holder.getView(R.id.ic_add_compile_list);
                 String iconVal = entity.getField(MultipleFidls.NAME);
                 icon.setText(iconVal);
-                if (iconVal.equals("保存")){
-                    icon.setBackgroundColor(Color.parseColor("#F93A30"));
+                if (iconVal.equals("保存")) {
+                    if (entity.getField(MultipleFidls.TAG)) {
+                        icon.setBackgroundColor(Color.parseColor("#F93A30"));
+                    }else{
+                        icon.setBackgroundColor(Color.parseColor("#06F985"));
+                    }
                     icon.setTextColor(Color.WHITE);
                 }
                 break;

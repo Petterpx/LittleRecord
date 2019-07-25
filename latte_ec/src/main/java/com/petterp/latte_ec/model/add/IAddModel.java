@@ -1,5 +1,7 @@
 package com.petterp.latte_ec.model.add;
 
+import android.graphics.Color;
+
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import java.util.List;
@@ -71,4 +73,11 @@ public interface IAddModel {
      * @return
      */
     String getTitleRvKind();
+
+
+    /**
+     * 设置保存按钮颜色
+     * @param mode
+     */
+    void setKeyRvSaveColor(boolean mode);
 }

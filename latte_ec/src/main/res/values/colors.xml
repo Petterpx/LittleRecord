@@ -10,4 +10,6 @@
     <color name="index_add_text_color">#757575</color>
     <color name="index_add_icon_color">@android:color/holo_blue_dark</color>
     <color name="app_back">#F1F1F1</color>
+    <color name="add_key_color_consume">#F93A30</color>
+    <color name="add_key_color_income">#06F985</color>
 </resources>

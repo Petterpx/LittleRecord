@@ -1,6 +1,8 @@
 package com.petterp.latte_ec.model.add;
 
-import com.petterp.latte_ec.main.index.add.BootomCompile.CompileListItemType;
+import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.view.add.BootomCompile.CompileListItemType;
+import com.petterp.latte_ec.view.add.topViewVp.RecordListItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -13,15 +15,37 @@ import java.util.List;
  */
 public class IAddImpl implements IAddModel {
     private String mode = IAddTitleItems.CONSUME_ITEMS;
-    private String titleRvKind="三餐";
+    private String titleRvKind = "三餐";
+    private List<MultipleItemEntity> list;
+
     @Override
     public List<MultipleItemEntity> getConsumeRvList() {
-        return null;
+        List<MultipleItemEntity> itemEntities = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            MultipleItemEntity itemEntity = MultipleItemEntity.builder()
+                    .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
+                    .setField(MultipleFidls.NAME, "{icon-award}")
+                    .setField(IHomeRvFields.KIND, "三餐")
+                    .setField(MultipleFidls.ID, "" + i)
+                    .build();
+            itemEntities.add(itemEntity);
+        }
+        return itemEntities;
     }
 
     @Override
     public List<MultipleItemEntity> getIncomeRvList() {
-        return null;
+        List<MultipleItemEntity> itemEntities = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            MultipleItemEntity itemEntity = MultipleItemEntity.builder()
+                    .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
+                    .setField(MultipleFidls.NAME, "{icon-award}")
+                    .setField(IHomeRvFields.KIND, "三餐")
+                    .setField(MultipleFidls.ID, "" + i)
+                    .build();
+            itemEntities.add(itemEntity);
+        }
+        return itemEntities;
     }
 
     @Override
@@ -32,12 +56,13 @@ public class IAddImpl implements IAddModel {
                 "7", "8", "9", "再记",
                 "+", "0", ".", "保存"
         };
-        List<MultipleItemEntity> list = new ArrayList<>();
+        list = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(CompileListItemType.ITEM_COMPILE)
                     .setField(MultipleFidls.NAME, values[i])
                     .setField(MultipleFidls.ID, i)
+                    .setField(MultipleFidls.TAG, true)
                     .build();
             list.add(itemEntity);
         }
@@ -66,7 +91,7 @@ public class IAddImpl implements IAddModel {
 
     @Override
     public void setTitleMode(String mode) {
-        this.mode=mode;
+        this.mode = mode;
     }
 
     @Override
@@ -76,12 +101,17 @@ public class IAddImpl implements IAddModel {
 
     @Override
     public void setTitleRvKind(String kind) {
-        this.titleRvKind=kind;
+        this.titleRvKind = kind;
     }
 
     @Override
     public String getTitleRvKind() {
         return titleRvKind;
+    }
+
+    @Override
+    public void setKeyRvSaveColor(boolean mode) {
+        list.get(15).setFild(MultipleFidls.TAG, mode);
     }
 
 }
