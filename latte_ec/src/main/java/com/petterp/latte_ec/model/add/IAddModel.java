@@ -64,15 +64,15 @@ public interface IAddModel {
 
     /**
      * 设置Top Rv所选条目种类
-     * @param kind
+     * @param
      */
-    void setTitleRvKind(String kind);
+    void setTitleRvKind(String[] kind);
 
     /**
      * 返回Top Rv所选条目种类
      * @return
      */
-    String getTitleRvKind();
+    String[] getTitleRvKind();
 
 
     /**

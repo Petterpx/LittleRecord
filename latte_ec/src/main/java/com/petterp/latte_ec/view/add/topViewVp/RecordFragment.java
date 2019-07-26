@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.petterp.latte_core.util.callback.CallbackManager;
-import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;

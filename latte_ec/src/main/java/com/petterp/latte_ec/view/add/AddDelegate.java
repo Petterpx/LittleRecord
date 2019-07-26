@@ -44,7 +44,7 @@ import butterknife.BindView;
  * @author by Petterp
  * @date 2019-07-24
  */
-public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallback<String> {
+public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallback<String[]> {
 
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
@@ -160,13 +160,14 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
         EventBus.getDefault().unregister(this);
     }
 
+
     /**
      * TopRv 点击的kind
      *
-     * @param kind
+     * @param
      */
     @Override
-    public void executeCallback(@Nullable String kind) {
-        mPresenter.setTitleRvKind(kind);
+    public void executeCallback(@Nullable String[] args) {
+        mPresenter.setTitleRvKind(args);
     }
 }

@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class IAddImpl implements IAddModel {
     private String mode = IAddTitleItems.CONSUME_ITEMS;
-    private String titleRvKind = "三餐";
     private List<MultipleItemEntity> list;
+    private String[] kind = {"{icon-kind}", "三餐"};
 
     @Override
     public List<MultipleItemEntity> getConsumeRvList() {
@@ -100,13 +100,13 @@ public class IAddImpl implements IAddModel {
     }
 
     @Override
-    public void setTitleRvKind(String kind) {
-        this.titleRvKind = kind;
+    public void setTitleRvKind(String[] kind) {
+        this.kind = kind;
     }
 
     @Override
-    public String getTitleRvKind() {
-        return titleRvKind;
+    public String[] getTitleRvKind() {
+        return kind;
     }
 
     @Override

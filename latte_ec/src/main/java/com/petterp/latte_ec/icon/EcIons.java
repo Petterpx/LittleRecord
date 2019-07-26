@@ -7,11 +7,11 @@ import com.joanzapata.iconify.Icon;
  * Summary:引用第三方字体
  */
 public enum EcIons implements Icon {
-    icon_scan('\ue618'),
-    icon_news('\ue717'),
-    icon_ali_pay('\ue65f'),
-    icon_back('\ue63b'),
-    icon_award('\ue8bc');
+    icon_kind('\ue622'),
+    icon_delete('\ue627'),
+    icon_money('\ue658'),
+    icon_time('\ue603'),
+    icon_update('\ue71b');
     private char character;
 
     EcIons(char character) {

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_rv_index_circle"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
+
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/ic_dia_header_update"
+        android:textColor="@android:color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="{icon-update}"
+        android:textSize="25sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_centerInParent="true"
+        android:text="@string/dia_home_rv_header"
+        android:textSize="20sp" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/ic_dia_header_delete"
+        android:layout_width="wrap_content"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="{icon-delete}"
+        android:textSize="23sp" />
+
+</RelativeLayout>

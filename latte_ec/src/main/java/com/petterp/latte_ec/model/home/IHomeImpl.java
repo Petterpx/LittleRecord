@@ -92,6 +92,7 @@ public class IHomeImpl implements IHomeModel {
                         .setField(IHomeRvFields.CATEGORY, billInfos.get(j).getCategory())
                         .setField(IHomeRvFields.KIND, billInfos.get(j).getKind())
                         .setField(IHomeRvFields.CONSUME_I, billInfos.get(j).getMoney())
+                        .setField(IHomeRvFields.LONG_TIME,billInfos.get(j).getLongDate())
                         .build();
                 //添加具体item
                 itemEntities.add(itemEntity);

@@ -57,6 +57,7 @@
                             android:text="{fa-pie-chart}"
                             android:layout_width="wrap_content"
                             android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp_10"
                             android:layout_centerVertical="true"
                             android:textColor="@android:color/white"
                             android:layout_height="wrap_content"

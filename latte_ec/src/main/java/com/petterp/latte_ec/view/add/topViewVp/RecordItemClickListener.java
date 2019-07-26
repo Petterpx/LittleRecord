@@ -11,6 +11,7 @@ import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_ec.R;
+import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -29,7 +30,9 @@ public class RecordItemClickListener extends SimpleClickListener {
         iconTextView.setTextColor(Color.WHITE);
         textView.setTextColor(Color.parseColor("#ff0099cc"));
         mode = position;
-        CallbackManager.getInstance().getCallback(RecordCallbackFields.ADD_RV_KIND).executeCallback(entity.getField(MultipleFidls.NAME));
+        CallbackManager.getInstance()
+                .getCallback(RecordCallbackFields.ADD_RV_KIND)
+                .executeCallback(new String[]{entity.getField(MultipleFidls.NAME),entity.getField(IHomeRvFields.KIND)});
     }
 
     @Override

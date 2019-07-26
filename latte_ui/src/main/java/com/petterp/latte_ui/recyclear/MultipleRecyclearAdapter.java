@@ -47,7 +47,7 @@ public class MultipleRecyclearAdapter extends
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    protected MultipleRecyclearAdapter(List<MultipleItemEntity> data) {
+    public MultipleRecyclearAdapter(List<MultipleItemEntity> data) {
         super(data);
         init();
     }

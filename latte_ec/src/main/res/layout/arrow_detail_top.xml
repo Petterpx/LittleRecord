@@ -8,6 +8,7 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10"
     android:paddingStart="@dimen/dp_10"
     tools:ignore="RtlSymmetry">
 

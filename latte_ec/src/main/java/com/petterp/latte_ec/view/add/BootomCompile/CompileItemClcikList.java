@@ -198,15 +198,16 @@ public class CompileItemClcikList extends SimpleClickListener {
                 }
             }
             double money = Double.parseDouble(res);
+            String[] kindRes=mPresenter.getTitleRvKind();
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(HomeItemType.HOME_DETAIL_LIST)
                     .setField(IHomeRvFields.CATEGORY, mPresenter.getTitleMode())
                     .setField(IHomeRvFields.CONSUME_I, money)
-                    .setField(IHomeRvFields.KIND,mPresenter.getTitleRvKind())
-                    .setField(IHomeRvFields.REMARK,mPresenter.getRemarkInfo())
+                    .setField(MultipleFidls.NAME,kindRes[0])
+                    .setField(IHomeRvFields.KIND, kindRes[1])
+                    .setField(IHomeRvFields.REMARK, mPresenter.getRemarkInfo())
                     .setField(IHomeRvFields.LONG_TIME, SystemClock.now())
                     .build();
-            Log.e("demo","---------"+mPresenter.getTitleRvKind());
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));
 //            mPresenter.setBootomKey(TEXT_BUILDER.toString());

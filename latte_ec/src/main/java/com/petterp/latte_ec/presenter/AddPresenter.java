@@ -85,11 +85,11 @@ public class AddPresenter {
         return model.getTitleMode();
     }
 
-    public void setTitleRvKind(String kind) {
+    public void setTitleRvKind(String[] kind) {
         model.setTitleRvKind(kind);
     }
 
-    public String getTitleRvKind() {
+    public String[] getTitleRvKind() {
         return model.getTitleRvKind();
     }
 

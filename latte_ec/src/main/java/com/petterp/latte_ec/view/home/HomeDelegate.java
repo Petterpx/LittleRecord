@@ -3,6 +3,7 @@ package com.petterp.latte_ec.view.home;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -121,7 +122,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         //Rv滑动监听
         recyclerView.addOnScrollListener(new HomeRvoScrollListener(this));
         //Rv点击事件
-//        recyclerView.addOnItemTouchListener(new IndexItemClickListener(getContext()));
+        recyclerView.addOnItemTouchListener(new HomeItemClickListener(getContext()));
     }
 
 
