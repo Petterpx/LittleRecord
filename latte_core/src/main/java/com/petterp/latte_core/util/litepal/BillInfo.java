@@ -10,10 +10,10 @@ import org.litepal.crud.LitePalSupport;
  * @date 2019-07-17
  */
 public class BillInfo extends LitePalSupport {
+    //key->对应每日key
+    private String key;
     //插入时间->戳
     private long longDate;
-    //插入时间 年-月-日
-    private String dateRes;
     //相应金额
     private double money;
     //备注
@@ -25,14 +25,25 @@ public class BillInfo extends LitePalSupport {
     //消费还是支出
     private String category;
 
-    public BillInfo(long longDate, String dateRes, double money, String remark, String name, String kind, String category) {
+    public BillInfo(String key, long longDate, double money, String remark, String name, String kind, String category) {
+        this.key = key;
         this.longDate = longDate;
-        this.dateRes = dateRes;
         this.money = money;
         this.remark = remark;
         this.name = name;
         this.kind = kind;
         this.category = category;
+    }
+    public  BillInfo(){
+
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public long getLongDate() {
@@ -41,14 +52,6 @@ public class BillInfo extends LitePalSupport {
 
     public void setLongDate(long longDate) {
         this.longDate = longDate;
-    }
-
-    public String getDateRes() {
-        return dateRes;
-    }
-
-    public void setDateRes(String dateRes) {
-        this.dateRes = dateRes;
     }
 
     public double getMoney() {

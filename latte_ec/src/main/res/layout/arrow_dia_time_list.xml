@@ -16,7 +16,7 @@
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tv_dia_rv_time"
+        android:id="@+id/tv_dia_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

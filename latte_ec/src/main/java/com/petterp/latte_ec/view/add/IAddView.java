@@ -33,4 +33,9 @@ public interface IAddView {
      */
     void updateKeyColor(boolean mode);
 
+    /**
+     * 更新数据
+     */
+    void UpdateRv();
+
 }

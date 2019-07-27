@@ -28,5 +28,9 @@ public enum IHomeRvFields {
     //种类(收入/支出)
     CATEGORY,
     //备注
-    REMARK
+    REMARK,
+    //Rv每个Header所对应的子条目长度
+    HEADER_SUM,
+    //日期Key
+    KEY
 }

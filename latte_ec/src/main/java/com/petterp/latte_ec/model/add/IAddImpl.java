@@ -1,6 +1,10 @@
 package com.petterp.latte_ec.model.add;
 
+import android.os.Bundle;
+
+import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileListItemType;
 import com.petterp.latte_ec.view.add.topViewVp.RecordListItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
@@ -17,6 +21,9 @@ public class IAddImpl implements IAddModel {
     private String mode = IAddTitleItems.CONSUME_ITEMS;
     private List<MultipleItemEntity> list;
     private String[] kind = {"{icon-kind}", "三餐"};
+    //默认状态添加
+    private int state = IHomeStateType.ADD;
+    private IAddBundleFields iAddBundleFields = null;
 
     @Override
     public List<MultipleItemEntity> getConsumeRvList() {
@@ -69,25 +76,6 @@ public class IAddImpl implements IAddModel {
         return list;
     }
 
-    @Override
-    public void queryRvInfo() {
-
-    }
-
-    @Override
-    public String keySave() {
-        return null;
-    }
-
-    @Override
-    public void setRemark(String remark) {
-
-    }
-
-    @Override
-    public String getRemark() {
-        return null;
-    }
 
     @Override
     public void setTitleMode(String mode) {
@@ -112,6 +100,27 @@ public class IAddImpl implements IAddModel {
     @Override
     public void setKeyRvSaveColor(boolean mode) {
         list.get(15).setFild(MultipleFidls.TAG, mode);
+    }
+
+
+    @Override
+    public void setBundle(Bundle bundle) {
+        iAddBundleFields = bundle.getParcelable(IAddBundleType.KEY_UPDATE_LIST);
+        if (iAddBundleFields != null) {
+            state = IHomeStateType.UPDATE;
+            kind = new String[]{iAddBundleFields.getName(), iAddBundleFields.getKind()};
+        }
+    }
+
+    @Override
+    public int getStateMode() {
+        return state;
+    }
+
+
+    @Override
+    public IAddBundleFields getStateUpdate() {
+        return iAddBundleFields;
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * home-控制层
+ *
  * @author by Petterp
  * @date 2019-07-23
  */
@@ -43,10 +44,9 @@ public class HomePresenter {
         }
     }
 
-    private HashMap<IHomeRvFields,String> getTitleinfo(){
+    private HashMap<IHomeRvFields, String> getTitleinfo() {
         return iModel.getTitleInfo();
     }
-
 
 
     //显示首页rv
@@ -61,12 +61,11 @@ public class HomePresenter {
         return iModel.getInfo();
     }
 
-    private void floatButtonListener(){
+    private void floatButtonListener() {
         if (iView != null) {
             iView.FloatButtonListener();
         }
     }
-
 
 
     //更新Rv内容
@@ -78,8 +77,13 @@ public class HomePresenter {
 
 
     //更新Rv数据
-    public void updateModel(MultipleItemEntity itemEntity, int position) {
-        iModel.update(itemEntity, position);
+    public void updateModel(MultipleItemEntity itemEntity) {
+        iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
+        iModel.update(itemEntity);
+        //通知Rv刷新
+        updateRvView();
+        //通知TitleInfo刷新
+        setTitleInfoView();
     }
 
     //删除Rv数据
@@ -89,6 +93,8 @@ public class HomePresenter {
 
     //添加数据
     public void addModel(MultipleItemEntity itemEntity) {
+        //设置key
+        iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
         //model层添加数据
         iModel.add(itemEntity);
         //通知Rv刷新
@@ -97,4 +103,71 @@ public class HomePresenter {
         setTitleInfoView();
     }
 
+    public void addHeaderModel(MultipleItemEntity itemEntity) {
+        //设置key
+        iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
+        //model层添加数据
+        iModel.addHeader(itemEntity);
+        //通知Rv刷新
+        updateRvView();
+        //通知TitleInfo刷新
+        setTitleInfoView();
+    }
+
+    /**
+     * 设置Header 头位置
+     *
+     * @param key
+     */
+    public void setHeaderPosition(String key) {
+        iModel.setHeaderPosition(key);
+    }
+
+    public void setHeaderPosition(int headerPosition) {
+        iModel.setHeaderPosition(headerPosition);
+    }
+
+    /**
+     * 获得Header头位置
+     *
+     * @return
+     */
+    public int getHeaderPosition() {
+        return iModel.getHeaderPosition();
+    }
+
+    /**
+     * 设置手指按下位置
+     *
+     * @param position
+     */
+    public void setOndownPosition(int position) {
+        iModel.setOndownPosition(position);
+    }
+
+
+    public int getStateMode() {
+        return iModel.getStateMode();
+    }
+
+    /**
+     * 设置当前状态
+     *
+     * @param state
+     */
+    public void setStateMode(int state) {
+        iModel.setStateMode(state);
+    }
+
+    public void setAddPosition(int position) {
+        iModel.setAddPosition(position);
+    }
+
+    public void setKey(String key) {
+        iModel.setKey(key);
+    }
+
+    public String getKey() {
+        return iModel.getKey();
+    }
 }

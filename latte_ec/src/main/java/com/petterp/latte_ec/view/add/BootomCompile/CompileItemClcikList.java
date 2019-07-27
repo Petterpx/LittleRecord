@@ -1,6 +1,5 @@
 package com.petterp.latte_ec.view.add.BootomCompile;
 
-import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -35,6 +34,7 @@ public class CompileItemClcikList extends SimpleClickListener {
         this.mPresenter = mPresenter;
         this.delegate = delegate;
         TEXT_BUILDER = new StringBuilder();
+        TEXT_BUILDER.append(mPresenter.getUpdateRvItem().getMoney());
         DECI_FORMAT = new DecimalFormat("0.00");
     }
 
@@ -123,7 +123,7 @@ public class CompileItemClcikList extends SimpleClickListener {
                 TEXT_BUILDER.setLength(0);
                 break;
             case "保存":
-                setSave();
+                addSave();
                 break;
         }
     }
@@ -181,10 +181,11 @@ public class CompileItemClcikList extends SimpleClickListener {
 
     }
 
+
     /**
-     * 保存
+     * 普通添加
      */
-    private void setSave() {
+    private void addSave() {
         String res = TEXT_BUILDER.toString();
         if (!res.equals("")) {
             //如果包含"+"
@@ -198,21 +199,20 @@ public class CompileItemClcikList extends SimpleClickListener {
                 }
             }
             double money = Double.parseDouble(res);
-            String[] kindRes=mPresenter.getTitleRvKind();
+            String[] kindRes = mPresenter.getTitleRvKind();
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(HomeItemType.HOME_DETAIL_LIST)
                     .setField(IHomeRvFields.CATEGORY, mPresenter.getTitleMode())
                     .setField(IHomeRvFields.CONSUME_I, money)
-                    .setField(MultipleFidls.NAME,kindRes[0])
+                    .setField(MultipleFidls.NAME, kindRes[0])
                     .setField(IHomeRvFields.KIND, kindRes[1])
                     .setField(IHomeRvFields.REMARK, mPresenter.getRemarkInfo())
                     .setField(IHomeRvFields.LONG_TIME, SystemClock.now())
+                    .setField(IHomeRvFields.KEY, mPresenter.getkey())
                     .build();
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));
-//            mPresenter.setBootomKey(TEXT_BUILDER.toString());
             TEXT_BUILDER.setLength(0);
-            //退栈
             delegate.getSupportDelegate().pop();
         }
     }

@@ -17,10 +17,11 @@ import java.util.List;
 
 public class RecordListAdapter extends MultipleRecyclearAdapter {
     private boolean mode = true;
-
-    public RecordListAdapter(List<MultipleItemEntity> data) {
+    private String name;
+    public RecordListAdapter(List<MultipleItemEntity> data,String name) {
         super(data);
         addItemType(RecordListItemType.ITEM_CONSUME_LIST, R.layout.item_vp_consume_list);
+        this.name=name;
     }
 
 
@@ -40,7 +41,7 @@ public class RecordListAdapter extends MultipleRecyclearAdapter {
                 kind.setTextColor(R.color.index_add_text_color);
                 icon.setBackgroundResource(R.drawable.item_vp_add_to);
                 if (mode) {
-                    if (entity.getField(MultipleFidls.ID).equals("0")) {
+                    if (entity.getField(IHomeRvFields.KIND).equals(name)) {
                         icon.setTextColor(Color.WHITE);
                         icon.setBackgroundResource(R.drawable.item_vp_add_up);
                         kind.setTextColor(Color.parseColor("#ff0099cc"));

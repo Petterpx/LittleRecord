@@ -1,5 +1,7 @@
 package com.petterp.latte_ec.model.home;
 
+import android.os.Bundle;
+
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import java.util.HashMap;
@@ -18,7 +20,7 @@ public interface IHomeModel {
     void queryInfo();
 
     //修改数据
-    void update(MultipleItemEntity itemEntity,int position);
+    void update(MultipleItemEntity itemEntity);
 
     //删除数据
     void delegate(int position);
@@ -31,5 +33,37 @@ public interface IHomeModel {
      * @return
      */
     HashMap<IHomeRvFields,String> getTitleInfo();
-    
+
+
+    /**
+     * 在Handler上添加
+     * @param itemEntity
+     */
+    void addHeader(MultipleItemEntity itemEntity);
+
+    /**
+     * 设置key
+     * @param key
+     */
+    void setKey(String key);
+
+    String getKey();
+
+    /**
+     * 根据key查找Rv 中相应Header位置
+     * @param key
+     */
+    void setHeaderPosition(String key);
+
+    void setHeaderPosition(int headerPosition);
+
+    int getHeaderPosition();
+
+    void setOndownPosition(int position);
+
+    void setStateMode(int state);
+
+    int getStateMode();
+
+    void setAddPosition(int position);
 }

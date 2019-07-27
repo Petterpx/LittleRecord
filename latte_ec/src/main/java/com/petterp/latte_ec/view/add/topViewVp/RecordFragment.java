@@ -19,14 +19,16 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class RecordFragment extends Fragment{
+public class RecordFragment extends Fragment {
     @BindView(R2.id.rv_add_vp_consume)
     RecyclerView mRecyclerView = null;
     private RecordListAdapter adapter;
     private List<MultipleItemEntity> list;
+    private String name;
 
-    public RecordFragment(List<MultipleItemEntity> list) {
+    public RecordFragment(List<MultipleItemEntity> list, String name) {
         this.list = list;
+        this.name = name;
     }
 
     @Nullable
@@ -34,7 +36,7 @@ public class RecordFragment extends Fragment{
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.arrow_add_vp_consume, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rv_add_vp_consume);
-        adapter = new RecordListAdapter(list);
+        adapter = new RecordListAdapter(list, name);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);

@@ -1,8 +1,8 @@
 package com.petterp.latte_ec.view.add;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -24,6 +24,10 @@ import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.model.add.IAddBundleFields;
+import com.petterp.latte_ec.model.add.IAddBundleType;
+import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
 import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileItemClcikList;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileListAdapter;
@@ -31,6 +35,7 @@ import com.petterp.latte_ec.view.add.topViewVp.RecordCallbackFields;
 import com.petterp.latte_ec.view.add.topViewVp.RecordFragment;
 import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
 import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
+import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -63,21 +68,37 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
     private AddPresenter mPresenter;
     private CompileListAdapter adapter;
 
+
     @Override
     public Object setLayout() {
         return R.layout.delegate_add;
     }
 
+    public static AddDelegate newInstance(IAddBundleFields addBundleFields) {
+        Bundle args = new Bundle();
+        args.putParcelable(IAddBundleType.KEY_UPDATE_LIST, addBundleFields);
+        AddDelegate fragment = new AddDelegate();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static AddDelegate newInstance() {
+        Bundle args = new Bundle();
+        AddDelegate fragment = new AddDelegate();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         //建立连接
         mPresenter = new AddPresenter(this);
         //初始化View
-        mPresenter.showInfo();
+        mPresenter.showInfo(getArguments());
         //处理键盘冲突
         initEditKey();
     }
+
 
     private void initEditKey() {
         //处理键盘弹出冲突
@@ -96,8 +117,8 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
 
     @Override
     public void topViewPagerInfo() {
-        RecordFragment consumeFragment = new RecordFragment(mPresenter.getConsumeRvList());
-        RecordFragment incomeFragment = new RecordFragment(mPresenter.getIncomeRvList());
+        RecordFragment consumeFragment = new RecordFragment(mPresenter.getConsumeRvList(), mPresenter.getTitleRvKind()[1]);
+        RecordFragment incomeFragment = new RecordFragment(mPresenter.getIncomeRvList(), mPresenter.getTitleRvKind()[1]);
         String[] sums = {"支出", "收入"};
         List<Fragment> list = new ArrayList<>();
         list.add(consumeFragment);
@@ -147,6 +168,19 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
         }
     }
 
+    @Override
+    public void UpdateRv() {
+        IAddBundleFields fields = mPresenter.getUpdateRvItem();
+        editText.setText(fields.getRemark());
+        String money = "" + fields.getMoney();
+        tvMoney.setText(money);
+        if (fields.getCargoy().equals(IHomeTitleRvItems.CONSUME)) {
+            viewPager.setCurrentItem(0);
+        } else {
+            viewPager.setCurrentItem(1);
+        }
+    }
+
 
     @Override
     public Toolbar getToolbar() {
@@ -170,4 +204,5 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
     public void executeCallback(@Nullable String[] args) {
         mPresenter.setTitleRvKind(args);
     }
+
 }

@@ -3,11 +3,9 @@ package com.petterp.latte_ec.view.home;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,10 +20,12 @@ import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.presenter.HomePresenter;
 import com.petterp.latte_ec.view.add.AddDelegate;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
@@ -122,7 +122,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         //Rv滑动监听
         recyclerView.addOnScrollListener(new HomeRvoScrollListener(this));
         //Rv点击事件
-        recyclerView.addOnItemTouchListener(new HomeItemClickListener(getContext()));
+        recyclerView.addOnItemTouchListener(new HomeItemClickListener(this,mPresenter));
     }
 
 
@@ -140,8 +140,10 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
     @Override
     public void FloatButtonListener() {
         floatingActionButton.setOnClickListener(view -> {
+            mPresenter.setKey(TimeUtils.build().getLongTimekey());
+            mPresenter.setStateMode(IHomeStateType.ADD);
             //启动AddDelegate
-            getSupportDelegate().start(new AddDelegate());
+            getSupportDelegate().start(AddDelegate.newInstance());
         });
     }
 
@@ -153,9 +155,22 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void getKeyInfo(MessageItems messageItems) {
-        mPresenter.addModel(messageItems.getItemEntity());
+    public void modeState(MessageItems messageItems) {
+        switch (mPresenter.getStateMode()) {
+            case IHomeStateType.ADD:
+                mPresenter.addModel(messageItems.getItemEntity());
+                break;
+            case IHomeStateType.UPDATE:
+                mPresenter.updateModel(messageItems.getItemEntity());
+                break;
+            case IHomeStateType.HEADER_ADD:
+                mPresenter.addHeaderModel(messageItems.getItemEntity());
+                break;
+            default:
+                break;
+        }
     }
+
 
     @Override
     public void showFlootButton() {
@@ -169,7 +184,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
     @Override
     public boolean onBackPressedSupport() {
-        boolean mode=super.onBackPressedSupport();
+        boolean mode = super.onBackPressedSupport();
         if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
             drawerLayout.closeDrawer(Gravity.LEFT);
             return true;

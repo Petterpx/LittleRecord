@@ -7,6 +7,7 @@ import com.petterp.latte_ui.recyclear.MultipleItemEntity;
  * @date 2019-07-24
  */
 public class MessageItems {
+    //所需的item
     private MultipleItemEntity itemEntity;
 
     public MessageItems(MultipleItemEntity itemEntity) {

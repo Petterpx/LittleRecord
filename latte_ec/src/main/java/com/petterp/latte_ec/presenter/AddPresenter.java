@@ -1,7 +1,11 @@
 package com.petterp.latte_ec.presenter;
 
+import android.os.Bundle;
+
+import com.petterp.latte_ec.model.add.IAddBundleFields;
 import com.petterp.latte_ec.model.add.IAddImpl;
 import com.petterp.latte_ec.model.add.IAddModel;
+import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.view.add.IAddView;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -22,9 +26,16 @@ public class AddPresenter {
         model = new IAddImpl();
     }
 
-    public void showInfo() {
+    public void showInfo(Bundle bundle) {
+        model.setBundle(bundle);
         showTopVP();
         showKeyInfo();
+    }
+
+    private void updateAddRv() {
+        if (mView != null) {
+            mView.UpdateRv();
+        }
     }
 
     private void showTopVP() {
@@ -36,6 +47,9 @@ public class AddPresenter {
     private void showKeyInfo() {
         if (mView != null) {
             mView.bottomKeyInfo();
+            if (model.getStateMode() == IHomeStateType.UPDATE) {
+                updateAddRv();
+            }
         }
     }
 
@@ -100,4 +114,13 @@ public class AddPresenter {
             mView.updateKeyColor(mode);
         }
     }
+
+    public int getStateMode() {
+        return model.getStateMode();
+    }
+
+    public IAddBundleFields getUpdateRvItem() {
+        return model.getStateUpdate();
+    }
+
 }

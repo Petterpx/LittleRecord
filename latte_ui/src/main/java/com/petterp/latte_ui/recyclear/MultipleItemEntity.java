@@ -39,6 +39,7 @@ public class MultipleItemEntity implements MultiItemEntity {
 
     /**
      * 获取其他具体数据
+     *
      * @param key
      * @param <T>
      * @return
@@ -54,6 +55,7 @@ public class MultipleItemEntity implements MultiItemEntity {
 
     /**
      * 插入数据
+     *
      * @param key
      * @param value
      * @return

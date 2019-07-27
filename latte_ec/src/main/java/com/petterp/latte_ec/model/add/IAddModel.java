@@ -1,9 +1,11 @@
 package com.petterp.latte_ec.model.add;
 
 import android.graphics.Color;
+import android.os.Bundle;
 
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -28,30 +30,6 @@ public interface IAddModel {
      * @return
      */
     List<MultipleItemEntity> getKeyRvList();
-    /**
-     * 设置Rv数据
-     */
-    void queryRvInfo();
-
-
-    /**
-     * 保存
-     */
-    String keySave();
-
-
-    /**
-     * 设置备注
-     * @param remark
-     */
-    void setRemark(String remark);
-
-
-    /**
-     * 返回备注信息
-     * @return
-     */
-    String getRemark();
 
 
     /**
@@ -80,4 +58,23 @@ public interface IAddModel {
      * @param mode
      */
     void setKeyRvSaveColor(boolean mode);
+
+    /**
+     * 根据bundle判断操作状态
+     * @param bundle
+     */
+    void setBundle(Bundle bundle);
+
+    /**
+     * 获取当前操作状态
+     * @return
+     */
+    int getStateMode();
+
+    /**
+     * 获取要更新的值
+     * @return
+     */
+    IAddBundleFields getStateUpdate();
+
 }
