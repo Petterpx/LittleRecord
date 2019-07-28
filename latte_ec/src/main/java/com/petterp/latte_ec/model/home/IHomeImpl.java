@@ -11,6 +11,7 @@ import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.litepal.LitePal;
+import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -106,6 +107,7 @@ public class IHomeImpl implements IHomeModel {
                     .setField(IHomeRvFields.DAY, day)
                     .setField(IHomeRvFields.CONSUME, collects.get(i).getConsume())
                     .setField(IHomeRvFields.KEY, key)
+                    .setField(IHomeRvFields.LONG_TIME, longTime)
                     .build();
             //添加头
             itemEntities.add(itemHeader);
@@ -135,24 +137,62 @@ public class IHomeImpl implements IHomeModel {
 
     @Override
     public void update(MultipleItemEntity itemEntity) {
+        //先拿到以前数据
         MultipleItemEntity multipleItemEntity = itemEntities.get(onDownPosition);
+        //状态
+        String state = multipleItemEntity.getField(IHomeRvFields.CATEGORY);
+        String stateNew = itemEntity.getField(IHomeRvFields.CATEGORY);
+
+        long longdate = multipleItemEntity.getField(IHomeRvFields.LONG_TIME);
         double money = multipleItemEntity.getField(IHomeRvFields.CONSUME_I);
         double moneyNew = itemEntity.getField(IHomeRvFields.CONSUME_I);
-
-        EveryBillCollect collect = new EveryBillCollect();
-        Log.e("demo", timeKey);
         List<EveryBillCollect> collects = LitePal.where("key = ?", timeKey).find(EveryBillCollect.class);
-        if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.CONSUME)) {
-            consumeMoney += money - moneyNew;
-            collect.setConsume(collects.get(0).getConsume() - money + moneyNew);
+        double consume = collects.get(0).getConsume();
+        double income = collects.get(0).getIncome();
+        Log.e("demo", "money:" + money + "-----moneyNew:" + moneyNew + "----consume:" + consume + "=====income:" + income);
+        //判断是否是本月，再决定更改title数据
+        boolean mode = TimeUtils.build().isMonth(itemEntities.get(headerPosition).getField(IHomeRvFields.LONG_TIME));
+
+        //从外层开始判断，先判以前是收入还是支出
+        if (state.equals(IHomeTitleRvItems.CONSUME)) {
+            //内层决定如何改变
+            if (stateNew.equals(IHomeTitleRvItems.CONSUME)) {
+                consume = consume - money + moneyNew;
+                if (mode) {
+                    consumeMoney = consumeMoney - money + moneyNew;
+                }
+            } else {
+                consume -= money;
+                income += moneyNew;
+                if (mode) {
+                    consumeMoney -= money;
+                    incomeMoney += moneyNew;
+                }
+            }
         } else {
-            incomeMoney -= money + moneyNew;
-            collect.setIncome(collects.get(0).getIncome() - money + moneyNew);
+            if (stateNew.equals(IHomeTitleRvItems.INCOME)) {
+                income = income - money + moneyNew;
+                if (mode) {
+                    incomeMoney = incomeMoney - money + moneyNew;
+                }
+            } else {
+                income -= money;
+                consume += moneyNew;
+                if (mode) {
+                    incomeMoney -= money;
+                    consumeMoney += moneyNew;
+                }
+            }
         }
         surplusMoney = consumeMoney + incomeMoney;
-        //更新Header
+        EveryBillCollect collect = new EveryBillCollect();
+        collect.setIncome(income);
+        collect.setConsume(consume);
+        //更新Header数据
         collect.updateAll("key=?", timeKey);
-
+        //更新RvHeader数值
+        itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, consume);
+        //重新计算结余
         //更新子项
         BillInfo info = new BillInfo();
         info.setCategory(itemEntity.getField(IHomeRvFields.CATEGORY));
@@ -161,9 +201,11 @@ public class IHomeImpl implements IHomeModel {
         info.setMoney(moneyNew);
         info.setName(itemEntity.getField(MultipleFidls.NAME));
         info.setRemark(itemEntity.getField(IHomeRvFields.REMARK));
-        info.updateAll("key=?", timeKey);
+        info.updateAll("key=? and longDate=?", timeKey, "" + longdate);
         //更新Rv
         itemEntities.set(onDownPosition, itemEntity);
+
+        Log.e("demo", "money:" + money + "-----moneyNew:" + moneyNew + "----consume:" + consume + "=====income:" + income);
     }
 
     @Override
@@ -183,9 +225,9 @@ public class IHomeImpl implements IHomeModel {
             addPosition += 1;
             double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
             if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.INCOME)) {
-                incomeMoney += money;
+                incomeMoney = incomeMoney + money;
             } else {
-                consumeMoney -= money;
+                consumeMoney = consumeMoney + money;
                 double consume = itemEntities.get(0).getField(IHomeRvFields.CONSUME);
                 itemEntities.get(0).setFild(IHomeRvFields.CONSUME, Double.parseDouble(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
             }
@@ -249,20 +291,27 @@ public class IHomeImpl implements IHomeModel {
 
     @Override
     public void setHeaderPosition(String key) {
+        headerPosition = 0;
         this.timeKey = key;
         List<EveryBillCollect> collects = LitePal
+                .order("longDate desc")
                 .select("sum", "key").find(EveryBillCollect.class);
         int size = collects.size();
-        if (size == 1) {
+        if (size <= 1) {
             headerPosition = 0;
         } else {
             for (int i = 0; i < size; i++) {
                 if (key.equals(collects.get(i).getKey())) {
+                    if (i == 0) {
+                        break;
+                    }
                     headerPosition += 1;
+                    break;
                 }
                 headerPosition += collects.get(i).getSum();
             }
         }
+        Log.e("demo", "header:" + headerPosition);
     }
 
     @Override
