@@ -3,6 +3,7 @@ package com.petterp.latte_ec.view.home;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -113,6 +114,7 @@ public class HomeItemClickListener extends SimpleClickListener {
                 //设置header头位置，用于更新
                 presenter.setHeaderPosition(fields.getKey());
                 presenter.setOndownPosition(position);
+                presenter.setStateMode(IHomeStateType.UPDATE);
                 mDialog.dismiss();
                 mdelegate.getSupportDelegate().start(AddDelegate.newInstance(fields));
             });

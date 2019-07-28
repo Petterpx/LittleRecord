@@ -78,7 +78,6 @@ public class HomePresenter {
 
     //更新Rv数据
     public void updateModel(MultipleItemEntity itemEntity) {
-        iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
         iModel.update(itemEntity);
         //通知Rv刷新
         updateRvView();
@@ -93,8 +92,6 @@ public class HomePresenter {
 
     //添加数据
     public void addModel(MultipleItemEntity itemEntity) {
-        //设置key
-        iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
         //model层添加数据
         iModel.add(itemEntity);
         //通知Rv刷新

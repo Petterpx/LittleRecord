@@ -3,6 +3,7 @@ package com.petterp.latte_ec.view.home;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -122,7 +123,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         //Rv滑动监听
         recyclerView.addOnScrollListener(new HomeRvoScrollListener(this));
         //Rv点击事件
-        recyclerView.addOnItemTouchListener(new HomeItemClickListener(this,mPresenter));
+        recyclerView.addOnItemTouchListener(new HomeItemClickListener(this, mPresenter));
     }
 
 
@@ -156,15 +157,17 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void modeState(MessageItems messageItems) {
+        MultipleItemEntity itemEntity = messageItems.getItemEntity();
+        itemEntity.setFild(IHomeRvFields.KEY, mPresenter.getKey());
         switch (mPresenter.getStateMode()) {
             case IHomeStateType.ADD:
-                mPresenter.addModel(messageItems.getItemEntity());
+                mPresenter.addModel(itemEntity);
                 break;
             case IHomeStateType.UPDATE:
-                mPresenter.updateModel(messageItems.getItemEntity());
+                mPresenter.updateModel(itemEntity);
                 break;
             case IHomeStateType.HEADER_ADD:
-                mPresenter.addHeaderModel(messageItems.getItemEntity());
+                mPresenter.addHeaderModel(itemEntity);
                 break;
             default:
                 break;

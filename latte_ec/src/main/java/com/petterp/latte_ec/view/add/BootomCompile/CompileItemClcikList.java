@@ -1,5 +1,6 @@
 package com.petterp.latte_ec.view.add.BootomCompile;
 
+import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -8,6 +9,8 @@ import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.time.SystemClock;
 import com.petterp.latte_ec.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.model.home.IHomeStateType;
+import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
 import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ec.view.home.HomeItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
@@ -34,7 +37,9 @@ public class CompileItemClcikList extends SimpleClickListener {
         this.mPresenter = mPresenter;
         this.delegate = delegate;
         TEXT_BUILDER = new StringBuilder();
-        TEXT_BUILDER.append(mPresenter.getUpdateRvItem().getMoney());
+        if (mPresenter.getStateMode() == IHomeStateType.UPDATE) {
+            TEXT_BUILDER.append(mPresenter.getUpdateRvItem().getMoney());
+        }
         DECI_FORMAT = new DecimalFormat("0.00");
     }
 
@@ -199,6 +204,9 @@ public class CompileItemClcikList extends SimpleClickListener {
                 }
             }
             double money = Double.parseDouble(res);
+            if (mPresenter.getTitleMode().equals(IHomeTitleRvItems.CONSUME)) {
+                money = -1 * money;
+            }
             String[] kindRes = mPresenter.getTitleRvKind();
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(HomeItemType.HOME_DETAIL_LIST)
@@ -208,7 +216,7 @@ public class CompileItemClcikList extends SimpleClickListener {
                     .setField(IHomeRvFields.KIND, kindRes[1])
                     .setField(IHomeRvFields.REMARK, mPresenter.getRemarkInfo())
                     .setField(IHomeRvFields.LONG_TIME, SystemClock.now())
-                    .setField(IHomeRvFields.KEY, mPresenter.getkey())
+                    .setField(IHomeRvFields.KEY, null)
                     .build();
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));

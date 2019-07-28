@@ -96,7 +96,7 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
         //初始化View
         mPresenter.showInfo(getArguments());
         //处理键盘冲突
-        initEditKey();
+//        initEditKey();
     }
 
 

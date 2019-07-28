@@ -44,11 +44,13 @@ public class IHomeImpl implements IHomeModel {
     private int headerPosition = 0;
     //手指按下位置
     private int onDownPosition = 1;
-
-    private int updateAddPosition=0;
+    //header头添加时的位置
+    private int updateAddPosition = 0;
 
     //当前状态
     private int stateMode = IHomeStateType.ADD;
+
+    private boolean addMode = false;
 
 
     @Override
@@ -68,6 +70,10 @@ public class IHomeImpl implements IHomeModel {
 
     @Override
     public void queryInfo() {
+        consumeMoney = 0;
+        incomeMoney = 0;
+        surplusMoney = 0;
+        itemEntities.clear();
         //降序获取数据
         List<EveryBillCollect> collects = LitePal
                 .order("longDate desc")
@@ -111,6 +117,9 @@ public class IHomeImpl implements IHomeModel {
                         .setField(IHomeRvFields.KIND, billInfos.get(j).getKind())
                         .setField(IHomeRvFields.CONSUME_I, billInfos.get(j).getMoney())
                         .setField(IHomeRvFields.LONG_TIME, billInfos.get(j).getLongDate())
+                        .setField(IHomeRvFields.KEY, billInfos.get(j).getKey())
+                        .setField(MultipleFidls.NAME, billInfos.get(j).getName())
+                        .setField(IHomeRvFields.REMARK, billInfos.get(j).getRemark())
                         .build();
                 //添加具体item
                 itemEntities.add(itemEntity);
@@ -131,7 +140,8 @@ public class IHomeImpl implements IHomeModel {
         double moneyNew = itemEntity.getField(IHomeRvFields.CONSUME_I);
 
         EveryBillCollect collect = new EveryBillCollect();
-        List<EveryBillCollect> collects = LitePal.where("key=?", timeKey).find(EveryBillCollect.class);
+        Log.e("demo", timeKey);
+        List<EveryBillCollect> collects = LitePal.where("key = ?", timeKey).find(EveryBillCollect.class);
         if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.CONSUME)) {
             consumeMoney += money - moneyNew;
             collect.setConsume(collects.get(0).getConsume() - money + moneyNew);
@@ -166,7 +176,7 @@ public class IHomeImpl implements IHomeModel {
     public void add(MultipleItemEntity itemEntity) {
         //操作数据库
         sqlAdd(itemEntity);
-        if (itemEntities.size() == 0) {
+        if (itemEntities.size() == 0 || addMode) {
             queryInfo();
         } else {
             itemEntities.add(addPosition, itemEntity);
@@ -180,7 +190,18 @@ public class IHomeImpl implements IHomeModel {
                 itemEntities.get(0).setFild(IHomeRvFields.CONSUME, Double.parseDouble(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
             }
             surplusMoney = incomeMoney + consumeMoney;
+            addHeaderSum(0);
         }
+    }
+
+    /**
+     * 用于每次更新完后，header头的自动相加，避免数据库操作
+     *
+     * @param i
+     */
+    private void addHeaderSum(int i) {
+        int sum = itemEntities.get(i).getField(IHomeRvFields.HEADER_SUM);
+        itemEntities.get(i).setFild(IHomeRvFields.HEADER_SUM, sum + 1);
     }
 
     @Override
@@ -189,29 +210,29 @@ public class IHomeImpl implements IHomeModel {
         titleHashMap.put(IHomeRvFields.CONSUME, "支出：" + decimalFormat.format(consumeMoney));
         titleHashMap.put(IHomeRvFields.INCOME, "收入：" + decimalFormat.format(incomeMoney));
         titleHashMap.put(IHomeRvFields.SUR_PLUS, decimalFormat.format(surplusMoney));
-//        Log.e("demo", consumeMoney + "------" + incomeMoney + "------" + surplusMoney);
         return titleHashMap;
     }
 
     @Override
     public void addHeader(MultipleItemEntity itemEntity) {
         sqlAdd(itemEntity);
+        addHeaderSum(headerPosition);
         itemEntities.add(updateAddPosition, itemEntity);
         //更改header的高度
-        int sum = itemEntities.get(headerPosition).getField(IHomeRvFields.HEADER_SUM);
-        itemEntities.get(headerPosition).setFild(IHomeRvFields.HEADER_SUM, sum + 1);
-
         String month = TimeUtils.build().getday(itemEntity.getField(IHomeRvFields.LONG_TIME));
         if (month.equals(TimeUtils.build().getday())) {
             double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
             if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.INCOME)) {
-                incomeMoney += money;
+                incomeMoney += Math.abs(money);
             } else {
-                consumeMoney -= money;
+                consumeMoney -= Math.abs(money);
                 double consume = itemEntities.get(headerPosition).getField(IHomeRvFields.CONSUME);
                 itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, Double.parseDouble(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
             }
             surplusMoney = incomeMoney + consumeMoney;
+        }
+        if (headerPosition == 0) {
+            addPosition += 1;
         }
     }
 
@@ -234,12 +255,13 @@ public class IHomeImpl implements IHomeModel {
         int size = collects.size();
         if (size == 1) {
             headerPosition = 0;
-        }
-        for (int i = 0; i < size; i++) {
-            if (key.equals(collects.get(i).getKey())) {
-                headerPosition += 1;
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (key.equals(collects.get(i).getKey())) {
+                    headerPosition += 1;
+                }
+                headerPosition += collects.get(i).getSum();
             }
-            headerPosition += collects.get(i).getSum();
         }
     }
 
@@ -289,20 +311,23 @@ public class IHomeImpl implements IHomeModel {
 
         //如果是支出
         if (category.equals(IHomeTitleRvItems.CONSUME)) {
-            money = -1 * money;
             if (collects.size() > 0) {
+                addMode = false;
                 //修改
                 collect.setConsume(collects.get(0).getConsume() + money);
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
                 //新增第一个
+                addMode = true;
                 new EveryBillCollect(timeKey, time, "petterp", money, 0.0, 1).save();
             }
         } else {
             if (collects.size() > 0) {
+                addMode = false;
                 collect.setIncome(collects.get(0).getIncome() + money);
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
+                addMode = true;
                 new EveryBillCollect(timeKey, time, "petterp", 0.0, money, 1).save();
             }
 
