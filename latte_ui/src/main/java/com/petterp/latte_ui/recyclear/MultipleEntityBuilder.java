@@ -16,20 +16,22 @@ public class MultipleEntityBuilder {
     }
 
 
-    public final MultipleEntityBuilder setItemType(int Type){
-        FIELDS.put(MultipleFidls.ITEM_TYPE,Type);
+    public final MultipleEntityBuilder setItemType(int Type) {
+        FIELDS.put(MultipleFidls.ITEM_TYPE, Type);
         return this;
     }
 
-    public final MultipleEntityBuilder setField(Object key, Object value){
-        FIELDS.put(key,value);
+    public final MultipleEntityBuilder setField(Object key, Object value) {
+        FIELDS.put(key, value);
         return this;
     }
-    public final MultipleEntityBuilder setField(LinkedHashMap<?,?> map){
+
+    public final MultipleEntityBuilder setField(LinkedHashMap<?, ?> map) {
         FIELDS.putAll(map);
         return this;
     }
-    public final MultipleItemEntity build(){
+
+    public final MultipleItemEntity build() {
         return new MultipleItemEntity(FIELDS);
     }
 }

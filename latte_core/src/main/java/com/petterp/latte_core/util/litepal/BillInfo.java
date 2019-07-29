@@ -10,6 +10,7 @@ import org.litepal.crud.LitePalSupport;
  * @date 2019-07-17
  */
 public class BillInfo extends LitePalSupport {
+    private long id;
     //key->对应每日key
     private String key;
     //插入时间->戳
@@ -93,4 +94,13 @@ public class BillInfo extends LitePalSupport {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
 }

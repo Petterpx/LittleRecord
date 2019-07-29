@@ -9,40 +9,67 @@ import java.util.List;
 
 /**
  * 首页-数据层
+ *
  * @author by Petterp
  * @date 2019-07-23
  */
 public interface IHomeModel {
-    //提供数据
+    /**
+     * 返回全部数据
+     *
+     * @return
+     */
     List<MultipleItemEntity> getInfo();
 
-    //查询数据库数据
+
+    /**
+     * 数据库查询
+     */
     void queryInfo();
 
-    //修改数据
-    void update(MultipleItemEntity itemEntity);
-
-    //删除数据
-    void delegate(int position);
-
-    //新增数据
-    void add(MultipleItemEntity itemEntity);
 
     /**
      * 获取Titlebar数据
+     *
      * @return
      */
-    HashMap<IHomeRvFields,String> getTitleInfo();
+    HashMap<IHomeRvFields, String> getTitleInfo();
 
 
     /**
-     * 在Handler上添加
+     * state -> update
+     *
+     * @param itemEntity
+     */
+    void update(MultipleItemEntity itemEntity);
+
+
+    /**
+     * state -delete
+     *
+     * @param itemEntity
+     */
+    void delete(MultipleItemEntity itemEntity);
+
+
+    /**
+     * state -> add
+     *
+     * @param itemEntity
+     */
+    void add(MultipleItemEntity itemEntity);
+
+
+    /**
+     * state -> addHeader
+     *
      * @param itemEntity
      */
     void addHeader(MultipleItemEntity itemEntity);
 
     /**
      * 设置key
+     *
      * @param key
      */
     void setKey(String key);
@@ -50,20 +77,47 @@ public interface IHomeModel {
     String getKey();
 
     /**
-     * 根据key查找Rv 中相应Header位置
+     * 根据key查找Rv -> 设置 Header位置
+     *
      * @param key
      */
     void setHeaderPosition(String key);
 
+
+    /**
+     * 设置 Header位置
+     * @param headerPosition
+     */
     void setHeaderPosition(int headerPosition);
 
-    int getHeaderPosition();
 
+    /**
+     * 设置手指按下位置
+     *
+     * @param position
+     */
     void setOndownPosition(int position);
 
+    /**
+     * 设置当前操作状态
+     *
+     * @param state
+     */
     void setStateMode(int state);
 
+
+    /**
+     * 获取状态
+     * @return
+     */
     int getStateMode();
 
+    /**
+     * 设置新增数据位置
+     *
+     * @param position
+     */
     void setAddPosition(int position);
+
+
 }

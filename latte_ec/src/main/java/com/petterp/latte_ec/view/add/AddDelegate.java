@@ -3,6 +3,7 @@ package com.petterp.latte_ec.view.add;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;

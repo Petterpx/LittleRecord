@@ -11,10 +11,7 @@ import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
-import com.petterp.latte_core.delegates.web.event.Event;
-import com.petterp.latte_core.delegates.web.event.EventManager;
 
-import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,18 +212,6 @@ public class Configurator {
         return this;
     }
 
-
-    /**
-     * webview使用
-     * @param name
-     * @param event
-     * @return
-     */
-    public Configurator withWebEvent(@NonNull String name, @NonNull Event event) {
-        final EventManager manager=EventManager.getInstance();
-        manager.addEvent(name, event);
-        return this;
-    }
 
     /**
      * 是否每次启动显示倒计时页面

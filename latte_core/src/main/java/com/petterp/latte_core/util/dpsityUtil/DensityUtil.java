@@ -1,4 +1,4 @@
-package com.petterp.latte_core.util.DpsityUtil;
+package com.petterp.latte_core.util.dpsityUtil;
 
 import android.app.Activity;
 import android.content.Context;

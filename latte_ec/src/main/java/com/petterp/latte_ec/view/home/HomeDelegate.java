@@ -155,6 +155,10 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
     }
 
 
+    /**
+     * EvenBus 接收Add传回的具体item
+     * @param messageItems
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void modeState(MessageItems messageItems) {
         MultipleItemEntity itemEntity = messageItems.getItemEntity();
@@ -185,6 +189,10 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         floatingActionButton.hide();
     }
 
+    /**
+     * 返回键重写
+     * @return
+     */
     @Override
     public boolean onBackPressedSupport() {
         boolean mode = super.onBackPressedSupport();

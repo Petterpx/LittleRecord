@@ -38,6 +38,10 @@ public interface IAddModel {
      */
     void setTitleMode(String mode);
 
+    /**
+     * 获取当前为支出还是收入
+     * @return
+     */
     String getTitleMode();
 
     /**

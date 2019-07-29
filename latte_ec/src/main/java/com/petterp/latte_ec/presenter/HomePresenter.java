@@ -1,6 +1,5 @@
 package com.petterp.latte_ec.presenter;
 
-import android.util.Log;
 
 import com.petterp.latte_ec.model.home.IHomeImpl;
 import com.petterp.latte_ec.model.home.IHomeModel;
@@ -32,31 +31,58 @@ public class HomePresenter {
     public void showInfo() {
         iModel.queryInfo();
         showRvView();
-        setTitleInfoView();
+        showTitleInfo();
         floatButtonListener();
     }
 
+    /**
+     * 操作结束后的刷新
+     */
+    private void showUpdateInfo() {
+        //更新Rv
+        if (iView != null) {
+            iView.updateRv();
+        }
+        //更新Title
+        showTitleInfo();
+    }
 
-    //显示titlebar具体内容
-    private void setTitleInfoView() {
+    /**
+     * 显示Title
+     */
+    private void showTitleInfo() {
+        //更新Title
         if (iView != null) {
             iView.setTitleinfo(getTitleinfo());
         }
     }
 
+
+    /**
+     * 获取Title全部数据
+     *
+     * @return
+     */
     private HashMap<IHomeRvFields, String> getTitleinfo() {
         return iModel.getTitleInfo();
     }
 
 
-    //显示首页rv
+    /**
+     * 显示首页rv
+     */
     private void showRvView() {
         if (iView != null) {
             iView.showRv(getRvInfo());
         }
     }
 
-    //获取数据
+
+    /**
+     * 获取数据
+     *
+     * @return
+     */
     private List<MultipleItemEntity> getRvInfo() {
         return iModel.getInfo();
     }
@@ -68,36 +94,31 @@ public class HomePresenter {
     }
 
 
-    //更新Rv内容
-    public void updateRvView() {
-        if (iView != null) {
-            iView.updateRv();
-        }
-    }
-
-
-    //更新Rv数据
+    /**
+     * update
+     *
+     * @param itemEntity
+     */
     public void updateModel(MultipleItemEntity itemEntity) {
         iModel.update(itemEntity);
-        //通知Rv刷新
-        updateRvView();
-        //通知TitleInfo刷新
-        setTitleInfoView();
+        showUpdateInfo();
     }
 
-    //删除Rv数据
-    public void delegateModel(int position) {
-        iModel.delegate(position);
+    /**
+     * delete
+     *
+     * @param itemEntity
+     */
+    public void delegateModel(MultipleItemEntity itemEntity) {
+        iModel.delete(itemEntity);
+        showUpdateInfo();
     }
 
     //添加数据
     public void addModel(MultipleItemEntity itemEntity) {
         //model层添加数据
         iModel.add(itemEntity);
-        //通知Rv刷新
-        updateRvView();
-        //通知TitleInfo刷新
-        setTitleInfoView();
+        showUpdateInfo();
     }
 
     public void addHeaderModel(MultipleItemEntity itemEntity) {
@@ -105,10 +126,7 @@ public class HomePresenter {
         iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
         //model层添加数据
         iModel.addHeader(itemEntity);
-        //通知Rv刷新
-        updateRvView();
-        //通知TitleInfo刷新
-        setTitleInfoView();
+        showUpdateInfo();
     }
 
     /**
@@ -124,14 +142,6 @@ public class HomePresenter {
         iModel.setHeaderPosition(headerPosition);
     }
 
-    /**
-     * 获得Header头位置
-     *
-     * @return
-     */
-    public int getHeaderPosition() {
-        return iModel.getHeaderPosition();
-    }
 
     /**
      * 设置手指按下位置
@@ -167,4 +177,6 @@ public class HomePresenter {
     public String getKey() {
         return iModel.getKey();
     }
+
+
 }

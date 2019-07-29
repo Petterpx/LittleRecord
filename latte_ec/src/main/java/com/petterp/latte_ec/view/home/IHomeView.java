@@ -26,7 +26,9 @@ public interface IHomeView {
     void showRv(List<MultipleItemEntity> list);
 
 
-
+    /**
+     * floatButton onlcik
+     */
     void FloatButtonListener();
 
     /**

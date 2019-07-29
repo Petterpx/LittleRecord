@@ -3,14 +3,18 @@ package com.petterp.latte_ec.model.home;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
+import com.petterp.latte_core.util.exception.ExecptionFiels;
 import com.petterp.latte_core.util.litepal.BillInfo;
 import com.petterp.latte_core.util.litepal.EveryBillCollect;
+import com.petterp.latte_core.util.time.SystemClock;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.view.home.HomeItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
+import org.litepal.crud.callback.SaveCallback;
 import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
 import java.text.DecimalFormat;
@@ -142,14 +146,12 @@ public class IHomeImpl implements IHomeModel {
         //状态
         String state = multipleItemEntity.getField(IHomeRvFields.CATEGORY);
         String stateNew = itemEntity.getField(IHomeRvFields.CATEGORY);
-
-        long longdate = multipleItemEntity.getField(IHomeRvFields.LONG_TIME);
+        long datetime = multipleItemEntity.getField(IHomeRvFields.LONG_TIME);
         double money = multipleItemEntity.getField(IHomeRvFields.CONSUME_I);
         double moneyNew = itemEntity.getField(IHomeRvFields.CONSUME_I);
         List<EveryBillCollect> collects = LitePal.where("key = ?", timeKey).find(EveryBillCollect.class);
         double consume = collects.get(0).getConsume();
         double income = collects.get(0).getIncome();
-        Log.e("demo", "money:" + money + "-----moneyNew:" + moneyNew + "----consume:" + consume + "=====income:" + income);
         //判断是否是本月，再决定更改title数据
         boolean mode = TimeUtils.build().isMonth(itemEntities.get(headerPosition).getField(IHomeRvFields.LONG_TIME));
 
@@ -189,7 +191,8 @@ public class IHomeImpl implements IHomeModel {
         collect.setIncome(income);
         collect.setConsume(consume);
         //更新Header数据
-        collect.updateAll("key=?", timeKey);
+        collect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
+        });
         //更新RvHeader数值
         itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, consume);
         //重新计算结余
@@ -199,19 +202,45 @@ public class IHomeImpl implements IHomeModel {
         info.setKind(itemEntity.getField(IHomeRvFields.KIND));
         info.setLongDate(itemEntity.getField(IHomeRvFields.LONG_TIME));
         info.setMoney(moneyNew);
+        info.setLongDate(SystemClock.now());
         info.setName(itemEntity.getField(MultipleFidls.NAME));
         info.setRemark(itemEntity.getField(IHomeRvFields.REMARK));
-        info.updateAll("key=? and longDate=?", timeKey, "" + longdate);
+        info.updateAllAsync("key=? and longDate=?", timeKey, "" + datetime).listen(rowsAffected -> {
+        });
         //更新Rv
         itemEntities.set(onDownPosition, itemEntity);
-
-        Log.e("demo", "money:" + money + "-----moneyNew:" + moneyNew + "----consume:" + consume + "=====income:" + income);
     }
 
     @Override
-    public void delegate(int p) {
-        itemEntities.remove(p);
-        this.addPosition -= 1;
+    public void delete(MultipleItemEntity itemEntity) {
+        String key = itemEntity.getField(IHomeRvFields.KEY);
+        Double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
+        long time = itemEntity.getField(IHomeRvFields.LONG_TIME);
+        //判断是否是本月，再决定更改title数据
+        boolean mode = TimeUtils.build().isMonth(itemEntities.get(headerPosition).getField(IHomeRvFields.LONG_TIME));
+        List<EveryBillCollect> collect = LitePal.where("key=?", key).find(EveryBillCollect.class);
+        EveryBillCollect billCollect = new EveryBillCollect();
+        if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.CONSUME)) {
+            double consume = collect.get(0).getConsume() - money;
+            billCollect.setConsume(consume);
+            itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, consume);
+            if (mode) {
+                consumeMoney -= money;
+            }
+        } else {
+            double income = collect.get(0).getIncome() - money;
+            billCollect.setIncome(income);
+//            itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME,income);
+            if (mode) {
+                incomeMoney -= money;
+            }
+        }
+        surplusMoney = incomeMoney + consumeMoney;
+        itemEntities.remove(itemEntity);
+        billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
+        });
+        LitePal.deleteAllAsync(BillInfo.class, "longDate=?", "" + time).listen(rowsAffected -> {
+        });
     }
 
     @Override
@@ -311,7 +340,6 @@ public class IHomeImpl implements IHomeModel {
                 headerPosition += collects.get(i).getSum();
             }
         }
-        Log.e("demo", "header:" + headerPosition);
     }
 
     @Override
@@ -319,10 +347,6 @@ public class IHomeImpl implements IHomeModel {
         this.headerPosition = headerPosition;
     }
 
-    @Override
-    public int getHeaderPosition() {
-        return headerPosition;
-    }
 
     @Override
     public void setOndownPosition(int position) {
@@ -348,7 +372,7 @@ public class IHomeImpl implements IHomeModel {
         //判断是否已经存入当天数据
         List<EveryBillCollect> collects
                 = LitePal.where("key=?", timeKey)
-                .select("consume", "income", "sum")
+                .select("consume", "income", "sum", "id")
                 .find(EveryBillCollect.class);
 
         EveryBillCollect collect = new EveryBillCollect();
@@ -366,9 +390,7 @@ public class IHomeImpl implements IHomeModel {
                 collect.setConsume(collects.get(0).getConsume() + money);
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
-                //新增第一个
-                addMode = true;
-                new EveryBillCollect(timeKey, time, "petterp", money, 0.0, 1).save();
+                addHeaderSql(money, 0.0, time);
             }
         } else {
             if (collects.size() > 0) {
@@ -376,17 +398,25 @@ public class IHomeImpl implements IHomeModel {
                 collect.setIncome(collects.get(0).getIncome() + money);
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
-                addMode = true;
-                new EveryBillCollect(timeKey, time, "petterp", 0.0, money, 1).save();
+                addHeaderSql(0.0, money, time);
             }
 
         }
-        //修改数据
-        collect.updateAll("key=?", timeKey);
+        collect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
 
+        });
         //新增到日账单详细
         BillInfo info = new BillInfo(timeKey, time, money, itemEntity.getField(IHomeRvFields.REMARK), "petterp", kind, category);
-        info.save();
+        info.saveAsync().listen(success -> {
+            if (!success) {
+                throw new RuntimeException(ExecptionFiels.KEY_LITE_PAL_ADD_ERROR);
+            }
+        });
+    }
+
+    private void addHeaderSql(double consume, double income, long time) {
+        addMode = true;
+        new EveryBillCollect(timeKey, time, "petterp", consume, income, 1).save();
     }
 
 

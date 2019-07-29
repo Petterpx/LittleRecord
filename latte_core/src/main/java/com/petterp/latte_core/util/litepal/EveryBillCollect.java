@@ -6,10 +6,14 @@ import org.litepal.crud.LitePalSupport;
 
 /**
  * 每日账单汇总
+ *
  * @author by Petterp
  * @date 2019-07-19
  */
 public class EveryBillCollect extends LitePalSupport {
+
+    private long id;
+
     //key+时间戳
     private String key;
     //时间戳
@@ -27,10 +31,6 @@ public class EveryBillCollect extends LitePalSupport {
     //当日添加次数
     private int sum;
 
-    public EveryBillCollect(){
-
-    }
-
     public EveryBillCollect(String key, long longDate, String name, Double consume, Double income, int sum) {
         this.key = key;
         this.longDate = longDate;
@@ -38,6 +38,10 @@ public class EveryBillCollect extends LitePalSupport {
         this.consume = consume;
         this.income = income;
         this.sum = sum;
+    }
+
+    public EveryBillCollect() {
+
     }
 
     public String getKey() {
@@ -86,5 +90,14 @@ public class EveryBillCollect extends LitePalSupport {
 
     public void setSum(int sum) {
         this.sum = sum;
+    }
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
