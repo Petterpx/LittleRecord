@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+import com.mob.MobSDK;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_ec.icon.FontEcModule;
 
@@ -32,6 +33,8 @@ public class ExampleApp extends Application {
                 .configure();
         //初始化LitePal
         LitePal.initialize(getApplicationContext());
+        //初始化Mobsdk
+        MobSDK.init(this);
 //        initStetho();
 //        DatabaseManager.getInstance().init(this);
 //        //开启极光推送

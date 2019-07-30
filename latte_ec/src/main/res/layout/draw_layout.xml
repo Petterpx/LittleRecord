@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/line_home_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="15dp"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_user_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/androidq" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@id/img_user_avatar"
+            android:text="已经记录10天啦,继续加油!"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText,NotSibling"
+            android:layout_marginStart="@dimen/dp_10" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:text="@string/draw_login_res"
+            android:layout_toRightOf="@id/img_user_avatar"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText"
+            android:layout_toEndOf="@id/img_user_avatar"
+            android:layout_marginStart="20dp" />
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#DCE7EC"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_home_draw"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

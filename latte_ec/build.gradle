@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.mob.sdk'
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
@@ -6,7 +7,7 @@ android {
 
 
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -36,4 +37,21 @@ dependencies {
     api project(path: ':latte_ui')
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+}
+
+MobSDK {
+    appKey "2be2d426d5fb8"
+    appSecret "5828fa70de47daeeacc67f79e4a34d10"
+    ShareSDK {
+        loopShare true
+        devInfo {
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+            }
+        }
+    }
+    SMSSDK {
+        autoSMS true
+    }
 }

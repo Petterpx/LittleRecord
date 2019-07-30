@@ -36,4 +36,9 @@ public interface IHomeView {
      */
     void updateRv();
 
+    /**
+     * 初始化Draw
+     */
+    void showDrawInfo();
+
 }

@@ -11,7 +11,6 @@ import com.petterp.latte_core.activity.ProxyActivity;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_ec.view.home.HomeDelegate;
-import com.petterp.latte_ec.view.sign.ISignListener;
 
 
 /**

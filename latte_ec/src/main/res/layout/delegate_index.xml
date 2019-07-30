@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/cord_layout"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:contentScrim="@color/app_main"
+                app:contentScrim="@color/app_title_color"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <include layout="@layout/arrow_detail_top" />
@@ -75,7 +76,7 @@
             android:layout_gravity="center|bottom"
             android:layout_margin="16dp"
             android:src="@drawable/delegate_index_top_add"
-            app:backgroundTint="#faad14"
+            app:backgroundTint="@color/app_title_color"
             app:borderWidth="0dp"
             app:elevation="8dp"
             app:pressedTranslationZ="16dp"
@@ -90,12 +91,5 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <TextView
-        android:id="@+id/tv_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#fff"
-        android:text="this is a 侧滑"
-        android:textSize="30dp" />
+   <include layout="@layout/draw_layout"/>
 </androidx.drawerlayout.widget.DrawerLayout>

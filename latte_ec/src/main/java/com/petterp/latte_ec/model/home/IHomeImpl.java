@@ -113,8 +113,11 @@ public class IHomeImpl implements IHomeModel {
                     .setField(IHomeRvFields.KEY, key)
                     .setField(IHomeRvFields.LONG_TIME, longTime)
                     .build();
-            //添加头
-            itemEntities.add(itemHeader);
+
+            //添加头,记得判断
+            if (billInfoSize>0){
+                itemEntities.add(itemHeader);
+            }
 
             for (int j = 0; j < billInfoSize; j++) {
                 MultipleItemEntity itemEntity = MultipleItemEntity.builder()
@@ -235,12 +238,14 @@ public class IHomeImpl implements IHomeModel {
                 incomeMoney -= money;
             }
         }
+        billCollect.setSum(collect.get(0).getSum()-1);
         surplusMoney = incomeMoney + consumeMoney;
         itemEntities.remove(itemEntity);
         billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
         });
         LitePal.deleteAllAsync(BillInfo.class, "longDate=?", "" + time).listen(rowsAffected -> {
         });
+        removeHeaderSum(headerPosition);
     }
 
     @Override
@@ -273,6 +278,21 @@ public class IHomeImpl implements IHomeModel {
     private void addHeaderSum(int i) {
         int sum = itemEntities.get(i).getField(IHomeRvFields.HEADER_SUM);
         itemEntities.get(i).setFild(IHomeRvFields.HEADER_SUM, sum + 1);
+    }
+
+    /**
+     * 用于每次更新完后，header头的自动相减，避免数据库操作
+     *
+     * @param i
+     */
+    private void removeHeaderSum(int i) {
+        int sum = itemEntities.get(i).getField(IHomeRvFields.HEADER_SUM);
+        sum -= 1;
+        if (sum == 0) {
+            itemEntities.remove(headerPosition);
+        } else {
+            itemEntities.get(i).setFild(IHomeRvFields.HEADER_SUM, sum);
+        }
     }
 
     @Override

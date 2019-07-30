@@ -55,7 +55,6 @@ public class HomeDiaQuery extends DialogFragment {
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
             window.setAttributes(params);
-
             AppCompatTextView tvMoney = window.findViewById(R.id.tv_dia_money);
             AppCompatTextView tvKind = window.findViewById(R.id.tv_dia_kind);
             AppCompatTextView tvTime = window.findViewById(R.id.tv_dia_time);

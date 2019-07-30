@@ -1,22 +1,23 @@
 package com.petterp.latte_ec.view.home;
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.joanzapata.iconify.widget.IconTextView;
@@ -29,12 +30,17 @@ import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.presenter.HomePresenter;
 import com.petterp.latte_ec.view.add.AddDelegate;
+import com.petterp.latte_ec.view.home.draw.DrawAdapter;
+import com.petterp.latte_ec.view.home.draw.DrawFields;
+import com.petterp.latte_ec.view.home.draw.DrawItemClickListener;
+import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -66,10 +72,12 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
     DrawerLayout drawerLayout = null;
     @BindView(R2.id.cord_layout)
     CoordinatorLayout right = null;
-    @BindView(R2.id.tv_layout)
-    TextView left = null;
     @BindView(R2.id.ic_toolbar_data_home)
     IconTextView dataTooblar;
+    @BindView(R2.id.line_home_layout)
+    LinearLayoutCompat layoutCompat = null;
+    @BindView(R2.id.rv_home_draw)
+    RecyclerView drawRv = null;
 
     @SuppressLint("WrongConstant")
     @OnClick(R2.id.ic_toolbar_drawer_home)
@@ -89,6 +97,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
         //建立连接
         mPresenter = new HomePresenter(this);
         //初始化view
@@ -132,10 +141,31 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         homeAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showDrawInfo() {
+        Resources resource = getResources();
+        String[] itemIc = resource.getStringArray(R.array.draw_home_ic_values);
+        String[] itemTv = resource.getStringArray(R.array.draw_home_tv_values);
+        int size = itemIc.length;
+        ArrayList<MultipleItemEntity> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            MultipleItemEntity itemEntity = MultipleItemEntity.builder()
+                    .setItemType(DrawFields.DRAW_HOME_FILEDS)
+                    .setField(MultipleFidls.NAME, itemIc[i])
+                    .setField(MultipleFidls.ID,i)
+                    .setField(MultipleFidls.TEXT, itemTv[i]).build();
+            list.add(itemEntity);
+        }
+        DrawAdapter adapter = new DrawAdapter(list);
+        drawRv.setAdapter(adapter);
+        drawRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        drawRv.addOnItemTouchListener(new DrawItemClickListener(this));
+    }
+
 
     @Override
     public void setHomeOffset(int r, int b) {
-        right.layout(left.getRight(), 0, left.getRight() + r, b);
+        right.layout(layoutCompat.getRight(), 0, layoutCompat.getRight() + r, b);
     }
 
     @Override
@@ -157,6 +187,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
     /**
      * EvenBus 接收Add传回的具体item
+     *
      * @param messageItems
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -191,6 +222,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
     /**
      * 返回键重写
+     *
      * @return
      */
     @Override

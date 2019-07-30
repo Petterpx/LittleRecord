@@ -33,6 +33,7 @@ public class HomePresenter {
         showRvView();
         showTitleInfo();
         floatButtonListener();
+        showDraw();
     }
 
     /**
@@ -178,5 +179,10 @@ public class HomePresenter {
         return iModel.getKey();
     }
 
+    private void showDraw(){
+        if (iView != null) {
+            iView.showDrawInfo();
+        }
+    }
 
 }

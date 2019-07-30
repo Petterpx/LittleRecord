@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.mob.sdk'
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.petterp.record"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 28
         multiDexEnabled true
         versionCode 1
@@ -22,6 +22,24 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    MobSDK {
+        appKey "2be2d426d5fb8"
+        appSecret "5828fa70de47daeeacc67f79e4a34d10"
+        ShareSDK {
+            loopShare true
+            devInfo {
+                QQ {
+                    appId "100371282"
+                    appKey "aed9b0303e3ed1e27bae87c33761161d"
+                }
+            }
+        }
+        SMSSDK {
+            autoSMS true
+        }
+    }
+
 }
 
 dependencies {

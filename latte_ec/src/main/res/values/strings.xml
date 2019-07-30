@@ -17,4 +17,5 @@
     <string name="delegate_index_add_income">收入</string>
     <string name="delegate_index_add_remark">输入备注…</string>
     <string name="dia_home_rv_header">账单详情</string>
+    <string name="draw_login_res">点击登录</string>
 </resources>
