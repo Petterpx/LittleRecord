@@ -45,6 +45,8 @@ public abstract class ProxyActivity extends AppCompatActivity implements ISuppor
         }
     }
 
+
+
     @Override
     protected void onDestroy() {
         DELEGATE.onDestroy();
@@ -77,7 +79,6 @@ public abstract class ProxyActivity extends AppCompatActivity implements ISuppor
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
-        //设置4.x动画
         return DELEGATE.onCreateFragmentAnimator();
     }
 

@@ -1,4 +1,4 @@
-package com.petterp.latte_ec.view.login;
+package com.petterp.latte_ec.view.login.iview;
 
 /**
  * view -> login

@@ -18,4 +18,13 @@
     <string name="delegate_index_add_remark">输入备注…</string>
     <string name="dia_home_rv_header">账单详情</string>
     <string name="draw_login_res">点击登录</string>
+    <string name="login_edit_name">手机号码</string>
+    <string name="login_edit_pswd">密码</string>
+    <string name="login_tv_forget_pswd">忘记密码?</string>
+    <string name="login_btn_login">登录</string>
+    <string name="login_tv_create">创建新账号</string>
+    <string name="login_tv_qq_login">QQ登录</string>
+    <string name="register_tv_user">创建新账号</string>
+    <string name="register_tv_code">获取验证码</string>
+    <string name="register_btn_next_step">下一步</string>
 </resources>

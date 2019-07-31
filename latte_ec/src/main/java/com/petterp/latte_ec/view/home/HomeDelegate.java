@@ -33,6 +33,7 @@ import com.petterp.latte_ec.view.add.AddDelegate;
 import com.petterp.latte_ec.view.home.draw.DrawAdapter;
 import com.petterp.latte_ec.view.home.draw.DrawFields;
 import com.petterp.latte_ec.view.home.draw.DrawItemClickListener;
+import com.petterp.latte_ec.view.login.LoginDelegate;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -47,6 +48,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
 /**
  * 首页delegate
@@ -78,6 +80,15 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
     LinearLayoutCompat layoutCompat = null;
     @BindView(R2.id.rv_home_draw)
     RecyclerView drawRv = null;
+    @BindView(R2.id.tv_draw_login)
+    AppCompatTextView tvLogin=null;
+    @OnClick(R2.id.tv_draw_login)
+    void onLogin(){
+//        FragmentAnimator fragmentAnimator=get().beginTransaction();
+//        fragmentAnimator.setEnter()
+        getSupportDelegate().start(new LoginDelegate());
+    }
+
 
     @SuppressLint("WrongConstant")
     @OnClick(R2.id.ic_toolbar_drawer_home)

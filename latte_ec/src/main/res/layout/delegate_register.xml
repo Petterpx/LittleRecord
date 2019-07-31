@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_back"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bar_register"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="top"
+        android:background="@color/app_title_color"
+        app:layout_collapseMode="pin">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/ic_login_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="20dp"
+            android:text="{fa-arrow-left}"
+            android:textColor="@android:color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_tv_user"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/index_bar"
+        android:layout_margin="30dp"
+        android:background="@drawable/login_lin_back"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_register_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入你的手机号码"
+            android:inputType="phone"
+            android:maxEms="16"
+            android:maxLines="1"
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:textColor="@color/app_text_color_dark"
+            android:textColorHint="@color/app_text_color_light"
+            android:textSize="19sp"
+            tools:ignore="RtlSymmetry" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_back" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/edit_register_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:maxEms="18"
+                android:maxLines="1"
+                android:paddingStart="15dp"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/app_text_color_dark"
+                android:textColorHint="@color/app_text_color_light"
+                android:textSize="19sp"
+                tools:ignore="HardcodedText,RtlSymmetry" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_register_gain_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="10dp"
+                android:paddingTop="3dp"
+                android:layout_marginRight="@dimen/dp_10"
+                android:paddingBottom="3dp"
+                android:textColor="@android:color/white"
+                android:paddingLeft="10dp"
+                android:background="@drawable/register_tv_back_circle"
+                android:paddingRight="10dp"
+                android:text="@string/register_tv_code"
+                android:textColorHint="@color/app_text_color_dark"
+                android:textSize="16sp"
+                tools:ignore="RtlSymmetry" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_back" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_register_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20sp"
+            android:background="@drawable/login_btn_back"
+            android:gravity="center"
+            android:text="@string/register_btn_next_step"
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

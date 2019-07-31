@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/SplashTheme"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
-        <activity android:name=".ExampleActivity">
+        <activity android:name=".ExampleActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

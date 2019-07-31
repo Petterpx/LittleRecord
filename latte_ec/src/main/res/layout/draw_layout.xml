@@ -22,7 +22,7 @@
             android:layout_marginTop="30dp"
             android:src="@mipmap/androidq" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_height="wrap_content"
@@ -32,10 +32,11 @@
             android:textSize="15sp"
             tools:ignore="HardcodedText,NotSibling"
             android:layout_marginStart="@dimen/dp_10" />
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
+            android:id="@+id/tv_draw_login"
             android:text="@string/draw_login_res"
             android:layout_toRightOf="@id/img_user_avatar"
             android:textSize="20sp"

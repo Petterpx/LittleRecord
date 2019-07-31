@@ -3,9 +3,11 @@ package com.petterp.latte_core.delegates;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.gyf.immersionbar.OnKeyboardListener;
 import com.petterp.latte_core.R;
 import com.petterp.latte_core.activity.ProxyActivity;
 
@@ -207,15 +210,16 @@ public abstract class BaseDelegate extends Fragment implements ISupportFragment 
                 .autoDarkModeEnable(true)
 //                .transparentNavigationBar()
 //                .navigationBarColorTransform(R.color.design_default_color_primary_dark)
-                .keyboardEnable(true).init();
+                .init();
     }
 
     /**
      * 解决沉浸式状态栏标题栏重叠->根据不同需求
      * 决定是否传入标题栏
+     *
      * @return
      */
-    public  View getToolbar(){
+    public View getToolbar() {
         return null;
     }
 }

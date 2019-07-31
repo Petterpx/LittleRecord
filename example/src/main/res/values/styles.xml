@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@android:color/holo_blue_dark</item>
+        <item name="android:windowBackground">@drawable/launcher</item>
         <item name="android:windowFullscreen">false</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>

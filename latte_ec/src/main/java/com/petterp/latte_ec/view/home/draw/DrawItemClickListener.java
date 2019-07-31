@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_ec.view.login.LoginDelegate;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 

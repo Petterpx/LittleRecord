@@ -12,11 +12,13 @@ import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_ec.view.home.HomeDelegate;
 
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
+
 
 /**
  * 主Activity,处理回调，全局view入口
  */
-public class ExampleActivity extends ProxyActivity implements ISignListener {
+public class ExampleActivity extends ProxyActivity{
 
     @Override
     public LatteDelegate setRootDelegate() {
@@ -36,16 +38,6 @@ public class ExampleActivity extends ProxyActivity implements ISignListener {
         //绑定EvenBus
     }
 
-    @Override
-    public void onSignInSuccess() {
-        Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSignUpSuccess() {
-        Toast.makeText(this, "注册成功", Toast.LENGTH_SHORT).show();
-    }
-
 
     @Override
     protected void onPause() {
@@ -56,4 +48,5 @@ public class ExampleActivity extends ProxyActivity implements ISignListener {
     protected void onResume() {
         super.onResume();
     }
+
 }

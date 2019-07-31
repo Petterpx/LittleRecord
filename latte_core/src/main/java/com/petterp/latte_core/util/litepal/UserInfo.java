@@ -8,6 +8,7 @@ import org.litepal.crud.LitePalSupport;
  * @date 2019-07-17
  */
 public class UserInfo extends LitePalSupport {
+    private long id;
     private String name;
     private String pswd;
     private String phone;
@@ -51,5 +52,13 @@ public class UserInfo extends LitePalSupport {
 
     public void setQq(String qq) {
         this.qq = qq;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
