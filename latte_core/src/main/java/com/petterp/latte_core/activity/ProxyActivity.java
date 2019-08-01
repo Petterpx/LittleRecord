@@ -1,6 +1,7 @@
 package com.petterp.latte_core.activity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -33,8 +34,10 @@ public abstract class ProxyActivity extends AppCompatActivity implements ISuppor
         super.onCreate(savedInstanceState);
         DELEGATE.onCreate(savedInstanceState);
         initContainer(savedInstanceState);
+        DELEGATE.setDefaultFragmentBackground(R.drawable.btn_border);
     }
 
+    @SuppressLint("ResourceType")
     private void initContainer(@Nullable Bundle savedInstanceState) {
         @SuppressLint("RestrictedApi") final ContentFrameLayout container = new ContentFrameLayout(this);
         container.setId(R.id.delegate_container);

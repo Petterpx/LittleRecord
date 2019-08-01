@@ -27,4 +27,10 @@
     <string name="register_tv_user">创建新账号</string>
     <string name="register_tv_code">获取验证码</string>
     <string name="register_btn_next_step">下一步</string>
+    <string name="edit_user_create_name">起个好听的名字吧</string>
+    <string name="edit_create_user_pswd">密码(6-16位)</string>
+    <string name="user_sex">性别</string>
+    <string name="user_sex_man">男</string>
+    <string name="user_sex_woman">女</string>
+    <string name="user_create_info">填写账号资料</string>
 </resources>

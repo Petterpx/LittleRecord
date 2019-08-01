@@ -9,13 +9,13 @@ package com.petterp.latte_ec.model.login.imodel;
 public interface IRegisterModel {
     /**
      * 手机号码
-     * @param res
+     * @param phone
      */
-    void createUser(String res);
+    void createUser(String phone);
 
-    /**
-     * 获取验证码
-     * @return
-     */
-    String getCode();
+
+
+    void createCode(String res);
+
+    String getPhone();
 }
