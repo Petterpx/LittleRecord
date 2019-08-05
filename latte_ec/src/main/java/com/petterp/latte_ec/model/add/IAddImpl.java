@@ -105,10 +105,12 @@ public class IAddImpl implements IAddModel {
 
     @Override
     public void setBundle(Bundle bundle) {
-        iAddBundleFields = bundle.getParcelable(IAddBundleType.KEY_UPDATE_LIST);
-        if (iAddBundleFields != null) {
-            state = IHomeStateType.UPDATE;
-            kind = new String[]{iAddBundleFields.getName(), iAddBundleFields.getKind()};
+        if (bundle != null) {
+            iAddBundleFields = bundle.getParcelable(IAddBundleType.KEY_UPDATE_LIST);
+            if (iAddBundleFields != null) {
+                state = IHomeStateType.UPDATE;
+                kind = new String[]{iAddBundleFields.getName(), iAddBundleFields.getKind()};
+            }
         }
     }
 

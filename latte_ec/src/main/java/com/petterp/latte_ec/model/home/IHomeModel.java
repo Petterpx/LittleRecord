@@ -120,4 +120,16 @@ public interface IHomeModel {
     void setAddPosition(int position);
 
 
+    /**
+     * 获取头像
+     * @return url
+     */
+    String getDrawUserIcon();
+
+    /**
+     * 获取记录天数
+     * @return
+     */
+    String getDrawRecord();
+
 }

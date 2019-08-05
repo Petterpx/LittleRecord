@@ -10,6 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 /**
+ * 设置相应时间后执行某操作
  * @author by Petterp
  * @date 2019-08-01
  */

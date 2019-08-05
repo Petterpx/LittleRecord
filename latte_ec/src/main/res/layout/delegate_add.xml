@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/index_bar_add"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:layout_gravity="top"
         android:background="@android:color/holo_blue_dark">
 
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="{icon-back}"
+                android:text="{fa-arrow-left}"
                 android:textColor="@android:color/white"
                 android:textSize="22sp" />
 

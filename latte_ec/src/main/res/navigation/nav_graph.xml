@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeDelegate">
+
+    <fragment
+        android:id="@+id/homeDelegate"
+        android:name="com.petterp.latte_ec.view.home.HomeDelegate"
+        tools:layout="@layout/delegate_home"
+        android:label="HomeDelegate" >
+        <action
+            android:id="@+id/action_homeDelegate_to_addDelegate"
+            app:destination="@id/addDelegate" />
+        <action
+            android:id="@+id/action_homeDelegate_to_loginDelegate"
+            app:destination="@id/loginDelegate" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDelegate"
+        tools:layout="@layout/delegate_add"
+        android:name="com.petterp.latte_ec.view.add.AddDelegate"
+        android:label="AddDelegate" />
+    <fragment
+        android:id="@+id/loginDelegate"
+        tools:layout="@layout/delegate_login"
+        android:name="com.petterp.latte_ec.view.login.LoginDelegate"
+        android:label="LoginDelegate" >
+        <action
+            android:id="@+id/action_loginDelegate_to_registerDelegate"
+            app:destination="@id/registerDelegate" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerDelegate"
+        tools:layout="@layout/delegate_register"
+        android:name="com.petterp.latte_ec.view.login.RegisterDelegate"
+        android:label="RegisterDelegate" >
+        <action
+            android:id="@+id/action_registerDelegate_to_createUserDelegate"
+            app:destination="@id/createUserDelegate" />
+    </fragment>
+    <fragment
+        android:id="@+id/createUserDelegate"
+        tools:layout="@layout/delegate_user_create"
+        android:name="com.petterp.latte_ec.view.login.CreateUserDelegate"
+        android:label="CreateUserDelegate" >
+        <action
+            android:id="@+id/action_createUserDelegate_to_homeDelegate"
+            app:destination="@id/homeDelegate" />
+        <argument
+            android:name="phone"
+            app:argType="string" />
+    </fragment>
+</navigation>

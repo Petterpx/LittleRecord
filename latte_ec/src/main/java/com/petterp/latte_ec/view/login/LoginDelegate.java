@@ -6,22 +6,23 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.Navigation;
 
-import com.petterp.latte_core.delegates.LatteDelegate;
-import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
+import com.petterp.latte_core.mvp.view.BaseFragment;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.presenter.LoginPresenter;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
+ * 登录
  * @author by Petterp
  * @date 2019-07-30
  */
-public class LoginDelegate extends LatteDelegate {
+public class LoginDelegate extends BaseFragment<LoginPresenter> {
 
     @BindView(R2.id.bar_login)
     Toolbar toolbar=null;
@@ -31,7 +32,7 @@ public class LoginDelegate extends LatteDelegate {
     }
     @OnClick(R2.id.tv_login_create)
     void createUser(){
-        getSupportDelegate().start(RegisterDelegate.newInstance());
+        Navigation.findNavController(getRootView()).navigate(R.id.registerDelegate);
     }
     @Override
     public Object setLayout() {
@@ -54,7 +55,9 @@ public class LoginDelegate extends LatteDelegate {
     }
 
     @Override
-    public Toolbar getToolbar() {
+    public View setToolbar() {
         return toolbar;
     }
+
+
 }

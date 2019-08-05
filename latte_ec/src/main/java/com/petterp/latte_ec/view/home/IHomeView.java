@@ -1,5 +1,6 @@
 package com.petterp.latte_ec.view.home;
 
+import com.petterp.latte_core.mvp.view.IBaseView;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author by Petterp
  * @date 2019-07-23
  */
-public interface IHomeView {
+public interface IHomeView extends IBaseView {
 
 
     /**
@@ -40,5 +41,6 @@ public interface IHomeView {
      * 初始化Draw
      */
     void showDrawInfo();
+
 
 }

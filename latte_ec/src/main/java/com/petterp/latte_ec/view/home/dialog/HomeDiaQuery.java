@@ -64,12 +64,8 @@ public class HomeDiaQuery extends DialogFragment {
             icKind.setText(itemEntity.getField(MultipleFidls.NAME));
             tvKind.setText(itemEntity.getField(IHomeRvFields.KIND));
             tvTime.setText(TimeUtils.build().getDateinfo(itemEntity.getField(IHomeRvFields.LONG_TIME)));
-            window.findViewById(R.id.ic_dia_header_update).setOnClickListener(view -> {
-                info.update();
-            });
-            window.findViewById(R.id.ic_dia_header_delete).setOnClickListener(view -> {
-                info.delete();
-            });
+            window.findViewById(R.id.ic_dia_header_update).setOnClickListener(view -> info.update());
+            window.findViewById(R.id.ic_dia_header_delete).setOnClickListener(view -> info.delete());
         }
     }
 }

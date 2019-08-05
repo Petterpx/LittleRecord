@@ -1,5 +1,9 @@
 package com.petterp.latte_core.util.callback;
 
+import android.util.Log;
+
+import java.lang.ref.ReferenceQueue;
+import java.util.HashMap;
 import java.util.WeakHashMap;
 
 /**
@@ -8,20 +12,22 @@ import java.util.WeakHashMap;
  * email：1509492795@qq.com
  */
 public class CallbackManager {
-    private static final WeakHashMap<Object,IGlobalCallback> CALLBACKS=new WeakHashMap<>();
+    public static final HashMap<Object, IGlobalCallback> CALLBACKS = new HashMap<>();
 
-    private static class Holder{
-        private static  final CallbackManager INSTANCE=new CallbackManager();
+    private static class Holder {
+        private static final CallbackManager INSTANCE = new CallbackManager();
     }
-    public static CallbackManager getInstance(){
+
+    public static CallbackManager getInstance() {
         return Holder.INSTANCE;
     }
-    public <T> CallbackManager addCallback(Object tag, IGlobalCallback<T> callback){
-        CALLBACKS.put(tag,callback);
+
+    public <T> CallbackManager addCallback(Object tag, IGlobalCallback<T> callback) {
+        CALLBACKS.put(tag, callback);
         return this;
     }
 
-    public IGlobalCallback getCallback(Object tag){
+    public IGlobalCallback getCallback(Object tag) {
         return CALLBACKS.get(tag);
     }
 

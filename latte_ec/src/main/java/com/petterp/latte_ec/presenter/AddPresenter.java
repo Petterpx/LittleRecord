@@ -2,6 +2,7 @@ package com.petterp.latte_ec.presenter;
 
 import android.os.Bundle;
 
+import com.petterp.latte_core.mvp.presenter.BasePresenter;
 import com.petterp.latte_ec.model.add.IAddBundleFields;
 import com.petterp.latte_ec.model.add.IAddImpl;
 import com.petterp.latte_ec.model.add.IAddModel;
@@ -17,12 +18,13 @@ import java.util.List;
  * @author by Petterp
  * @date 2019-07-24
  */
-public class AddPresenter {
+public class AddPresenter extends BasePresenter<IAddView> {
     private IAddView mView;
     private IAddModel model;
 
-    public AddPresenter(IAddView addView) {
-        this.mView = addView;
+    @Override
+    public void getView(IAddView view) {
+        this.mView = view;
         model = new IAddImpl();
     }
 
@@ -122,5 +124,6 @@ public class AddPresenter {
     public IAddBundleFields getUpdateRvItem() {
         return model.getStateUpdate();
     }
+
 
 }

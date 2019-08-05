@@ -1,10 +1,12 @@
 package com.petterp.latte_ec.view.login.iview;
 
+import com.petterp.latte_core.mvp.view.IBaseView;
+
 /**
  * @author by Petterp
  * @date 2019-07-31
  */
-public interface IRegisterView {
+public interface IRegisterView extends IBaseView {
     /**
      * 显示Loader
      */

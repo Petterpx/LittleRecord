@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin : "androidx.navigation.safeargs"
 android {
     compileSdkVersion 28
 
@@ -56,18 +57,11 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0-beta03'
 
 
-
-    //Fragment库
-    api 'me.yokeyword:fragmentation:1.3.7'
-
     //字体图标库
     api 'com.joanzapata.iconify:android-iconify-ionicons:2.2.2'
     api 'com.joanzapata.iconify:android-iconify-meteocons:2.2.2'
     api 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
 
-    //glide图片加载库依赖
-    api 'com.github.bumptech.glide:glide:4.9.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
 
 
@@ -95,4 +89,17 @@ dependencies {
     api 'com.jakewharton.rxbinding3:rxbinding:3.0.0'
     api 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.0.0'
     api 'com.jakewharton.rxbinding3:rxbinding-viewpager:3.0.0'
+
+    //导入jetPack相应依赖
+
+    def lifecycle_version = "2.0.0"
+    def nav_version = "2.1.0-beta02"
+    api "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    // Java
+    api "androidx.navigation:navigation-fragment:$nav_version"
+    api "androidx.navigation:navigation-ui:$nav_version"
+
+    //图片选择
+    api 'com.lwkandroid:ImagePicker:1.4.4'
+
 }

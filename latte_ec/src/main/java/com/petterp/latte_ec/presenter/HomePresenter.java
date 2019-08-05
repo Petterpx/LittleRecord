@@ -1,10 +1,20 @@
 package com.petterp.latte_ec.presenter;
 
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+
+import com.petterp.latte_core.mvp.factory.CreatePresenter;
+import com.petterp.latte_core.mvp.presenter.BasePresenter;
+import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_ec.model.home.IHomeImpl;
 import com.petterp.latte_ec.model.home.IHomeModel;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.view.home.IHomeView;
+import com.petterp.latte_ec.view.home.draw.DrawUserUpdateFieds;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import java.util.HashMap;
@@ -16,14 +26,16 @@ import java.util.List;
  * @author by Petterp
  * @date 2019-07-23
  */
-public class HomePresenter {
+public class HomePresenter extends BasePresenter<IHomeView> {
     private IHomeModel iModel;
     private IHomeView iView;
 
-    public HomePresenter(IHomeView iView) {
-        this.iView = iView;
+    @Override
+    public void getView(IHomeView view) {
+        this.iView = view;
         iModel = new IHomeImpl();
     }
+
 
     /**
      * 初始化显示
@@ -33,6 +45,7 @@ public class HomePresenter {
         showRvView();
         showTitleInfo();
         floatButtonListener();
+        //初始化侧滑
         showDraw();
     }
 
@@ -179,10 +192,28 @@ public class HomePresenter {
         return iModel.getKey();
     }
 
-    private void showDraw(){
+    private void showDraw() {
         if (iView != null) {
             iView.showDrawInfo();
         }
     }
 
+    /**
+     * 返回 User头像url
+     *
+     * @return
+     */
+    public String getDrawUserUrl() {
+        return iModel.getDrawUserIcon();
+    }
+
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
+        super.onDestroy(owner);
+        Log.e("demo","ondey");
+    }
+
+    public String getDrawRecord() {
+        return iModel.getDrawRecord();
+    }
 }

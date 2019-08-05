@@ -19,7 +19,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
-import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_core.mvp.factory.CreatePresenter;
+import com.petterp.latte_core.mvp.view.BaseFragment;
 import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_core.util.edittext.SoftKeyBoardListener;
@@ -50,7 +51,8 @@ import butterknife.BindView;
  * @author by Petterp
  * @date 2019-07-24
  */
-public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallback<String[]> {
+@CreatePresenter(AddPresenter.class)
+public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView, IGlobalCallback<String[]> {
 
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
@@ -75,25 +77,9 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
         return R.layout.delegate_add;
     }
 
-    public static AddDelegate newInstance(IAddBundleFields addBundleFields) {
-        Bundle args = new Bundle();
-        args.putParcelable(IAddBundleType.KEY_UPDATE_LIST, addBundleFields);
-        AddDelegate fragment = new AddDelegate();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    public static AddDelegate newInstance() {
-        Bundle args = new Bundle();
-        AddDelegate fragment = new AddDelegate();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-        //建立连接
-        mPresenter = new AddPresenter(this);
+        mPresenter=getPresenter();
         //初始化View
         mPresenter.showInfo(getArguments());
         //处理键盘冲突
@@ -141,7 +127,7 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnItemTouchListener(new CompileItemClcikList(mPresenter, this));
+        recyclerView.addOnItemTouchListener(new CompileItemClcikList(mPresenter));
         //设置Rv分割线
         RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
                 .color(Color.parseColor("#F0F1F2"))
@@ -184,7 +170,7 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
 
 
     @Override
-    public Toolbar getToolbar() {
+    public View setToolbar() {
         return toolbar;
     }
 
@@ -203,6 +189,7 @@ public class AddDelegate extends LatteDelegate implements IAddView, IGlobalCallb
      */
     @Override
     public void executeCallback(@Nullable String[] args) {
+        Log.e("demo","123");
         mPresenter.setTitleRvKind(args);
     }
 

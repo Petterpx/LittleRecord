@@ -1,10 +1,12 @@
 package com.petterp.latte_ec.view.add;
 
+import com.petterp.latte_core.mvp.view.IBaseView;
+
 /**
  * @author by Petterp
  * @date 2019-07-24
  */
-public interface IAddView {
+public interface IAddView extends IBaseView {
 
     /**
      * 初始化top

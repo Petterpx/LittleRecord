@@ -46,6 +46,10 @@ public final class FileUtil {
     public static final String UPLOAD_PHOTO_DIR =
             Environment.getExternalStorageDirectory().getPath() + "/a_upload_photos/";
 
+    //默认本地图片存储位置
+    public static final String
+            IMG_DIR=Environment.getExternalStorageDirectory().getPath()+"/NingXiaoJi/";
+
     //网页缓存地址
     public static final String WEB_CACHE_DIR =
             Environment.getExternalStorageDirectory().getPath() + "/app_web_cache/";

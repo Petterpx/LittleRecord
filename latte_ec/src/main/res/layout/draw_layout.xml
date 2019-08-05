@@ -14,21 +14,20 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_user_avatar"
+            android:id="@+id/img_draw_user_avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:src="@mipmap/androidq" />
+            android:layout_marginTop="30dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_height="wrap_content"
+            android:id="@+id/tv_draw_user_record"
             android:layout_marginLeft="20dp"
-            android:layout_below="@id/img_user_avatar"
-            android:text="已经记录10天啦,继续加油!"
+            android:layout_below="@id/img_draw_user_avatar"
             android:textSize="15sp"
             tools:ignore="HardcodedText,NotSibling"
             android:layout_marginStart="@dimen/dp_10" />
@@ -38,12 +37,12 @@
             android:layout_marginLeft="20dp"
             android:id="@+id/tv_draw_login"
             android:text="@string/draw_login_res"
-            android:layout_toRightOf="@id/img_user_avatar"
+            android:layout_toRightOf="@id/img_draw_user_avatar"
             android:textSize="20sp"
             android:textColor="@android:color/black"
             android:layout_height="wrap_content"
             tools:ignore="HardcodedText"
-            android:layout_toEndOf="@id/img_user_avatar"
+            android:layout_toEndOf="@id/img_draw_user_avatar"
             android:layout_marginStart="20dp" />
     </RelativeLayout>
     <View

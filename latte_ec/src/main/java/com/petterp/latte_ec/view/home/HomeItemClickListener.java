@@ -1,24 +1,16 @@
 package com.petterp.latte_ec.view.home;
 
-import android.annotation.SuppressLint;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
-import android.view.Gravity;
+import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
-import com.joanzapata.iconify.widget.IconTextView;
-import com.petterp.latte_core.delegates.LatteDelegate;
-import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.model.add.IAddBundleFields;
+import com.petterp.latte_ec.model.add.IAddBundleType;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.presenter.HomePresenter;
@@ -30,27 +22,28 @@ import com.petterp.latte_ec.view.home.dialog.IHomeDiaQueryInfo;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
-import java.util.Objects;
 
 /**
  * @author by Petterp
  * @date 2019-07-26
  */
 public class HomeItemClickListener extends SimpleClickListener implements IHomeDiaDeleteListener, IHomeDiaQueryInfo {
-    private LatteDelegate mdelegate;
     private HomePresenter presenter;
     private MultipleItemEntity entity;
     private int position;
     private HomeDiaQuery diaQuery;
     private HomeDiaDelete diaDelete;
+    private FragmentManager fragmentManager;
+    private View view;
 
-    public HomeItemClickListener(LatteDelegate delegate, HomePresenter presenter) {
-        this.mdelegate = delegate;
+    public HomeItemClickListener(FragmentManager fragmentManager, HomePresenter presenter) {
         this.presenter = presenter;
+        this.fragmentManager=fragmentManager;
     }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        this.view=view;
         entity = (MultipleItemEntity) adapter.getData().get(position);
         this.position = position;
         //如果点击位置为header，跳转添加页面
@@ -64,10 +57,10 @@ public class HomeItemClickListener extends SimpleClickListener implements IHomeD
             presenter.setAddPosition(position + sum + 1);
             //设置key
             presenter.setKey(entity.getField(IHomeRvFields.KEY));
-            mdelegate.getSupportDelegate().start(AddDelegate.newInstance());
+            Navigation.findNavController(view).navigate(R.id.addDelegate);
         } else {
             diaQuery = new HomeDiaQuery(entity, this);
-            diaQuery.show(mdelegate.getChildFragmentManager(), "dialog_query");
+            diaQuery.show(fragmentManager, "dialog_query");
         }
     }
 
@@ -101,14 +94,16 @@ public class HomeItemClickListener extends SimpleClickListener implements IHomeD
         presenter.setOndownPosition(position);
         presenter.setStateMode(IHomeStateType.UPDATE);
         diaQuery.dismiss();
-        mdelegate.getSupportDelegate().start(AddDelegate.newInstance(fields));
+        Bundle args = new Bundle();
+        args.putParcelable(IAddBundleType.KEY_UPDATE_LIST, fields);
+        Navigation.findNavController(this.view).navigate(R.id.addDelegate,args);
     }
 
     @Override
     public void delete() {
         diaQuery.dismiss();
         diaDelete = new HomeDiaDelete(this);
-        diaDelete.show(mdelegate.getChildFragmentManager(), "dialog_delete");
+        diaDelete.show(fragmentManager, "dialog_delete");
     }
 
     @Override

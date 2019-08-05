@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,14 +15,19 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.load.engine.Resource;
+import com.bumptech.glide.Glide;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.joanzapata.iconify.widget.IconTextView;
-import com.petterp.latte_core.delegates.LatteDelegate;
+import com.petterp.latte_core.mvp.factory.CreatePresenter;
+import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_core.util.callback.IGlobalCallback;
+import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
@@ -29,11 +35,10 @@ import com.petterp.latte_ec.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.presenter.HomePresenter;
-import com.petterp.latte_ec.view.add.AddDelegate;
 import com.petterp.latte_ec.view.home.draw.DrawAdapter;
 import com.petterp.latte_ec.view.home.draw.DrawFields;
 import com.petterp.latte_ec.view.home.draw.DrawItemClickListener;
-import com.petterp.latte_ec.view.login.LoginDelegate;
+import com.petterp.latte_ec.view.home.draw.DrawUserUpdateFieds;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -48,7 +53,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 首页delegate
@@ -56,7 +61,8 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * @author by Petterp
  * @date 2019-07-23
  */
-public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrListener, IHomeRvListener {
+@CreatePresenter(HomePresenter.class)
+public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeView, IHomeDrListener, IHomeRvListener {
 
     @BindView(R2.id.index_bar)
     Toolbar toolbar = null;
@@ -81,12 +87,20 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
     @BindView(R2.id.rv_home_draw)
     RecyclerView drawRv = null;
     @BindView(R2.id.tv_draw_login)
-    AppCompatTextView tvLogin=null;
+    AppCompatTextView tvLogin = null;
+    @BindView(R2.id.img_draw_user_avatar)
+    CircleImageView circleImageView = null;
+    @BindView(R2.id.tv_draw_user_record)
+    AppCompatTextView tvRecord = null;
+
+    @OnClick(R2.id.img_draw_user_avatar)
+    void onStartUser(){
+        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+    }
+
     @OnClick(R2.id.tv_draw_login)
-    void onLogin(){
-//        FragmentAnimator fragmentAnimator=get().beginTransaction();
-//        fragmentAnimator.setEnter()
-        getSupportDelegate().start(new LoginDelegate());
+    void onLogin() {
+        Navigation.findNavController(getRootView()).navigate(R.id.loginDelegate);
     }
 
 
@@ -102,7 +116,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_index;
+        return R.layout.delegate_home;
     }
 
 
@@ -110,11 +124,11 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         //建立连接
-        mPresenter = new HomePresenter(this);
+        mPresenter = getPresenter();
         //初始化view
         mPresenter.showInfo();
         //侧滑监听
-        drawerLayout.addDrawerListener(new HomeDrawerListener(getProxyActivity(), this));
+        drawerLayout.addDrawerListener(new HomeDrawerListener(getActivity(), this));
         //注册EvenBus
         EventBus.getDefault().register(this);
     }
@@ -143,7 +157,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         //Rv滑动监听
         recyclerView.addOnScrollListener(new HomeRvoScrollListener(this));
         //Rv点击事件
-        recyclerView.addOnItemTouchListener(new HomeItemClickListener(this, mPresenter));
+        recyclerView.addOnItemTouchListener(new HomeItemClickListener(getChildFragmentManager(), mPresenter));
     }
 
 
@@ -163,14 +177,31 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(DrawFields.DRAW_HOME_FILEDS)
                     .setField(MultipleFidls.NAME, itemIc[i])
-                    .setField(MultipleFidls.ID,i)
+                    .setField(MultipleFidls.ID, i)
                     .setField(MultipleFidls.TEXT, itemTv[i]).build();
             list.add(itemEntity);
         }
         DrawAdapter adapter = new DrawAdapter(list);
         drawRv.setAdapter(adapter);
         drawRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        drawRv.addOnItemTouchListener(new DrawItemClickListener(this));
+        drawRv.addOnItemTouchListener(new DrawItemClickListener());
+        showDrawUser();
+        CallbackManager.getInstance().addCallback(DrawUserUpdateFieds.USER_ICON_UPDATE, (IGlobalCallback<String>) args -> showDrawUser());
+    }
+
+    /**
+     * 设置侧滑栏里的一些数据
+     */
+    private void showDrawUser() {
+        if (!LatterPreference.getLoginMode("login")) {
+            Glide.with(this).load(R.mipmap.androidq).into(circleImageView);
+            circleImageView.setEnabled(false);
+        } else {
+            circleImageView.setEnabled(true);
+            Glide.with(this).load(mPresenter.getDrawUserUrl()).into(circleImageView);
+            tvLogin.setVisibility(View.GONE);
+        }
+        tvRecord.setText(mPresenter.getDrawRecord());
     }
 
 
@@ -185,16 +216,15 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
             mPresenter.setKey(TimeUtils.build().getLongTimekey());
             mPresenter.setStateMode(IHomeStateType.ADD);
             //启动AddDelegate
-            getSupportDelegate().start(AddDelegate.newInstance());
+            Navigation.findNavController(view).navigate(R.id.addDelegate);
         });
     }
 
 
     @Override
-    public View getToolbar() {
+    public View setToolbar() {
         return toolbar;
     }
-
 
     /**
      * EvenBus 接收Add传回的具体item
@@ -218,6 +248,7 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
             default:
                 break;
         }
+        tvRecord.setText(mPresenter.getDrawRecord());
     }
 
 
@@ -231,18 +262,18 @@ public class HomeDelegate extends LatteDelegate implements IHomeView, IHomeDrLis
         floatingActionButton.hide();
     }
 
-    /**
-     * 返回键重写
-     *
-     * @return
-     */
-    @Override
-    public boolean onBackPressedSupport() {
-        boolean mode = super.onBackPressedSupport();
-        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-            drawerLayout.closeDrawer(Gravity.LEFT);
-            return true;
-        }
-        return mode;
-    }
+//    /**
+//     * 返回键重写
+//     *
+//     * @return
+//     */
+//    @Override
+//    public boolean onBackPressedSupport() {
+//        boolean mode = super.onBackPressedSupport();
+//        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+//            drawerLayout.closeDrawer(Gravity.LEFT);
+//            return true;
+//        }
+//        return mode;
+//    }
 }

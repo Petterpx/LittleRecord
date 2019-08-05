@@ -3,9 +3,10 @@ package com.petterp.latte_ec.view.add.BootomCompile;
 import android.util.Log;
 import android.view.View;
 
+import androidx.navigation.Navigation;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
-import com.petterp.latte_core.delegates.LatteDelegate;
 import com.petterp.latte_core.util.time.SystemClock;
 import com.petterp.latte_ec.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
@@ -31,11 +32,8 @@ public class CompileItemClcikList extends SimpleClickListener {
     private final DecimalFormat DECI_FORMAT;
     private final int SUM_LENGTH = 20;
     private AddPresenter mPresenter;
-    private LatteDelegate delegate;
-
-    public CompileItemClcikList(AddPresenter mPresenter, LatteDelegate delegate) {
+    public CompileItemClcikList(AddPresenter mPresenter) {
         this.mPresenter = mPresenter;
-        this.delegate = delegate;
         TEXT_BUILDER = new StringBuilder();
         if (mPresenter.getStateMode() == IHomeStateType.UPDATE) {
             TEXT_BUILDER.append(mPresenter.getUpdateRvItem().getMoney());
@@ -128,7 +126,7 @@ public class CompileItemClcikList extends SimpleClickListener {
                 TEXT_BUILDER.setLength(0);
                 break;
             case "保存":
-                addSave();
+                addSave(view);
                 break;
         }
     }
@@ -190,7 +188,7 @@ public class CompileItemClcikList extends SimpleClickListener {
     /**
      * 普通添加
      */
-    private void addSave() {
+    private void addSave(View view) {
         String res = TEXT_BUILDER.toString();
         if (!res.equals("")) {
             //如果包含"+"
@@ -221,7 +219,8 @@ public class CompileItemClcikList extends SimpleClickListener {
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));
             TEXT_BUILDER.setLength(0);
-            delegate.getSupportDelegate().pop();
+            //弹栈
+            Navigation.findNavController(view).navigateUp();
         }
     }
 

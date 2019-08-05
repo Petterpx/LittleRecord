@@ -6,8 +6,11 @@ import android.util.Log;
 import com.petterp.latte_core.util.exception.ExecptionFiels;
 import com.petterp.latte_core.util.litepal.BillInfo;
 import com.petterp.latte_core.util.litepal.EveryBillCollect;
+import com.petterp.latte_core.util.litepal.UserInfo;
+import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_core.util.time.SystemClock;
 import com.petterp.latte_core.util.time.TimeUtils;
+import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.view.home.HomeItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
@@ -56,6 +59,8 @@ public class IHomeImpl implements IHomeModel {
     private int stateMode = IHomeStateType.ADD;
 
     private boolean addMode = false;
+    //天数
+    private int collectSize = 0;
 
 
     @Override
@@ -83,7 +88,7 @@ public class IHomeImpl implements IHomeModel {
         List<EveryBillCollect> collects = LitePal
                 .order("longDate desc")
                 .find(EveryBillCollect.class);
-        int collectSize = collects.size();
+        collectSize = collects.size();
         String yearMonth = TimeUtils.build().getYearMonth();
         for (int i = 0; i < collectSize; i++) {
             //如果是当天改为今天
@@ -115,7 +120,7 @@ public class IHomeImpl implements IHomeModel {
                     .build();
 
             //添加头,记得判断
-            if (billInfoSize>0){
+            if (billInfoSize > 0) {
                 itemEntities.add(itemHeader);
             }
 
@@ -238,7 +243,7 @@ public class IHomeImpl implements IHomeModel {
                 incomeMoney -= money;
             }
         }
-        billCollect.setSum(collect.get(0).getSum()-1);
+        billCollect.setSum(collect.get(0).getSum() - 1);
         surplusMoney = incomeMoney + consumeMoney;
         itemEntities.remove(itemEntity);
         billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
@@ -386,6 +391,21 @@ public class IHomeImpl implements IHomeModel {
     @Override
     public void setAddPosition(int position) {
         this.updateAddPosition = position;
+    }
+
+    @Override
+    public String getDrawUserIcon() {
+        List<UserInfo> userId = LitePal.where("key=?", LatterPreference.getUserId("userId")).limit(1).find(UserInfo.class);
+        return userId.get(0).getIconUrl();
+    }
+
+    @Override
+    public String getDrawRecord() {
+        if (collectSize == 0) {
+            return "还没有记录数据呢，快去记录吧!";
+        } else {
+            return "已经记录 "+collectSize+" 天啦,继续加油!";
+        }
     }
 
     private void sqlAdd(MultipleItemEntity itemEntity) {
