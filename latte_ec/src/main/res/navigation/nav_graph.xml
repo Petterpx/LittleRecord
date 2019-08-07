@@ -12,10 +12,25 @@
         android:label="HomeDelegate" >
         <action
             android:id="@+id/action_homeDelegate_to_addDelegate"
-            app:destination="@id/addDelegate" />
+            app:destination="@id/addDelegate"
+            app:enterAnim="@anim/dialog_bottom_in"
+            app:exitAnim="@anim/dialog_top_out"
+            app:popEnterAnim="@anim/dialog_top_in"
+            app:popExitAnim="@anim/dialog_bottom_out" />
         <action
             android:id="@+id/action_homeDelegate_to_loginDelegate"
-            app:destination="@id/loginDelegate" />
+            app:destination="@id/loginDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
+        <action
+            android:id="@+id/action_homeDelegate_to_userDelegate"
+            app:destination="@id/userDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out"/>
     </fragment>
     <fragment
         android:id="@+id/addDelegate"
@@ -24,32 +39,56 @@
         android:label="AddDelegate" />
     <fragment
         android:id="@+id/loginDelegate"
-        tools:layout="@layout/delegate_login"
+        tools:layout="@layout/delegate_login_login"
         android:name="com.petterp.latte_ec.view.login.LoginDelegate"
         android:label="LoginDelegate" >
         <action
             android:id="@+id/action_loginDelegate_to_registerDelegate"
-            app:destination="@id/registerDelegate" />
+            app:destination="@id/registerDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
     </fragment>
     <fragment
         android:id="@+id/registerDelegate"
-        tools:layout="@layout/delegate_register"
+        tools:layout="@layout/delegate_login_register"
         android:name="com.petterp.latte_ec.view.login.RegisterDelegate"
         android:label="RegisterDelegate" >
         <action
             android:id="@+id/action_registerDelegate_to_createUserDelegate"
-            app:destination="@id/createUserDelegate" />
+            app:destination="@id/createUserDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
+        <action
+            android:id="@+id/action_registerDelegate_to_homeDelegate"
+            app:destination="@id/homeDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
     </fragment>
     <fragment
         android:id="@+id/createUserDelegate"
-        tools:layout="@layout/delegate_user_create"
+        tools:layout="@layout/delegate_login_user_create"
         android:name="com.petterp.latte_ec.view.login.CreateUserDelegate"
         android:label="CreateUserDelegate" >
         <action
             android:id="@+id/action_createUserDelegate_to_homeDelegate"
-            app:destination="@id/homeDelegate" />
+            app:destination="@id/homeDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
         <argument
             android:name="phone"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/userDelegate"
+        tools:layout="@layout/delegate_login_user"
+        android:name="com.petterp.latte_ec.view.login.UserDelegate"
+        android:label="UserDelegate" />
 </navigation>

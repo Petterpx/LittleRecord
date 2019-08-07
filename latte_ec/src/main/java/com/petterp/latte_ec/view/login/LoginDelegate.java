@@ -1,6 +1,5 @@
 package com.petterp.latte_ec.view.login;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -32,11 +31,11 @@ public class LoginDelegate extends BaseFragment<LoginPresenter> {
     }
     @OnClick(R2.id.tv_login_create)
     void createUser(){
-        Navigation.findNavController(getRootView()).navigate(R.id.registerDelegate);
+        Navigation.findNavController(getRootView()).navigate(R.id.action_loginDelegate_to_registerDelegate);
     }
     @Override
     public Object setLayout() {
-        return R.layout.delegate_login;
+        return R.layout.delegate_login_login;
     }
 
     @Override

@@ -14,7 +14,12 @@ android {
     }
     buildTypes {
         release {
+            //开启混淆
             minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+            //前一部分代表系统默认的android程序的混淆文件，该文件已经包含了基本的混淆声明
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

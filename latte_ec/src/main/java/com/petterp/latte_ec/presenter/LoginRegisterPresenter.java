@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author by Petterp
  * @date 2019-07-31
  */
-public class RegisterPresenter extends BasePresenter<IRegisterView> {
+public class LoginRegisterPresenter extends BasePresenter<IRegisterView> {
     private IRegisterView iView;
     private IRegisterImpl iModel;
     private EventHandler eventHandler;

@@ -33,4 +33,16 @@
     <string name="user_sex_man">男</string>
     <string name="user_sex_woman">女</string>
     <string name="user_create_info">填写账号资料</string>
+    <string name="tv_login_user">资料管理</string>
+    <string name="save">保存</string>
+    <string name="user_icon">头像</string>
+    <string name="user_name">昵称</string>
+    <string name="user_account">登录账号</string>
+    <string name="user_login_qq">通过QQ登录</string>
+    <string name="user_login_phone">通过账号登录</string>
+    <string name="user_account_back">退出登录</string>
+    <string name="tv_info_update">点击上面的内容可以修改</string>
+    <string name="tv_login_user_manage">资料管理</string>
+    <string name="login_user_qq">通过 QQ 登录</string>
+    <string name="login_user_phone">通过 手机 登录</string>
 </resources>

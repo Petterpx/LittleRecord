@@ -5,53 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    android:background="@android:color/white"
+    android:background="@color/app_back"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:paddingBottom="15dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/li_draw_home_back"
+        android:orientation="vertical"
+        android:paddingTop="30dp"
+        android:paddingBottom="15dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_draw_user_avatar"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_draw_user_avatar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_draw_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="@string/draw_login_res"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_height="wrap_content"
             android:id="@+id/tv_draw_user_record"
-            android:layout_marginLeft="20dp"
-            android:layout_below="@id/img_draw_user_avatar"
-            android:textSize="15sp"
-            tools:ignore="HardcodedText,NotSibling"
-            android:layout_marginStart="@dimen/dp_10" />
-        <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tv_draw_login"
-            android:text="@string/draw_login_res"
-            android:layout_toRightOf="@id/img_draw_user_avatar"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"
             android:layout_height="wrap_content"
-            tools:ignore="HardcodedText"
-            android:layout_toEndOf="@id/img_draw_user_avatar"
-            android:layout_marginStart="20dp" />
-    </RelativeLayout>
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            tools:ignore="HardcodedText,NotSibling" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#DCE7EC"/>
+        android:background="#DCE7EC" />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_home_draw"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rv_home_draw"/>
+        android:layout_height="wrap_content" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

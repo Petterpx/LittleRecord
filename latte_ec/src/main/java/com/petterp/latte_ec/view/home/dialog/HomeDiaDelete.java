@@ -24,16 +24,16 @@ import com.petterp.latte_ec.R;
  * @date 2019-07-29
  */
 public class HomeDiaDelete extends DialogFragment {
-    private IHomeDiaDeleteListener deleteListener;
+    private IDialogTextListener deleteListener;
 
-    public HomeDiaDelete(IHomeDiaDeleteListener deleteListener) {
+    public HomeDiaDelete(IDialogTextListener deleteListener) {
         this.deleteListener = deleteListener;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dia_home_delete, container);
+        View view = inflater.inflate(R.layout.dialog_message, container);
         view.findViewById(R.id.tv_dia_home_delete).setOnClickListener(view1 -> deleteListener.ensure());
         view.findViewById(R.id.tv_dia_home_back).setOnClickListener(view1 -> deleteListener.back());
         return view;

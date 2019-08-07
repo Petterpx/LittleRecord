@@ -2,42 +2,37 @@ package com.petterp.example;
 
 
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.petterp.latte_core.app.Latte;
-
+import com.petterp.latte_core.mvp.view.BaseActivity;
+import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_core.util.callback.IGlobalCallback;
 
 
 /**
  * 主Activity,处理回调，全局view入口
  */
-public class ExampleActivity extends AppCompatActivity {
+public class ExampleActivity extends BaseActivity {
 
 
-    //隐藏actionbar
+    @Override
+    public int getLayout() {
+        return R.layout.activity_main;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        //设置全局Activity
         Latte.getConfigurator().withActivity(this);
-        //绑定EvenBus
     }
 
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
 }

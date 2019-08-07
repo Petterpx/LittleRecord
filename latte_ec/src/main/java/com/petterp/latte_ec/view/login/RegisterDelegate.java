@@ -19,7 +19,7 @@ import com.petterp.latte_core.util.edittext.SoftHideBoardUtils;
 import com.petterp.latte_core.util.phone.PhoneUtil;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
-import com.petterp.latte_ec.presenter.RegisterPresenter;
+import com.petterp.latte_ec.presenter.LoginRegisterPresenter;
 import com.petterp.latte_ec.view.login.iview.IRegisterView;
 
 
@@ -32,8 +32,8 @@ import butterknife.OnClick;
  * @author by Petterp
  * @date 2019-07-31
  */
-@CreatePresenter(RegisterPresenter.class)
-public class RegisterDelegate extends BaseFragment<RegisterPresenter> implements IRegisterView {
+@CreatePresenter(LoginRegisterPresenter.class)
+public class RegisterDelegate extends BaseFragment<LoginRegisterPresenter> implements IRegisterView {
 
     @BindView(R2.id.bar_register)
     Toolbar toolbar = null;
@@ -44,12 +44,12 @@ public class RegisterDelegate extends BaseFragment<RegisterPresenter> implements
     @BindView(R2.id.tv_register_gain_code)
     AppCompatTextView tvTimer = null;
 
-    private RegisterPresenter presenter;
+    private LoginRegisterPresenter presenter;
     private String phone = null;
 
 
     @OnClick(R2.id.btn_register_next)
-    void onNext() {
+    void onNext(View view) {
         String code = editCode.getText().toString().trim();
         phone = editPhone.getText().toString().trim();
         if (!PhoneUtil.isMobileNO(phone)) {
@@ -59,11 +59,13 @@ public class RegisterDelegate extends BaseFragment<RegisterPresenter> implements
         } else {
             presenter.setCreateCode(code);
         }
+
+
     }
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_register;
+        return R.layout.delegate_login_register;
     }
 
     @SuppressLint("CheckResult")

@@ -90,28 +90,26 @@ public final class LatterPreference {
     /**
      * 是否登录
      *
-     * @param key
      * @param flag
      */
-    public static void setLoginMode(String key, boolean flag) {
-        getAppPreference().edit().putBoolean(key, flag).apply();
+    public static void setLoginMode(boolean flag) {
+        getAppPreference().edit().putBoolean("login", flag).apply();
     }
 
-    public static  boolean getLoginMode(String key) {
-        return getAppPreference().getBoolean(key, false);
+    public static  boolean getLoginMode() {
+        return getAppPreference().getBoolean("login", false);
     }
 
     /**
      * 设置用户key
-     * @param key
      * @param id
      */
-    public static void setUserId(String key,String id){
-        getAppPreference().edit().putString(key, id).apply();
+    public static void setUserId(String id){
+        getAppPreference().edit().putString("userId", id).apply();
     }
 
-    public static  String getUserId(String key) {
-        return getAppPreference().getString(key, "");
+    public static  String getUserId() {
+        return getAppPreference().getString("userId", "");
     }
 
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="app_background">#1111</color>
+    <color name="staus_bar">#FE5722</color>
+    <color name="we_chat_black">#323232</color>
+    <color name="item_blackground">#F1F1F1</color>
+    <color name="app_main">@android:color/holo_orange_dark</color>
+    <color name="vp_item_background_to">#DCE7EC</color>
+    <color name="app_title_color">#2A9BF2</color>
+    <color name="index_add_text_color">#757575</color>
+    <color name="index_add_icon_color">@android:color/holo_blue_dark</color>
+    <color name="add_key_color_consume">#F93A30</color>
+    <color name="add_key_color_income">#06F985</color>
+    <color name="app_back">#F1F1F1</color>
+    <color name="app_text_color_light">#93A8B1</color>
+    <color name="app_text_color_dark">#566974</color>
+</resources>

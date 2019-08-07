@@ -8,29 +8,40 @@ import org.litepal.crud.LitePalSupport;
  * @date 2019-07-17
  */
 public class UserInfo extends LitePalSupport {
-    private long id;
+    //key
     private String key;
+    //用户名
     private String name;
+    //密码
     private String pswd;
-    private String phone;
-    private String qq;
-    private String emial;
+    private String account;
+    //性别
     private String sex;
+    //头像url
     private String iconUrl;
+    //账号类型
+    private String accountMode;
 
-    public UserInfo(String key, String name, String pswd, String phone, String qq, String emial, String sex, String iconUrl) {
+    public UserInfo( String key, String name, String pswd, String account, String sex, String iconUrl, String accountMode) {
         this.key = key;
         this.name = name;
         this.pswd = pswd;
-        this.phone = phone;
-        this.qq = qq;
-        this.emial = emial;
+        this.account = account;
         this.sex = sex;
         this.iconUrl = iconUrl;
+        this.accountMode = accountMode;
     }
 
     public UserInfo(){
 
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getName() {
@@ -49,36 +60,12 @@ public class UserInfo extends LitePalSupport {
         this.pswd = pswd;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getAccount() {
+        return account;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getEmial() {
-        return emial;
-    }
-
-    public void setEmial(String emial) {
-        this.emial = emial;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getSex() {
@@ -97,11 +84,11 @@ public class UserInfo extends LitePalSupport {
         this.iconUrl = iconUrl;
     }
 
-    public String getKey() {
-        return key;
+    public String getAccountMode() {
+        return accountMode;
     }
 
-    public void setKey(String key) {
-        this.key = key;
+    public void setAccountMode(String accountMode) {
+        this.accountMode = accountMode;
     }
 }

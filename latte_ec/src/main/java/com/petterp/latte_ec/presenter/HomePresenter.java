@@ -6,16 +6,18 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
-import com.petterp.latte_core.util.callback.CallbackManager;
-import com.petterp.latte_core.util.callback.IGlobalCallback;
+import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeImpl;
 import com.petterp.latte_ec.model.home.IHomeModel;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.view.home.IHomeView;
-import com.petterp.latte_ec.view.home.draw.DrawUserUpdateFieds;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     public void getView(IHomeView view) {
         this.iView = view;
         iModel = new IHomeImpl();
+        EventBus.getDefault().register(this);
     }
 
 
@@ -108,15 +111,6 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     }
 
 
-    /**
-     * update
-     *
-     * @param itemEntity
-     */
-    public void updateModel(MultipleItemEntity itemEntity) {
-        iModel.update(itemEntity);
-        showUpdateInfo();
-    }
 
     /**
      * delete
@@ -125,21 +119,6 @@ public class HomePresenter extends BasePresenter<IHomeView> {
      */
     public void delegateModel(MultipleItemEntity itemEntity) {
         iModel.delete(itemEntity);
-        showUpdateInfo();
-    }
-
-    //添加数据
-    public void addModel(MultipleItemEntity itemEntity) {
-        //model层添加数据
-        iModel.add(itemEntity);
-        showUpdateInfo();
-    }
-
-    public void addHeaderModel(MultipleItemEntity itemEntity) {
-        //设置key
-        iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
-        //model层添加数据
-        iModel.addHeader(itemEntity);
         showUpdateInfo();
     }
 
@@ -188,7 +167,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         iModel.setKey(key);
     }
 
-    public String getKey() {
+    private String getKey() {
         return iModel.getKey();
     }
 
@@ -210,10 +189,48 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         super.onDestroy(owner);
-        Log.e("demo","ondey");
+        Log.e("demo", "ondey");
     }
 
     public String getDrawRecord() {
         return iModel.getDrawRecord();
     }
+
+    /**
+     * EvenBus 接收Add传回的具体item
+     *
+     * @param messageItems
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void modeState(MessageItems messageItems) {
+        if (messageItems.getMode() == 1) {
+            if (iView != null) {
+                iView.updateDrawUser();
+            }
+        } else {
+            MultipleItemEntity itemEntity = messageItems.getItemEntity();
+            itemEntity.setFild(IHomeRvFields.KEY, getKey());
+            switch (getStateMode()) {
+                case IHomeStateType.ADD:
+                    iModel.add(itemEntity);
+                    break;
+                case IHomeStateType.UPDATE:
+                    iModel.update(itemEntity);
+                    break;
+                case IHomeStateType.HEADER_ADD:
+                    //设置key
+                    iModel.setKey(itemEntity.getField(IHomeRvFields.KEY));
+                    //model层添加数据
+                    iModel.addHeader(itemEntity);
+                    break;
+                default:
+                    break;
+            }
+            showUpdateInfo();
+            if (iView != null) {
+                iView.updateDrawKeySum();
+            }
+        }
+    }
+
 }

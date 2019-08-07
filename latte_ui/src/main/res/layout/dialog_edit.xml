@@ -18,22 +18,22 @@
         android:padding="20dp">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_dia_edit_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="删除账单"
-            android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="22sp"
+            android:textSize="23sp"
             tools:ignore="HardcodedText" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="确定要删除吗？"
-            android:textSize="18sp"
-            tools:ignore="HardcodedText" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:inputType="text"
+            android:id="@+id/edit_dia"
+            android:maxEms="14"
+            android:lines="1" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
@@ -43,23 +43,21 @@
             tools:ignore="RtlHardcoded">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dia_edit_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="50dp"
-                android:text="取消"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18sp"
-                android:id="@+id/tv_dia_home_back"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_dia_edit_ensure"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="删除"
-                android:textColor="@android:color/holo_red_light"
-                android:id="@+id/tv_dia_home_delete"
+                android:textColor="@color/app_title_color"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 tools:ignore="HardcodedText" />

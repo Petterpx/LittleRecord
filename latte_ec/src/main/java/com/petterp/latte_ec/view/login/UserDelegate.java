@@ -1,36 +1,35 @@
 package com.petterp.latte_ec.view.login;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.lwkandroid.imagepicker.ImagePicker;
 import com.lwkandroid.imagepicker.data.ImageBean;
 import com.lwkandroid.imagepicker.data.ImagePickType;
 import com.lwkandroid.imagepicker.utils.GlideImagePickerDisplayer;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.view.BaseFragment;
-import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_core.util.file.FileUtil;
-import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.login.MuiltFileds;
-import com.petterp.latte_ec.presenter.LoginCreatePresenter;
-import com.petterp.latte_ec.view.home.draw.DrawUserUpdateFieds;
-import com.petterp.latte_ec.view.login.iview.ICreateUserView;
+import com.petterp.latte_ec.presenter.LoginUserPresenter;
+import com.petterp.latte_ec.view.login.iview.IUserView;
+import com.petterp.latte_ui.dialog.BaseDialogFragment;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,47 +40,29 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.petterp.latte_ec.view.login.CreateUserDelegate.REQUEST_OPTIONS;
 
 /**
- * 注册详细界面
- *
- * @author by Petterp
- * @date 2019-08-01
+ * @author by petterp
+ * @date 2019-08-06
  */
-@CreatePresenter(LoginCreatePresenter.class)
-public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> implements ICreateUserView {
-
-    public static final RequestOptions REQUEST_OPTIONS =
-            new RequestOptions()
-                    .centerCrop()
-                    .fitCenter()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate();
-
-    private static final int REQUEST_SELECT_IMAGES_CODE = 10;
+@CreatePresenter(LoginUserPresenter.class)
+public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IUserView {
     private String imgUrl;
-    private String mSex = "男";
-    @BindView(R2.id.bar_user_create)
+    private static final int REQUEST_SELECT_IMAGES_CODE = 101;
+    @BindView(R2.id.bar_user_info)
     Toolbar toolbar = null;
-    @BindView(R2.id.edit_user_create_name)
-    AppCompatEditText editName = null;
-    @BindView(R2.id.edit_user_create_pswd)
-    AppCompatEditText editPswd = null;
-    @BindView(R2.id.img_user_create_avatar)
+    @BindView(R2.id.img_login_user_icon)
     CircleImageView circleImageView = null;
+    @BindView(R2.id.tv_login_user_name)
+    AppCompatTextView userName = null;
+    @BindView(R2.id.tv_login_user_sex)
+    AppCompatTextView userSex = null;
+    @BindView(R2.id.tv_login_user_account)
+    AppCompatTextView userAccount = null;
 
-    @OnClick(R2.id.rad_user_create_man)
-    void getSexMan() {
-        mSex = "男";
-    }
-
-    @OnClick(R2.id.rad_user_create_woman)
-    void getSexWoman() {
-        mSex = "女";
-    }
-
-    @OnClick(R2.id.rl_img_settings)
-    void setIcon() {
+    @OnClick(R2.id.rl_login_user_icon)
+    void updateIcon() {
         new ImagePicker()
                 .pickType(ImagePickType.SINGLE) //设置选取类型(拍照ONLY_CAMERA、单选SINGLE、多选MUTIL)
                 .needCamera(true) //是否需要在界面中显示相机入口(类似微信那样)
@@ -91,44 +72,52 @@ public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> imple
                 .start(this, REQUEST_SELECT_IMAGES_CODE); //自定义RequestCode
     }
 
-    @OnClick(R2.id.btn_login_login)
-    void createUser(View view) {
-        String name = editName.getText().toString().trim();
-        String pswd = editPswd.getText().toString().trim();
-        if (name.equals("")) {
-            editName.setError("用户名不能为空");
-            return;
-        }
-        if (pswd.length() < 6 || pswd.length() > 18) {
-            editPswd.setError("密码长度不合规范");
-            return;
-        }
+    @OnClick(R2.id.rl_login_user_name)
+    void updateName() {
+        getPresenter().updateName(getFragmentManager());
+    }
 
-        HashMap<Object, String> map = new HashMap<>();
-        map.put(MuiltFileds.USER_ACCOUNT, CreateUserDelegateArgs.fromBundle(getArguments()).getPhone());
-        map.put(MuiltFileds.USER_PSWD, pswd);
-        map.put(MuiltFileds.USER_NAME, name);
-        map.put(MuiltFileds.USER_ICON_URL, imgUrl);
-        map.put(MuiltFileds.USER_SEX, mSex);
-        map.put(MuiltFileds.USER_ACCOUNT_MODE, "0");
-        map.put(MuiltFileds.KEY,"user"+ TimeUtils.build().getTimelong());
-        getPresenter().setSave(map);
-        Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
-        EventBus.getDefault().post(new MessageItems(1));
-        Navigation.findNavController(view).popBackStack(R.id.homeDelegate, false);
+    @OnClick(R2.id.rl_login_user_sex)
+    void updateSex() {
+        getPresenter().updateSex(getFragmentManager());
+    }
+
+    @OnClick(R2.id.tv_user_save)
+    void save(View view) {
+        getPresenter().save();
+        Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(view).navigateUp();
+    }
+
+    @OnClick(R2.id.btn_login_user_account)
+    void user_account() {
+        getPresenter().userAccountQuit();
+    }
+
+    @OnClick(R2.id.ic_dia_radio_back)
+    void back(){
+        
     }
 
 
     @Override
     public Object setLayout() {
-        return R.layout.delegate_login_user_create;
+        return R.layout.delegate_login_user;
     }
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-
+        HashMap<Object, String> map = getPresenter().getData();
+        Glide.with(this).load(map.get(MuiltFileds.USER_ICON_URL)).into(circleImageView);
+        userName.setText(map.get(MuiltFileds.USER_NAME));
+        userSex.setText(map.get(MuiltFileds.USER_SEX));
+        //0代表手机登录，1代表qq
+        if (map.get(MuiltFileds.USER_ACCOUNT_MODE).equals("0")) {
+            userAccount.setText(R.string.user_login_phone);
+        } else {
+            userAccount.setText(R.string.user_login_qq);
+        }
     }
-
 
     @Override
     public View setToolbar() {
@@ -137,6 +126,7 @@ public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> imple
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SELECT_IMAGES_CODE && resultCode == Activity.RESULT_OK && data != null) {
             //获取选择的图片数据
             List<ImageBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
@@ -145,5 +135,15 @@ public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> imple
                 Glide.with(this).load(imgUrl).apply(REQUEST_OPTIONS).into(circleImageView);
             }
         }
+    }
+
+    @Override
+    public void updateName(String name) {
+        userName.setText(name);
+    }
+
+    @Override
+    public void updateSex(String sex) {
+        userSex.setText(sex);
     }
 }

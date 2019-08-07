@@ -14,10 +14,9 @@ import com.petterp.latte_ec.model.add.IAddBundleType;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.presenter.HomePresenter;
-import com.petterp.latte_ec.view.add.AddDelegate;
 import com.petterp.latte_ec.view.home.dialog.HomeDiaDelete;
 import com.petterp.latte_ec.view.home.dialog.HomeDiaQuery;
-import com.petterp.latte_ec.view.home.dialog.IHomeDiaDeleteListener;
+import com.petterp.latte_ec.view.home.dialog.IDialogTextListener;
 import com.petterp.latte_ec.view.home.dialog.IHomeDiaQueryInfo;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
@@ -27,7 +26,7 @@ import com.petterp.latte_ui.recyclear.MultipleItemEntity;
  * @author by Petterp
  * @date 2019-07-26
  */
-public class HomeItemClickListener extends SimpleClickListener implements IHomeDiaDeleteListener, IHomeDiaQueryInfo {
+public class HomeItemClickListener extends SimpleClickListener implements IDialogTextListener, IHomeDiaQueryInfo {
     private HomePresenter presenter;
     private MultipleItemEntity entity;
     private int position;

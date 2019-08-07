@@ -2,10 +2,16 @@ package com.petterp.latte_ec.view.home;
 
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,31 +26,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.view.BaseFragment;
-import com.petterp.latte_core.util.callback.CallbackManager;
-import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
-import com.petterp.latte_ec.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.presenter.HomePresenter;
 import com.petterp.latte_ec.view.home.draw.DrawAdapter;
 import com.petterp.latte_ec.view.home.draw.DrawFields;
 import com.petterp.latte_ec.view.home.draw.DrawItemClickListener;
-import com.petterp.latte_ec.view.home.draw.DrawUserUpdateFieds;
+import com.petterp.latte_ui.dialog.BaseDialogFragment;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,19 +89,21 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     RecyclerView drawRv = null;
     @BindView(R2.id.tv_draw_login)
     AppCompatTextView tvLogin = null;
+
     @BindView(R2.id.img_draw_user_avatar)
     CircleImageView circleImageView = null;
     @BindView(R2.id.tv_draw_user_record)
     AppCompatTextView tvRecord = null;
-
+    @BindView(R2.id.li_draw_home_back)
+     LinearLayoutCompat liDrawback=null;
     @OnClick(R2.id.img_draw_user_avatar)
-    void onStartUser(){
-        Toast.makeText(getContext(), "1", Toast.LENGTH_SHORT).show();
+    void onStartUser(View view) {
+        Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_userDelegate);
     }
 
     @OnClick(R2.id.tv_draw_login)
-    void onLogin() {
-        Navigation.findNavController(getRootView()).navigate(R.id.loginDelegate);
+    void onLogin(View view) {
+        Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_loginDelegate);
     }
 
 
@@ -129,8 +132,6 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         mPresenter.showInfo();
         //侧滑监听
         drawerLayout.addDrawerListener(new HomeDrawerListener(getActivity(), this));
-        //注册EvenBus
-        EventBus.getDefault().register(this);
     }
 
 
@@ -185,22 +186,34 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         drawRv.setAdapter(adapter);
         drawRv.setLayoutManager(new LinearLayoutManager(getContext()));
         drawRv.addOnItemTouchListener(new DrawItemClickListener());
-        showDrawUser();
-        CallbackManager.getInstance().addCallback(DrawUserUpdateFieds.USER_ICON_UPDATE, (IGlobalCallback<String>) args -> showDrawUser());
+        Glide.with(this).asBitmap().load(R.mipmap.backimg).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                Drawable drawable = new BitmapDrawable(resource);
+                drawable.setColorFilter(Color.GRAY, PorterDuff.Mode.MULTIPLY);
+                liDrawback.setBackground(drawable);
+                liDrawback.getBackground().setAlpha(200);
+            }
+        });
+        updateDrawUser();
+        updateDrawKeySum();
     }
 
-    /**
-     * 设置侧滑栏里的一些数据
-     */
-    private void showDrawUser() {
-        if (!LatterPreference.getLoginMode("login")) {
+    @Override
+    public void updateDrawUser() {
+        if (!LatterPreference.getLoginMode()) {
             Glide.with(this).load(R.mipmap.androidq).into(circleImageView);
             circleImageView.setEnabled(false);
+            tvLogin.setVisibility(View.VISIBLE);
         } else {
             circleImageView.setEnabled(true);
             Glide.with(this).load(mPresenter.getDrawUserUrl()).into(circleImageView);
             tvLogin.setVisibility(View.GONE);
         }
+    }
+
+
+    public void updateDrawKeySum() {
         tvRecord.setText(mPresenter.getDrawRecord());
     }
 
@@ -216,7 +229,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
             mPresenter.setKey(TimeUtils.build().getLongTimekey());
             mPresenter.setStateMode(IHomeStateType.ADD);
             //启动AddDelegate
-            Navigation.findNavController(view).navigate(R.id.addDelegate);
+            Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_addDelegate);
         });
     }
 
@@ -224,31 +237,6 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     @Override
     public View setToolbar() {
         return toolbar;
-    }
-
-    /**
-     * EvenBus 接收Add传回的具体item
-     *
-     * @param messageItems
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void modeState(MessageItems messageItems) {
-        MultipleItemEntity itemEntity = messageItems.getItemEntity();
-        itemEntity.setFild(IHomeRvFields.KEY, mPresenter.getKey());
-        switch (mPresenter.getStateMode()) {
-            case IHomeStateType.ADD:
-                mPresenter.addModel(itemEntity);
-                break;
-            case IHomeStateType.UPDATE:
-                mPresenter.updateModel(itemEntity);
-                break;
-            case IHomeStateType.HEADER_ADD:
-                mPresenter.addHeaderModel(itemEntity);
-                break;
-            default:
-                break;
-        }
-        tvRecord.setText(mPresenter.getDrawRecord());
     }
 
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author by petterp
  * @date 2019-08-05
  */
-public class CreateUserPresenter extends BasePresenter<ICreateUserView> {
+public class LoginCreatePresenter extends BasePresenter<ICreateUserView> {
 
     private ICreateUserModel iModel;
     @Override

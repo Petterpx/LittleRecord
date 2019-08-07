@@ -28,6 +28,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     private Unbinder unbinder = null;
     private View rootView = null;
 
+    public abstract boolean backMode();
+
     /**
      * 设置view
      *
@@ -133,6 +135,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         }
         presenter = null;
         rootView = null;
+    }
+
+    public void setBackPressed(){
+
     }
 
 }

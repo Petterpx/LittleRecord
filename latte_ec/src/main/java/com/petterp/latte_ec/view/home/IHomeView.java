@@ -43,4 +43,14 @@ public interface IHomeView extends IBaseView {
     void showDrawInfo();
 
 
+    /**
+     * 更新侧滑信息
+     */
+    void updateDrawUser();
+
+    /**
+     * 更新侧滑天数
+     */
+    void updateDrawKeySum();
+
 }

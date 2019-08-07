@@ -10,6 +10,6 @@ public enum MuiltFileds {
     USER_PSWD,
     USER_SEX,
     USER_ICON_URL,
-    USER_QQ,
-    USER_PHONE
+    USER_ACCOUNT,
+    USER_ACCOUNT_MODE
 }

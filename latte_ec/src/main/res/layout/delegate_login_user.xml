@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_back"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bar_user_info"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="top"
+        android:background="@color/app_title_color"
+        app:layout_collapseMode="pin">
+
+        <RelativeLayout
+            android:paddingRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.joanzapata.iconify.widget.IconTextView
+                android:id="@+id/ic_dia_radio_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="{fa-arrow-left}"
+                android:textColor="@android:color/white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/ic_login_back"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@id/ic_login_back"
+                android:text="@string/tv_login_user_manage"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_user_save"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textSize="17sp"
+                android:text="@string/save"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <RelativeLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/rl_login_user_icon"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_dark"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:text="@string/user_icon"
+            tools:ignore="RtlSymmetry" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="70dp"
+            android:id="@+id/img_login_user_icon"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_height="70dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_back" />
+
+    <RelativeLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/rl_login_user_name"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_dark"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:text="@string/user_name"
+            tools:ignore="RtlSymmetry" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_login_user_name"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_light"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:text="@string/user_icon"
+            tools:ignore="RtlSymmetry"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_back" />
+    <RelativeLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/rl_login_user_sex"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_dark"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:text="@string/user_sex"
+            tools:ignore="RtlSymmetry"
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_login_user_sex"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_light"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            tools:ignore="RtlSymmetry"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/app_back" />
+    <RelativeLayout
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:id="@+id/rl_login_user_account"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_dark"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:text="@string/user_account"
+            tools:ignore="RtlSymmetry" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/app_text_color_light"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            tools:ignore="RtlSymmetry"
+            android:id="@+id/tv_login_user_account"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login_user_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20sp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:text="@string/user_account_back"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="18sp" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:textColor="@color/app_text_color_light"
+        android:text="@string/tv_info_update"
+        android:layout_height="wrap_content" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,6 +1,5 @@
 package com.petterp.latte_ec.view.add.BootomCompile;
 
-import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.Navigation;
@@ -8,7 +7,7 @@ import androidx.navigation.Navigation;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.petterp.latte_core.util.time.SystemClock;
-import com.petterp.latte_ec.MessageItems;
+import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
 import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
