@@ -2,6 +2,7 @@ package com.petterp.latte_core.mvp.view;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +14,28 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.mvp.factory.PresenterFactoryImpl;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
+import com.petterp.latte_core.util.callback.CallbackManager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
+ * Fragment基类
+ * 处理了Fragment返回事件，适用于JetPack Navigation
+ * 根据Fragment的需求重写 setBackMode()-是否重写返回键,setBackPress()-具体实现的需求,postBackEvens()-通知Activity即将到来的返回事件拦截
+ *
  * @author by Petterp
  * @date 2019-08-03
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBaseView {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBaseView, BaseActivity.BackPressFragment {
     private P presenter = null;
     private Unbinder unbinder = null;
     private View rootView = null;
 
-    public abstract boolean backMode();
+//    public abstract boolean backMode();
 
     /**
      * 设置view
@@ -50,6 +57,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Navgation 内部执行replace方法，会导致onCreateView重新执行，这里选择保存View状态(即保存数据)
+
         if (rootView == null) {
             if (setLayout() instanceof Integer) {
                 rootView = inflater.inflate((Integer) setLayout(), container, false);
@@ -77,6 +85,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             setRetainInstance(true);
             //添加生命周期
             onBindView(savedInstanceState, rootView);
+            //传递返回监听事件给Activity
+            Latte.getBaseActivity().setiBack(this);
         }
         return rootView;
     }
@@ -137,8 +147,12 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         rootView = null;
     }
 
-    public void setBackPressed(){
 
+    /**
+     * 返回事件重写,默认不重写
+     */
+    @Override
+    public boolean setBackPress() {
+        return false;
     }
-
 }

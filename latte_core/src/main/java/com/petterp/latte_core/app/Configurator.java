@@ -11,6 +11,7 @@ import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
+import com.petterp.latte_core.mvp.view.BaseActivity;
 
 
 import java.util.ArrayList;
@@ -23,9 +24,6 @@ import okhttp3.Interceptor;
  * Summary:配置文件的存储与获取
  */
 public class Configurator {
-    /**
-     * WeakHashMap内部的键值对，在我们不使用的时候就会进行回收，省内存
-     */
     private static final HashMap<Object, Object> LATTE_CONFIGS = new HashMap<>();
     private static final ArrayList<IconFontDescriptor> ICONS = new ArrayList<>();
     private static final ArrayList<Interceptor> INTERCEPTORS = new ArrayList<>();
@@ -186,8 +184,8 @@ public class Configurator {
      * @param activity
      * @return
      */
-    public final Configurator withActivity(Activity activity) {
-        LATTE_CONFIGS.put(ConfigKeys.ACTIVITY, activity);
+    public final Configurator withBaseActivity(BaseActivity activity) {
+        LATTE_CONFIGS.put(ConfigKeys.BASEACTIVITY, activity);
         return this;
     }
 

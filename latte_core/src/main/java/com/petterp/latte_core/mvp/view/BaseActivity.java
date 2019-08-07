@@ -1,23 +1,35 @@
 package com.petterp.latte_core.mvp.view;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import com.petterp.latte_core.util.callback.CallbackManager;
-import com.petterp.latte_core.util.callback.IGlobalCallback;
+import com.petterp.latte_core.app.Latte;
 
 /**
  * 抽象Activity基类，包含Fragment返回键处理
+ *
  * @author by petterp
  * @date 2019-08-07
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    private BaseFragment fragment;
-    private boolean mode;
+    private BackPressFragment iBack;
+
+    public interface BackPressFragment {
+        /**
+         * 相应逻辑方法
+         * @return
+         */
+        boolean setBackPress();
+    }
+
+    public void setiBack(BackPressFragment back) {
+        this.iBack = back;
+    }
+
 
     public abstract int getLayout();
 
@@ -29,16 +41,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        CallbackManager.getInstance().addCallback("onclick", (IGlobalCallback<BaseFragment>) args -> fragment = args);
+        //添加Activity
+        Latte.getConfigurator().withBaseActivity(this);
     }
 
     @Override
-    public void onBackPressed() {
-        if (mode) {
-            //执行自定义back事件
-            fragment.setBackPressed();
-        } else {
-            super.onBackPressed();
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        //执行相应方法，成功拦截，否则默认执行
+        if (iBack.setBackPress()) {
+            return true;
         }
+        return super.onKeyUp(keyCode, event);
     }
 }

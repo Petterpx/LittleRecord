@@ -13,7 +13,7 @@ public enum ConfigKeys {
     INTERCEPTOR,
     WE_CHAT_APP_ID,         //微信AppId
     WE_CHAT_APP_SECRET,     //微信Sercret
-    ACTIVITY,               //微信会拉起上下文
+    BASEACTIVITY,            //全局Activity
     HANDLER,
     JAVASCRIPT_INTERFACE,
     LAUCHER_MODE            //是否重複开启倒计时页面

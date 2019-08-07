@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 
+import com.petterp.latte_core.mvp.view.BaseActivity;
+
 import java.util.HashMap;
 
 /**
@@ -43,8 +45,8 @@ public final class Latte {
      * 返回全局Activity
      * @return
      */
-    public static Activity getActivity(){
-        return (Activity) getConfiguration().get(ConfigKeys.ACTIVITY);
+    public static BaseActivity getBaseActivity(){
+        return (BaseActivity) getConfiguration().get(ConfigKeys.BASEACTIVITY);
     }
 
     /**

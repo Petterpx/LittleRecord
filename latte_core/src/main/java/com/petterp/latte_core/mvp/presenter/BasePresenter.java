@@ -7,7 +7,10 @@ import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 
+import com.petterp.latte_core.app.Latte;
+import com.petterp.latte_core.mvp.view.BaseFragment;
 import com.petterp.latte_core.mvp.view.IBaseView;
+import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_core.util.edittext.SoftHideBoardUtils;
 
 import java.lang.ref.Reference;
@@ -31,7 +34,7 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
 
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
-        Log.e("demo", "oncreate");
+
     }
 
     @Override
@@ -41,7 +44,6 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {
-
     }
 
     @Override
@@ -51,6 +53,7 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
+        SoftHideBoardUtils.hidekey(Latte.getBaseActivity());
     }
 
     @Override

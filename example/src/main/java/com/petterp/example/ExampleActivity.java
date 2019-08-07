@@ -3,6 +3,7 @@ package com.petterp.example;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -31,8 +32,6 @@ public class ExampleActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置全局Activity
-        Latte.getConfigurator().withActivity(this);
     }
-
 
 }

@@ -8,7 +8,9 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
@@ -95,7 +97,8 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     @BindView(R2.id.tv_draw_user_record)
     AppCompatTextView tvRecord = null;
     @BindView(R2.id.li_draw_home_back)
-     LinearLayoutCompat liDrawback=null;
+    LinearLayoutCompat liDrawback = null;
+
     @OnClick(R2.id.img_draw_user_avatar)
     void onStartUser(View view) {
         Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_userDelegate);
@@ -250,18 +253,8 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         floatingActionButton.hide();
     }
 
-//    /**
-//     * 返回键重写
-//     *
-//     * @return
-//     */
-//    @Override
-//    public boolean onBackPressedSupport() {
-//        boolean mode = super.onBackPressedSupport();
-//        if (drawerLayout.isDrawerOpen(Gravity.LEFT)) {
-//            drawerLayout.closeDrawer(Gravity.LEFT);
-//            return true;
-//        }
-//        return mode;
-//    }
+    @Override
+    public boolean setBackPress() {
+        return true;
+    }
 }

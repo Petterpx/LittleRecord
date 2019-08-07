@@ -118,7 +118,6 @@ public class RegisterDelegate extends BaseFragment<LoginRegisterPresenter> imple
 
     @Override
     public void onclickUserInfo() {
-        SoftHideBoardUtils.hidekey(getActivity());
         Navigation.findNavController(getRootView()).navigate(RegisterDelegateDirections.actionRegisterDelegateToCreateUserDelegate(phone));
     }
 
