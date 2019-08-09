@@ -34,7 +34,6 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.view.BaseFragment;
 import com.petterp.latte_core.util.storage.LatterPreference;
@@ -47,7 +46,6 @@ import com.petterp.latte_ec.presenter.HomePresenter;
 import com.petterp.latte_ec.view.home.draw.DrawAdapter;
 import com.petterp.latte_ec.view.home.draw.DrawFields;
 import com.petterp.latte_ec.view.home.draw.DrawItemClickListener;
-import com.petterp.latte_ui.dialog.BaseDialogFragment;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -85,8 +83,6 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     DrawerLayout drawerLayout = null;
     @BindView(R2.id.cord_layout)
     CoordinatorLayout right = null;
-    @BindView(R2.id.ic_toolbar_data_home)
-    IconTextView dataTooblar;
     @BindView(R2.id.line_home_layout)
     LinearLayoutCompat layoutCompat = null;
     @BindView(R2.id.rv_home_draw)
@@ -116,6 +112,11 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     @OnClick(R2.id.ic_toolbar_drawer_home)
     void startDrawer() {
         drawerLayout.openDrawer(Gravity.START);
+    }
+
+    @OnClick(R2.id.ic_toolbar_data_home)
+    void startAnalysis(){
+        fragmentStart(R.id.action_homeDelegate_to_dataAnalysisDelegate);
     }
 
     //控制层

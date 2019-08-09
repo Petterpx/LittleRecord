@@ -82,25 +82,10 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
         mPresenter=getPresenter();
         //初始化View
         mPresenter.showInfo(getArguments());
-        //处理键盘冲突
-//        initEditKey();
+
     }
 
 
-    private void initEditKey() {
-        //处理键盘弹出冲突
-        SoftKeyBoardListener.setListener(getActivity(), new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
-            @Override
-            public void keyBoardShow(int height) {
-                layoutCompat.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void keyBoardHide(int height) {
-                layoutCompat.setVisibility(View.VISIBLE);
-            }
-        });
-    }
 
     @Override
     public void topViewPagerInfo() {
@@ -189,7 +174,6 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
      */
     @Override
     public void executeCallback(@Nullable String[] args) {
-        Log.e("demo","123");
         mPresenter.setTitleRvKind(args);
     }
 

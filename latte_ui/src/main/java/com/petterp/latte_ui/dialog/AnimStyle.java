@@ -11,7 +11,7 @@ import com.petterp.latte_ui.R;
 public final class AnimStyle {
 
     // 默认动画效果
-    static final int DEFAULT = R.style.ScaleAnimStyle;
+    public static final int DEFAULT = R.style.ScaleAnimStyle;
 
     // 缩放动画
     public static final int SCALE = R.style.ScaleAnimStyle;

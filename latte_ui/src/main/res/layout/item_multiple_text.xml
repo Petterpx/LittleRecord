@@ -2,9 +2,8 @@
 <androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/text_single"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="45dp"
     android:background="@android:color/white"
     android:gravity="center"
-    android:textColor="@android:color/black"
-    android:textSize="18sp"
-    android:textStyle="bold" />
+    android:textColor="#566974"
+    android:textSize="18sp" />

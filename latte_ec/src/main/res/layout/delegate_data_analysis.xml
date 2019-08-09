@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_back"
@@ -11,30 +10,287 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/bar_data_analysis"
         android:layout_width="match_parent"
-        android:paddingLeft="20dp"
         android:layout_height="?attr/actionBarSize"
-        android:gravity="center_vertical"
         android:background="@color/app_title_color"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dp"
         app:layout_collapseMode="pin">
 
 
-        <com.joanzapata.iconify.widget.IconTextView
-            android:id="@+id/ic_analysis_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="{fa-arrow-left}"
-            android:textColor="@android:color/white" />
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+           <com.joanzapata.iconify.widget.IconTextView
+               android:id="@+id/ic_analysis_back"
+               android:layout_width="wrap_content"
+               android:layout_marginLeft="15dp"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:text="{fa-arrow-left}"
+               android:textColor="@android:color/white" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dp_10"
-            android:text="@string/tv_login_user_manage"
-            android:textColor="@android:color/white"
-            android:textSize="20sp" />
+           <androidx.appcompat.widget.AppCompatTextView
+               android:layout_width="wrap_content"
+               android:textSize="20sp"
+               android:textStyle="bold"
+               android:id="@+id/tv_title_date"
+               android:gravity="center"
+               android:layout_centerInParent="true"
+               android:textColor="@android:color/white"
+               android:drawableRight="@drawable/ic_arrow_drop_down_black_28dp"
+               android:text="2018年.01月"
+               android:layout_height="wrap_content" />
+           <com.joanzapata.iconify.widget.IconTextView
+               android:id="@+id/ic_analysis_settings"
+               android:layout_width="wrap_content"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:layout_marginRight="15dp"
+               android:layout_height="wrap_content"
+               android:text="{fa-arrow-left}"
+               android:textColor="@android:color/white" />
+       </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/analysis_back_circle"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/tv_income_consume_look"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="30dp"
+                    android:text="收支总览"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_income"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_income_consume_look"
+                    android:layout_marginLeft="60dp"
+                    android:text="收入"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_income_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_analysis_income"
+                    android:layout_alignLeft="@id/tv_analysis_income"
+                    android:layout_marginTop="7dp"
+                    android:text="0"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_income_consume_look"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="60dp"
+                    android:text="余额"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_balance_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_analysis_balance"
+                    android:layout_alignRight="@id/tv_analysis_balance"
+                    android:text="0"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_consume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_analysis_income_money"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="30dp"
+
+                    android:text="支出"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_analysis_consume"
+                    android:layout_alignLeft="@id/tv_analysis_consume"
+                    android:layout_marginTop="7dp"
+                    android:text="0"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_analysis_balance_money"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="60dp"
+                    android:text="余额"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_day_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_analysis_day"
+                    android:layout_alignRight="@id/tv_analysis_balance"
+                    android:text="0"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/analysis_back_circle"
+                android:paddingTop="15dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="@dimen/dp_10">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="每天收支波动图"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="18sp" />
+
+                <com.joanzapata.iconify.widget.IconTextView
+                    android:id="@+id/ic_analysis_magnify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="{fa-arrows-alt}" />
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/lc_analysis_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_below="@id/ic_analysis_magnify"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="25dp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/item_rv_index_circle"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分类账单统计"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="18sp" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pie_analysis_chart"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="点击分类查看对应的消费记录"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="15sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/app_back" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_analysis_classify"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/item_rv_index_circle"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="每日账单统计"
+                    android:textColor="@color/app_text_color_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_analysis_day_consume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="平均每日支出: -44.89"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="15sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_analysis_bill"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:gravity="center"
+                android:text="———————到底了———————"
+                android:textColor="@color/app_text_color_light"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

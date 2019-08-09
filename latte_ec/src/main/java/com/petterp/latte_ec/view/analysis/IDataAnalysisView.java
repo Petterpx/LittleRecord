@@ -9,4 +9,9 @@ import com.petterp.latte_core.mvp.view.IBaseView;
  */
 public interface IDataAnalysisView extends IBaseView {
 
+    /**
+     * 更新数据
+     */
+    void updateData();
+
 }
