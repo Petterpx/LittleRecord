@@ -1,6 +1,7 @@
 package com.petterp.latte_ui.dialog;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,9 +11,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StyleRes;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -20,7 +23,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.util.dpsityUtil.DensityUtil;
+import com.petterp.latte_core.util.edittext.SoftHideBoardUtils;
 import com.petterp.latte_ui.R;
 
 /**
@@ -181,13 +186,15 @@ public class BaseDialogFragment extends DialogFragment {
         }
     }
 
+
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
         window = null;
         layout = 0;
         animations = AnimStyle.DEFAULT;
         ionClickListener = null;
         iWindowsView = null;
+        SoftHideBoardUtils.hidekey(Latte.getBaseActivity());
     }
 }

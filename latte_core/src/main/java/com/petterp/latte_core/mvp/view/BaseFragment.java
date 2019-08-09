@@ -8,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.petterp.latte_core.R;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.mvp.factory.PresenterFactoryImpl;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
@@ -85,8 +88,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
             setRetainInstance(true);
             //添加生命周期
             onBindView(savedInstanceState, rootView);
-            //传递返回监听事件给Activity
-            Latte.getBaseActivity().setiBack(this);
         }
         return rootView;
     }
@@ -95,6 +96,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setTitleToolbar();
+        //传递返回监听事件给Activity
+        Latte.getBaseActivity().setiBack(this);
     }
 
     /**
@@ -154,5 +157,55 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public boolean setBackPress() {
         return false;
+    }
+
+
+    /**
+     * fragment基本跳转
+     * A->B
+     *
+     * @param id
+     */
+    public void fragmentStart(@IdRes int id) {
+        Navigation.findNavController(getRootView()).navigate(id);
+    }
+
+    /**
+     * fragment 携带数据跳转
+     * A->B
+     * @param id
+     * @param bundle
+     */
+    public void fragmentStart(@IdRes int id, @Nullable Bundle bundle) {
+        Navigation.findNavController(getRootView()).navigate(id, bundle);
+    }
+
+    /**
+     * fragment 携带数据新写法，Navigation 标准写法
+     * 需要在 nav_host中添加相应的argument，自动生成 以下类
+     * 发送端 ClassName+Directions ，接收端ClassName+Args
+     *
+     * Demo: RegisterDelegateDirections.actionRegisterDelegateToCreateUserDelegate(phone)
+     *       CreateUserDelegateArgs.fromBundle(getArguments()).getPhone()
+     * @param directions
+     */
+    public void fragmentStart(@NonNull NavDirections directions) {
+        Navigation.findNavController(getRootView()).navigate(directions);
+    }
+
+
+    /**
+     * 退栈方法
+     */
+    public void fragmentUP() {
+        Navigation.findNavController(getRootView()).navigateUp();
+    }
+
+    /**
+     * 跳转方法，多级跳转
+     * A-B-C,C->A,避免Navigation 跳转后重新执行生命周期方法
+     */
+    public boolean fragmentStartToA(@IdRes int id) {
+        return Navigation.findNavController(getRootView()).popBackStack(id, false);
     }
 }

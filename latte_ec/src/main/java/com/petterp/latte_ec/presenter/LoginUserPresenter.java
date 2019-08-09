@@ -5,7 +5,9 @@ import android.view.Window;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
+import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
 import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_ec.R;
@@ -69,7 +71,7 @@ public class LoginUserPresenter extends BasePresenter<IUserView> {
         BaseDialogFragment.Builder()
                 .setLayout(R.layout.dialog_radiogroup)
                 .setWindowsView((view, viewHolder) -> {
-                    viewHolder.setText(R.id.tv_dia_radio_title,"修改性别",false);
+                    viewHolder.setText(R.id.tv_dia_radio_title, "修改性别", false);
                     viewHolder.setText(R.id.rad_dia_radio_left, "男", true);
                     viewHolder.setText(R.id.rad_dia_radio_right, "女", true);
                     viewHolder.setText(R.id.tv_dia_radio_ensure, "保存", true);
@@ -90,8 +92,34 @@ public class LoginUserPresenter extends BasePresenter<IUserView> {
                 .show(fragmentManager);
     }
 
-    public void save(){
+    public void save() {
         model.saveData();
+        mView.saveUp();
+    }
+
+    public void updateData(Object key, String value) {
+        model.updateData(key, value);
+    }
+
+    /**
+     * 是否保存
+     */
+    public void stateSaveData(FragmentManager fragmentManager) {
+        BaseDialogFragment.Builder()
+                .setLayout(R.layout.dialog_message)
+                .setWindowsView((view, viewHolder) -> {
+                    viewHolder.setText(R.id.tv_dia_message_title, "保存数据", false);
+                    viewHolder.setText(R.id.tv_dia_message_message, "您修改了数据,是否保存吗？", false);
+                    viewHolder.setText(R.id.tv_dia_message_ensure, "确定", true);
+                    viewHolder.setText(R.id.tv_dia_message_back, "取消", false);
+                })
+                .setOnClickListener((view, viewHolder) -> {
+                    if (view.getId() == R.id.tv_dia_message_ensure) {
+                        save();
+                    }
+                    viewHolder.dismiss();
+                })
+                .show(fragmentManager);
     }
 
 }

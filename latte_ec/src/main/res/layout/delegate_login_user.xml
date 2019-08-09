@@ -33,9 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/ic_login_back"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:layout_toRightOf="@id/ic_login_back"
                 android:text="@string/tv_login_user_manage"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />

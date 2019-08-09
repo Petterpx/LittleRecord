@@ -8,12 +8,15 @@ import org.litepal.crud.LitePalSupport;
  * @date 2019-07-17
  */
 public class UserInfo extends LitePalSupport {
+
+    private long id;
     //key
     private String key;
     //用户名
     private String name;
     //密码
     private String pswd;
+    //账号
     private String account;
     //性别
     private String sex;
@@ -90,5 +93,9 @@ public class UserInfo extends LitePalSupport {
 
     public void setAccountMode(String accountMode) {
         this.accountMode = accountMode;
+    }
+
+    public long getId() {
+        return id;
     }
 }

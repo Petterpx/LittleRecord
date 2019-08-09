@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_back"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bar_data_analysis"
+        android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:background="@color/app_title_color"
+        app:layout_collapseMode="pin">
+
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/ic_analysis_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="{fa-arrow-left}"
+            android:textColor="@android:color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:text="@string/tv_login_user_manage"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

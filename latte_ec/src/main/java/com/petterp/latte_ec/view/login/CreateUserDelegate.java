@@ -92,7 +92,7 @@ public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> imple
     }
 
     @OnClick(R2.id.btn_login_login)
-    void createUser(View view) {
+    void createUser() {
         String name = editName.getText().toString().trim();
         String pswd = editPswd.getText().toString().trim();
         if (name.equals("")) {
@@ -115,7 +115,7 @@ public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> imple
         getPresenter().setSave(map);
         Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(new MessageItems(1));
-        Navigation.findNavController(view).popBackStack(R.id.homeDelegate, false);
+        fragmentStartToA(R.id.homeDelegate);
     }
 
 

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -100,13 +102,13 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     LinearLayoutCompat liDrawback = null;
 
     @OnClick(R2.id.img_draw_user_avatar)
-    void onStartUser(View view) {
-        Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_userDelegate);
+    void onStartUser() {
+       fragmentStart(R.id.action_homeDelegate_to_userDelegate);
     }
 
     @OnClick(R2.id.tv_draw_login)
-    void onLogin(View view) {
-        Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_loginDelegate);
+    void onLogin() {
+       fragmentStart(R.id.action_homeDelegate_to_loginDelegate);
     }
 
 
@@ -232,7 +234,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
             mPresenter.setKey(TimeUtils.build().getLongTimekey());
             mPresenter.setStateMode(IHomeStateType.ADD);
             //启动AddDelegate
-            Navigation.findNavController(view).navigate(R.id.action_homeDelegate_to_addDelegate);
+            fragmentStart(R.id.action_homeDelegate_to_addDelegate);
         });
     }
 
@@ -253,8 +255,14 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         floatingActionButton.hide();
     }
 
+    @SuppressLint("WrongConstant")
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean setBackPress() {
-        return true;
+        if (drawerLayout.isAttachedToWindow()) {
+            drawerLayout.closeDrawer(Gravity.START);
+            return true;
+        }
+        return false;
     }
 }

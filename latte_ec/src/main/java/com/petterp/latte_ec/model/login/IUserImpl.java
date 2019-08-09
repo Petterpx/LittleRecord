@@ -1,5 +1,7 @@
 package com.petterp.latte_ec.model.login;
 
+import android.util.Log;
+
 import com.petterp.latte_core.util.litepal.UserInfo;
 import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_ec.model.login.imodel.IUserModel;
@@ -31,17 +33,19 @@ public class IUserImpl implements IUserModel {
         map.put(MuiltFileds.USER_NAME, userId.get(0).getName());
         map.put(MuiltFileds.USER_SEX, userId.get(0).getSex());
         map.put(MuiltFileds.USER_ACCOUNT_MODE, userId.get(0).getAccountMode());
+        map.put(MuiltFileds.ID, String.valueOf(userId.get(0).getId()));
         return map;
     }
 
     @Override
     public void saveData() {
+        Log.e("demo",map.size()+"");
+        Log.e("demo",map.get(MuiltFileds.USER_NAME)+"");
         UserInfo userInfo = new UserInfo();
         userInfo.setName(map.get(MuiltFileds.USER_NAME));
         userInfo.setSex(map.get(MuiltFileds.USER_SEX));
         userInfo.setIconUrl(map.get(MuiltFileds.USER_ICON_URL));
-        userInfo.updateAllAsync("key=?", map.get(MuiltFileds.KEY)).listen(rowsAffected -> {
-        });
+        userInfo.updateAsync(Long.parseLong(map.get(MuiltFileds.ID))).listen(rowsAffected -> { });
     }
 
 

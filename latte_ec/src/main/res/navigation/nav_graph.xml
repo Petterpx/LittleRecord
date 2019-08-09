@@ -31,6 +31,9 @@
             app:exitAnim="@anim/dialog_left_out"
             app:popEnterAnim="@anim/dialog_left_in"
             app:popExitAnim="@anim/dialog_right_out"/>
+        <action
+            android:id="@+id/action_homeDelegate_to_dataAnalysisDelegate"
+            app:destination="@id/dataAnalysisDelegate" />
     </fragment>
     <fragment
         android:id="@+id/addDelegate"
@@ -91,4 +94,9 @@
         tools:layout="@layout/delegate_login_user"
         android:name="com.petterp.latte_ec.view.login.UserDelegate"
         android:label="UserDelegate" />
+    <fragment
+        android:id="@+id/dataAnalysisDelegate"
+        tools:layout="@layout/delegate_data_analysis"
+        android:name="com.petterp.latte_ec.view.analysis.DataAnalysisDelegate"
+        android:label="DataAnalysisDelegate" />
 </navigation>

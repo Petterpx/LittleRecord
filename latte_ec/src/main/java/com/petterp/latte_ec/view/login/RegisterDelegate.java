@@ -49,7 +49,7 @@ public class RegisterDelegate extends BaseFragment<LoginRegisterPresenter> imple
 
 
     @OnClick(R2.id.btn_register_next)
-    void onNext(View view) {
+    void onNext() {
         String code = editCode.getText().toString().trim();
         phone = editPhone.getText().toString().trim();
         if (!PhoneUtil.isMobileNO(phone)) {
@@ -118,7 +118,7 @@ public class RegisterDelegate extends BaseFragment<LoginRegisterPresenter> imple
 
     @Override
     public void onclickUserInfo() {
-        Navigation.findNavController(getRootView()).navigate(RegisterDelegateDirections.actionRegisterDelegateToCreateUserDelegate(phone));
+        fragmentStart(RegisterDelegateDirections.actionRegisterDelegateToCreateUserDelegate(phone));
     }
 
     @Override

@@ -53,6 +53,7 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
 
     @Override
     public void onStop(@NonNull LifecycleOwner owner) {
+        //关闭键盘
         SoftHideBoardUtils.hidekey(Latte.getBaseActivity());
     }
 
@@ -63,6 +64,7 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
             mview.clear();
             mview = null;
         }
+        //取消生命周期
         owner.getLifecycle().removeObserver(this);
     }
 

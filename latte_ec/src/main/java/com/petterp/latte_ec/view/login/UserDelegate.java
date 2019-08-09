@@ -50,6 +50,7 @@ import static com.petterp.latte_ec.view.login.CreateUserDelegate.REQUEST_OPTIONS
 public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IUserView {
     private String imgUrl;
     private static final int REQUEST_SELECT_IMAGES_CODE = 101;
+    private boolean mode = false;
     @BindView(R2.id.bar_user_info)
     Toolbar toolbar = null;
     @BindView(R2.id.img_login_user_icon)
@@ -74,29 +75,34 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
 
     @OnClick(R2.id.rl_login_user_name)
     void updateName() {
+        mode = true;
         getPresenter().updateName(getFragmentManager());
     }
 
     @OnClick(R2.id.rl_login_user_sex)
     void updateSex() {
+        mode = true;
         getPresenter().updateSex(getFragmentManager());
     }
 
     @OnClick(R2.id.tv_user_save)
-    void save(View view) {
-        getPresenter().save();
-        Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-        Navigation.findNavController(view).navigateUp();
+    void save() {
+        if (mode) {
+            getPresenter().save();
+        } else {
+            getPresenter().stateSaveData(getFragmentManager());
+        }
     }
 
     @OnClick(R2.id.btn_login_user_account)
     void user_account() {
         getPresenter().userAccountQuit();
+        fragmentUP();
     }
 
     @OnClick(R2.id.ic_dia_radio_back)
-    void back(){
-        
+    void back() {
+        fragmentUP();
     }
 
 
@@ -131,8 +137,10 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
             //获取选择的图片数据
             List<ImageBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
             if (resultList.size() > 0) {
+                mode = true;
                 imgUrl = resultList.get(0).getImagePath();
                 Glide.with(this).load(imgUrl).apply(REQUEST_OPTIONS).into(circleImageView);
+                getPresenter().updateData(MuiltFileds.USER_ICON_URL, imgUrl);
             }
         }
     }
@@ -146,4 +154,20 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
     public void updateSex(String sex) {
         userSex.setText(sex);
     }
+
+    @Override
+    public void saveUp() {
+        Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean setBackPress() {
+        if (mode) {
+            getPresenter().stateSaveData(getFragmentManager());
+            return true;
+        }
+        return false;
+    }
+
+
 }

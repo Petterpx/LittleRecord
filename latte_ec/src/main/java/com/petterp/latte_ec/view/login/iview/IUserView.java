@@ -13,4 +13,9 @@ public interface IUserView extends IBaseView {
     void updateName(String name);
 
     void updateSex(String sex);
+
+    /**
+     * 保存后的操作
+     */
+    void saveUp();
 }

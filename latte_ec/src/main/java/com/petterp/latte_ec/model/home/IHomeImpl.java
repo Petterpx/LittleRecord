@@ -244,10 +244,14 @@ public class IHomeImpl implements IHomeModel {
             }
         }
         billCollect.setSum(collect.get(0).getSum() - 1);
+        if (billCollect.getSum() == 0) {
+            LitePal.deleteAllAsync(EveryBillCollect.class,"key=?",timeKey).listen(rowsAffected -> {});
+        } else {
+            billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> { });
+        }
         surplusMoney = incomeMoney + consumeMoney;
         itemEntities.remove(itemEntity);
-        billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
-        });
+
         LitePal.deleteAllAsync(BillInfo.class, "longDate=?", "" + time).listen(rowsAffected -> {
         });
         removeHeaderSum(headerPosition);
@@ -404,7 +408,7 @@ public class IHomeImpl implements IHomeModel {
         if (collectSize == 0) {
             return "还没有记录数据呢，快去记录吧!";
         } else {
-            return "已经记录 "+collectSize+" 天啦,继续加油!";
+            return "已经记录 " + collectSize + " 天啦,继续加油!";
         }
     }
 

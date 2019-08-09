@@ -31,7 +31,7 @@ public class LoginDelegate extends BaseFragment<LoginPresenter> {
     }
     @OnClick(R2.id.tv_login_create)
     void createUser(){
-        Navigation.findNavController(getRootView()).navigate(R.id.action_loginDelegate_to_registerDelegate);
+        fragmentStart(R.id.action_loginDelegate_to_registerDelegate);
     }
     @Override
     public Object setLayout() {
