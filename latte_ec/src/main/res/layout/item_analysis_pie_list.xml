@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical"
+    android:paddingBottom="5dp">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/ic_analysis_pie_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/user_create_img_cricle"
+        android:text="{fa-heart}"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_analysis_pie_kind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@id/ic_analysis_pie_icon"
+        android:text="三餐"
+        android:textSize="14sp" />
+
+    <!--<View
+        android:id="@+id/view_analysis_pie"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/tv_analysis_pie_kind"
+        android:layout_toLeftOf="@id/tv_analysis_pie_sum"
+        android:layout_toRightOf="@id/ic_analysis_pie_icon"
+        android:background="@drawable/analysis_pie_item_back" />
+-->
+    <ProgressBar
+        android:id="@+id/view_analysis_pie"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:max="1000"
+        android:layout_below="@id/tv_analysis_pie_kind"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/abalysis_pie_back2"
+        android:layout_toLeftOf="@id/tv_analysis_pie_sum"
+        android:layout_toRightOf="@id/ic_analysis_pie_icon"
+         />
+
+    <ImageView
+        android:id="@+id/img_analysis_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="3dp"
+        android:src="@drawable/ic_chevron_right_black_24dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_analysis_pie_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/img_analysis_right"
+        android:text="-333"
+        android:textColor="@color/app_title_color"
+        android:textSize="15sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_analysis_pie_sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_analysis_pie_money"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@id/tv_analysis_pie_scale"
+        android:text="-333"
+        android:textColor="#93A8B1"
+        android:textSize="12sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_analysis_pie_scale"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_analysis_pie_money"
+        android:layout_marginLeft="8dp"
+        android:layout_toLeftOf="@id/img_analysis_right"
+        android:text="-333"
+        android:textColor="#93A8B1"
+        android:textSize="12sp" />
+</RelativeLayout>

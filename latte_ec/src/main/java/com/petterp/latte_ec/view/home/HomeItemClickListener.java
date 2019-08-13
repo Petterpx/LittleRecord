@@ -85,7 +85,7 @@ public class HomeItemClickListener extends SimpleClickListener implements IDialo
                 entity.getField(IHomeRvFields.KIND),
                 entity.getField(IHomeRvFields.LONG_TIME),
                 entity.getField(IHomeRvFields.CATEGORY),
-                Math.abs((double)entity.getField(IHomeRvFields.CONSUME_I)),
+                Math.abs((float)entity.getField(IHomeRvFields.CONSUME_I)),
                 entity.getField(IHomeRvFields.REMARK),
                 entity.getField(IHomeRvFields.KEY));
         //设置header头位置，用于更新

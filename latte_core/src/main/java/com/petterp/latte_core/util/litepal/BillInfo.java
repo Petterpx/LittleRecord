@@ -16,25 +16,25 @@ public class BillInfo extends LitePalSupport {
     //插入时间->戳
     private long longDate;
     //相应金额
-    private double money;
+    private float money;
     //备注
     private String remark;
-    //操作人
-    private String name;
     //选择的条目
     private String kind;
     //消费还是支出
     private String category;
+    private String kindIcon;
 
-    public BillInfo(String key, long longDate, double money, String remark, String name, String kind, String category) {
+    public BillInfo( String key, long longDate, float money, String remark, String kind, String category, String kindIcon) {
         this.key = key;
         this.longDate = longDate;
         this.money = money;
         this.remark = remark;
-        this.name = name;
         this.kind = kind;
         this.category = category;
+        this.kindIcon = kindIcon;
     }
+
     public  BillInfo(){
 
     }
@@ -55,11 +55,11 @@ public class BillInfo extends LitePalSupport {
         this.longDate = longDate;
     }
 
-    public double getMoney() {
+    public float getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(float money) {
         this.money = money;
     }
 
@@ -71,13 +71,6 @@ public class BillInfo extends LitePalSupport {
         this.remark = remark;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getKind() {
         return kind;
@@ -103,4 +96,11 @@ public class BillInfo extends LitePalSupport {
         this.id = id;
     }
 
+    public String getKindIcon() {
+        return kindIcon;
+    }
+
+    public void setKindIcon(String kindIcon) {
+        this.kindIcon = kindIcon;
+    }
 }

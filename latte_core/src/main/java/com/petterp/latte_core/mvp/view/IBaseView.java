@@ -11,4 +11,8 @@ public interface IBaseView {
      */
     void onDetachView();
 
+    void showLoader();
+
+    void stopLoader();
+
 }

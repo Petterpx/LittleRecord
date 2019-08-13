@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.petterp.latte_core.app.Latte;
+import com.petterp.latte_ec.model.analysis.AnalyDiaFields;
 import com.petterp.latte_ec.model.analysis.AnalyMessages;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
@@ -21,6 +22,7 @@ public class DateItemClcikListener extends SimpleClickListener {
 
     private Dialog dialog;
     private AnalyMessages messages;
+    private String[] date = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 
     public DateItemClcikListener(Dialog dialog, AnalyMessages messages) {
         this.dialog = dialog;
@@ -29,12 +31,19 @@ public class DateItemClcikListener extends SimpleClickListener {
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        MultipleItemEntity itemEntity= (MultipleItemEntity) adapter.getData().get(position);
-        if (itemEntity.getField(MultipleFidls.TAG)){
-            messages.setMonth(itemEntity.getField(MultipleFidls.TEXT));
+        MultipleItemEntity itemEntity = (MultipleItemEntity) adapter.getData().get(position);
+        if (messages.getMode() == AnalyDiaFields.DIA_SELECT_YEAR) {
+            messages.setYear(itemEntity.getField(MultipleFidls.TEXT));
             EventBus.getDefault().post(messages);
             dialog.dismiss();
+        } else {
+            if (itemEntity.getField(MultipleFidls.TAG)) {
+                messages.setMonth(date[position]);
+                EventBus.getDefault().post(messages);
+                dialog.dismiss();
+            }
         }
+
     }
 
     @Override

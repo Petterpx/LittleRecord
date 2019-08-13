@@ -1,13 +1,21 @@
 package com.petterp.latte_core.util.time;
 
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+
+import com.petterp.latte_core.app.Latte;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 设置相应时间后执行某操作
@@ -62,6 +70,9 @@ public class RxTimerUtil {
      * @param next
      */
     public static void interval(long milliseconds, final IRxNext next) {
+
+
+
         Observable.interval(milliseconds, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Long>() {
@@ -87,6 +98,16 @@ public class RxTimerUtil {
 
                     }
                 });
+    }
+
+    private void start(){
+        Disposable disposable = Observable.create((ObservableOnSubscribe<Void>) emitter -> {
+            Thread.sleep(1000);
+            emitter.onComplete();
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .doOnComplete(() -> Toast.makeText(Latte.getContext(), "任务执行结束", Toast.LENGTH_SHORT).show()).subscribe();
     }
 
 

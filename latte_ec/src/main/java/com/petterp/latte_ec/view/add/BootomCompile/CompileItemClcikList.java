@@ -37,7 +37,7 @@ public class CompileItemClcikList extends SimpleClickListener {
         if (mPresenter.getStateMode() == IHomeStateType.UPDATE) {
             TEXT_BUILDER.append(mPresenter.getUpdateRvItem().getMoney());
         }
-        DECI_FORMAT = new DecimalFormat("0.00");
+        DECI_FORMAT = new DecimalFormat("###################.##");
     }
 
     @Override
@@ -200,7 +200,7 @@ public class CompileItemClcikList extends SimpleClickListener {
                     res = DECI_FORMAT.format(Double.parseDouble(values[0]) + Double.parseDouble(values[1]));
                 }
             }
-            double money = Double.parseDouble(res);
+            float money = Float.parseFloat(res);
             if (mPresenter.getTitleMode().equals(IHomeTitleRvItems.CONSUME)) {
                 money = -1 * money;
             }

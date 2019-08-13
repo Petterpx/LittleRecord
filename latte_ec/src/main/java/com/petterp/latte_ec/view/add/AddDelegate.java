@@ -41,6 +41,7 @@ import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -70,6 +71,7 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
     AppCompatTextView tvMoney = null;
     private AddPresenter mPresenter;
     private CompileListAdapter adapter;
+    private DecimalFormat decimalFormat = new DecimalFormat("###################.##");
 
 
     @Override
@@ -79,12 +81,11 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-        mPresenter=getPresenter();
+        mPresenter = getPresenter();
         //初始化View
         mPresenter.showInfo(getArguments());
 
     }
-
 
 
     @Override
@@ -144,8 +145,7 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
     public void UpdateRv() {
         IAddBundleFields fields = mPresenter.getUpdateRvItem();
         editText.setText(fields.getRemark());
-        String money = "" + fields.getMoney();
-        tvMoney.setText(money);
+        tvMoney.setText(decimalFormat.format(fields.getMoney()));
         if (fields.getCargoy().equals(IHomeTitleRvItems.CONSUME)) {
             viewPager.setCurrentItem(0);
         } else {

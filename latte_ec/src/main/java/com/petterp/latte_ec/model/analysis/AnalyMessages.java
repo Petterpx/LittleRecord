@@ -6,8 +6,8 @@ package com.petterp.latte_ec.model.analysis;
  */
 public class AnalyMessages {
     private int mode;
-    private String year;
-    private String month;
+    private String year = "";
+    private String month = "";
 
 
     public int getMode() {

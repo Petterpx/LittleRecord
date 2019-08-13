@@ -31,7 +31,6 @@ public class DrawAdapter extends MultipleRecyclearAdapter {
     public void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
         super.convert(holder, entity);
         if (holder.getItemViewType() == DrawFields.DRAW_HOME_FILEDS) {
-            Log.e("demo",entity.getField(MultipleFidls.TEXT));
             holder.setText(R.id.ic_draw_rv_item,entity.getField(MultipleFidls.NAME));
             holder.setText(R.id.tv_draw_rv_item,entity.getField(MultipleFidls.TEXT));
         }

@@ -41,18 +41,6 @@ public class HomePresenter extends BasePresenter<IHomeView> {
 
 
     /**
-     * 初始化显示
-     */
-    public void showInfo() {
-        iModel.queryInfo();
-        showRvView();
-        showTitleInfo();
-        floatButtonListener();
-        //初始化侧滑
-        showDraw();
-    }
-
-    /**
      * 操作结束后的刷新
      */
     private void showUpdateInfo() {
@@ -109,7 +97,6 @@ public class HomePresenter extends BasePresenter<IHomeView> {
             iView.FloatButtonListener();
         }
     }
-
 
 
     /**
@@ -189,7 +176,6 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         super.onDestroy(owner);
-        Log.e("demo", "ondey");
     }
 
     public String getDrawRecord() {
@@ -233,4 +219,23 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         }
     }
 
+    @Override
+    public boolean startRxMode() {
+        return true;
+    }
+
+    @Override
+    public void rxPostData() {
+        iModel.queryInfo();
+    }
+
+    @Override
+    public void rxGetData() {
+        super.rxGetData();
+        showRvView();
+        showTitleInfo();
+        floatButtonListener();
+        //初始化侧滑
+        showDraw();
+    }
 }

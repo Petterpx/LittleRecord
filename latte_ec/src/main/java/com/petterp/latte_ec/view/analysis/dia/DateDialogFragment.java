@@ -1,6 +1,5 @@
 package com.petterp.latte_ec.view.analysis.dia;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,20 +43,29 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
     private RecyclerView rvDate;
     private int year;
     private int month;
+    private List<MultipleItemEntity> itemEntitiesYear;
+    private List<MultipleItemEntity> itemEntitiesMonth;
+    private List<MultipleItemEntity> itemEntities;
+    private DateRvAdapter adapter;
+    private AppCompatTextView tvMonth;
+    private AppCompatTextView tvYear;
 
-    public DateDialogFragment(int year, int month) {
-        this.year = year;
-        this.month = month;
+    public DateDialogFragment() {
+        //获取当前时间
+        String[] times = TimeUtils.build().getYearMonthDays();
+        year = Integer.parseInt(times[0]);
+        month = Integer.parseInt(times[1].replaceAll("^(0+)", ""));
         messages = new AnalyMessages();
-        messages.setYear(year+"年");
+        messages.setYear(String.valueOf(year));
+        messages.setMode(AnalyDiaFields.DIA_SELECT_MONTH);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dia_date_layout, container, false);
-        AppCompatTextView tvMonth = view.findViewById(R.id.tv_select_month);
-        AppCompatTextView tvYear = view.findViewById(R.id.tv_select_year);
+        View view = inflater.inflate(R.layout.dia_anlysis_date, container, false);
+        tvMonth = view.findViewById(R.id.tv_select_month);
+        tvYear = view.findViewById(R.id.tv_select_year);
         tabLayout = view.findViewById(R.id.tl_dia_date);
         rvDate = view.findViewById(R.id.rv_dia_date);
         tvMonth.setOnClickListener(this);
@@ -69,21 +76,24 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
     }
 
     private void setData() {
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(year);
-            tabLayout.addTab(tabLayout.newTab().setText(year-- + "年"));
+        itemEntitiesMonth = new ArrayList<>();
+        itemEntitiesYear = new ArrayList<>();
+        itemEntities = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            String mode = String.valueOf(year--);
+            itemEntitiesYear.add(MultipleItemEntity.builder().setField(MultipleFidls.ID,AnalyDiaFields.DIA_SELECT_YEAR).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, mode).build());
+            tabLayout.addTab(tabLayout.newTab().setText(mode+"年"));
         }
-        List<MultipleItemEntity> itemEntities = new ArrayList<>();
         String[] months = getResources().getStringArray(R.array.draw_analysis_dia_date);
         for (int i = 0; i < 12; i++) {
             if (i < month) {
-                itemEntities.add(MultipleItemEntity.builder().setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, true).build());
+                itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID,AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, true).build());
             } else {
-                itemEntities.add(MultipleItemEntity.builder().setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, false).build());
+                itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID,AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, false).build());
             }
         }
-        DateRvAdapter adapter = new DateRvAdapter(itemEntities);
+        itemEntities.addAll(itemEntitiesMonth);
+        adapter = new DateRvAdapter(itemEntities);
         rvDate.setAdapter(adapter);
         rvDate.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvDate.addOnItemTouchListener(new DateItemClcikListener(getDialog(), messages));
@@ -93,9 +103,34 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_select_month) {
-            messages.setMode(AnalyDiaFields.DIA_SELECT_MONTH);
+            selectData(itemEntitiesMonth, View.VISIBLE, AnalyDiaFields.DIA_SELECT_MONTH);
         } else {
-            messages.setMode(AnalyDiaFields.DIA_SELECT_YEAR);
+            selectData(itemEntitiesYear, View.GONE, AnalyDiaFields.DIA_SELECT_YEAR);
+        }
+    }
+
+    /**
+     * 更新Rv数据
+     *
+     * @param itemEntitiesMode
+     * @param visible
+     * @param diaSelectMonth
+     */
+    private void selectData(List<MultipleItemEntity> itemEntitiesMode, int visible, int diaSelectMonth) {
+        //判断，避免多次无效刷新
+        if (diaSelectMonth != messages.getMode()) {
+            itemEntities.clear();
+            itemEntities.addAll(itemEntitiesMode);
+            adapter.notifyDataSetChanged();
+            tabLayout.setVisibility(visible);
+            messages.setMode(diaSelectMonth);
+            if (diaSelectMonth == AnalyDiaFields.DIA_SELECT_MONTH) {
+                tvMonth.setBackgroundResource(R.drawable.analysis_dia_title_left);
+                tvYear.setBackgroundColor(Color.TRANSPARENT);
+            } else {
+                tvMonth.setBackgroundColor(Color.TRANSPARENT);
+                tvYear.setBackgroundResource(R.drawable.analysis_dia_title_right);
+            }
         }
     }
 
@@ -122,7 +157,7 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        messages.setYear(tab.getText().toString());
+        messages.setYear(tab.getText().toString().replace("年",""));
     }
 
     @Override

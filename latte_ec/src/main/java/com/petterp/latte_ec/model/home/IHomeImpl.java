@@ -1,7 +1,6 @@
 package com.petterp.latte_ec.model.home;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.petterp.latte_core.util.exception.ExecptionFiels;
 import com.petterp.latte_core.util.litepal.BillInfo;
@@ -10,15 +9,11 @@ import com.petterp.latte_core.util.litepal.UserInfo;
 import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_core.util.time.SystemClock;
 import com.petterp.latte_core.util.time.TimeUtils;
-import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.view.home.HomeItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.litepal.LitePal;
-import org.litepal.crud.LitePalSupport;
-import org.litepal.crud.callback.SaveCallback;
-import org.litepal.crud.callback.UpdateOrDeleteCallback;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -37,11 +32,11 @@ public class IHomeImpl implements IHomeModel {
     //新增数据时的位置
     private int addPosition = 0;
     //月支出
-    private double consumeMoney;
+    private float consumeMoney;
     //月收入
-    private double incomeMoney;
+    private float incomeMoney;
     //月结余
-    private double surplusMoney;
+    private float surplusMoney;
     //title详细
     private HashMap<IHomeRvFields, String> titleHashMap;
     //数字格式化
@@ -75,7 +70,7 @@ public class IHomeImpl implements IHomeModel {
     public IHomeImpl() {
         itemEntities = new ArrayList<>();
         titleHashMap = new HashMap<>();
-        decimalFormat = new DecimalFormat("0.00");
+        decimalFormat = new DecimalFormat("###################.##");
     }
 
     @Override
@@ -132,7 +127,7 @@ public class IHomeImpl implements IHomeModel {
                         .setField(IHomeRvFields.CONSUME_I, billInfos.get(j).getMoney())
                         .setField(IHomeRvFields.LONG_TIME, billInfos.get(j).getLongDate())
                         .setField(IHomeRvFields.KEY, billInfos.get(j).getKey())
-                        .setField(MultipleFidls.NAME, billInfos.get(j).getName())
+                        .setField(MultipleFidls.NAME, billInfos.get(j).getKindIcon())
                         .setField(IHomeRvFields.REMARK, billInfos.get(j).getRemark())
                         .build();
                 //添加具体item
@@ -155,11 +150,11 @@ public class IHomeImpl implements IHomeModel {
         String state = multipleItemEntity.getField(IHomeRvFields.CATEGORY);
         String stateNew = itemEntity.getField(IHomeRvFields.CATEGORY);
         long datetime = multipleItemEntity.getField(IHomeRvFields.LONG_TIME);
-        double money = multipleItemEntity.getField(IHomeRvFields.CONSUME_I);
-        double moneyNew = itemEntity.getField(IHomeRvFields.CONSUME_I);
+        float money = multipleItemEntity.getField(IHomeRvFields.CONSUME_I);
+        float moneyNew = itemEntity.getField(IHomeRvFields.CONSUME_I);
         List<EveryBillCollect> collects = LitePal.where("key = ?", timeKey).find(EveryBillCollect.class);
-        double consume = collects.get(0).getConsume();
-        double income = collects.get(0).getIncome();
+        float consume = collects.get(0).getConsume();
+        float income = collects.get(0).getIncome();
         //判断是否是本月，再决定更改title数据
         boolean mode = TimeUtils.build().isMonth(itemEntities.get(headerPosition).getField(IHomeRvFields.LONG_TIME));
 
@@ -211,7 +206,7 @@ public class IHomeImpl implements IHomeModel {
         info.setLongDate(itemEntity.getField(IHomeRvFields.LONG_TIME));
         info.setMoney(moneyNew);
         info.setLongDate(SystemClock.now());
-        info.setName(itemEntity.getField(MultipleFidls.NAME));
+        info.setKindIcon(itemEntity.getField(MultipleFidls.NAME));
         info.setRemark(itemEntity.getField(IHomeRvFields.REMARK));
         info.updateAllAsync("key=? and longDate=?", timeKey, "" + datetime).listen(rowsAffected -> {
         });
@@ -222,21 +217,21 @@ public class IHomeImpl implements IHomeModel {
     @Override
     public void delete(MultipleItemEntity itemEntity) {
         String key = itemEntity.getField(IHomeRvFields.KEY);
-        Double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
+        float money = itemEntity.getField(IHomeRvFields.CONSUME_I);
         long time = itemEntity.getField(IHomeRvFields.LONG_TIME);
         //判断是否是本月，再决定更改title数据
         boolean mode = TimeUtils.build().isMonth(itemEntities.get(headerPosition).getField(IHomeRvFields.LONG_TIME));
         List<EveryBillCollect> collect = LitePal.where("key=?", key).find(EveryBillCollect.class);
         EveryBillCollect billCollect = new EveryBillCollect();
         if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.CONSUME)) {
-            double consume = collect.get(0).getConsume() - money;
+            float consume = collect.get(0).getConsume() - money;
             billCollect.setConsume(consume);
             itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, consume);
             if (mode) {
                 consumeMoney -= money;
             }
         } else {
-            double income = collect.get(0).getIncome() - money;
+            float income = collect.get(0).getIncome() - money;
             billCollect.setIncome(income);
 //            itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME,income);
             if (mode) {
@@ -266,13 +261,13 @@ public class IHomeImpl implements IHomeModel {
         } else {
             itemEntities.add(addPosition, itemEntity);
             addPosition += 1;
-            double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
+            float money = itemEntity.getField(IHomeRvFields.CONSUME_I);
             if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.INCOME)) {
                 incomeMoney = incomeMoney + money;
             } else {
                 consumeMoney = consumeMoney + money;
-                double consume = itemEntities.get(0).getField(IHomeRvFields.CONSUME);
-                itemEntities.get(0).setFild(IHomeRvFields.CONSUME, Double.parseDouble(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
+                float consume = itemEntities.get(0).getField(IHomeRvFields.CONSUME);
+                itemEntities.get(0).setFild(IHomeRvFields.CONSUME, Float.parseFloat(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
             }
             surplusMoney = incomeMoney + consumeMoney;
             addHeaderSum(0);
@@ -321,13 +316,13 @@ public class IHomeImpl implements IHomeModel {
         //更改header的高度
         String month = TimeUtils.build().getday(itemEntity.getField(IHomeRvFields.LONG_TIME));
         if (month.equals(TimeUtils.build().getday())) {
-            double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
+            float money = itemEntity.getField(IHomeRvFields.CONSUME_I);
             if (itemEntity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.INCOME)) {
                 incomeMoney += Math.abs(money);
             } else {
                 consumeMoney -= Math.abs(money);
-                double consume = itemEntities.get(headerPosition).getField(IHomeRvFields.CONSUME);
-                itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, Double.parseDouble(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
+                float consume = itemEntities.get(headerPosition).getField(IHomeRvFields.CONSUME);
+                itemEntities.get(headerPosition).setFild(IHomeRvFields.CONSUME, Float.parseFloat(decimalFormat.format(Math.abs(consume) + Math.abs(money))));
             }
             surplusMoney = incomeMoney + consumeMoney;
         }
@@ -422,27 +417,28 @@ public class IHomeImpl implements IHomeModel {
         EveryBillCollect collect = new EveryBillCollect();
 
         String kind = itemEntity.getField(IHomeRvFields.KIND);
-        double money = itemEntity.getField(IHomeRvFields.CONSUME_I);
+        float money = itemEntity.getField(IHomeRvFields.CONSUME_I);
         String category = itemEntity.getField(IHomeRvFields.CATEGORY);
         long time = itemEntity.getField(IHomeRvFields.LONG_TIME);
+        String kindIcon=itemEntity.getField(MultipleFidls.NAME);
 
         //如果是支出
         if (category.equals(IHomeTitleRvItems.CONSUME)) {
             if (collects.size() > 0) {
                 addMode = false;
                 //修改
-                collect.setConsume(collects.get(0).getConsume() + money);
+                collect.setConsume((collects.get(0).getConsume() + money));
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
-                addHeaderSql(money, 0.0, time);
+                addHeaderSql(money, 0, time);
             }
         } else {
             if (collects.size() > 0) {
                 addMode = false;
-                collect.setIncome(collects.get(0).getIncome() + money);
+                collect.setIncome((collects.get(0).getIncome() + money));
                 collect.setSum(collects.get(0).getSum() + 1);
             } else {
-                addHeaderSql(0.0, money, time);
+                addHeaderSql(0, money, time);
             }
 
         }
@@ -450,7 +446,7 @@ public class IHomeImpl implements IHomeModel {
 
         });
         //新增到日账单详细
-        BillInfo info = new BillInfo(timeKey, time, money, itemEntity.getField(IHomeRvFields.REMARK), "petterp", kind, category);
+        BillInfo info = new BillInfo(timeKey, time, money, itemEntity.getField(IHomeRvFields.REMARK), kind, category,kindIcon);
         info.saveAsync().listen(success -> {
             if (!success) {
                 throw new RuntimeException(ExecptionFiels.KEY_LITE_PAL_ADD_ERROR);
@@ -458,7 +454,7 @@ public class IHomeImpl implements IHomeModel {
         });
     }
 
-    private void addHeaderSql(double consume, double income, long time) {
+    private void addHeaderSql(float consume, float income, long time) {
         addMode = true;
         new EveryBillCollect(timeKey, time, "petterp", consume, income, 1).save();
     }

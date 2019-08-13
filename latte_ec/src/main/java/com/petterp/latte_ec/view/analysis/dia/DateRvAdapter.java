@@ -3,6 +3,7 @@ package com.petterp.latte_ec.view.analysis.dia;
 import android.graphics.Color;
 
 import com.petterp.latte_ec.R;
+import com.petterp.latte_ec.model.analysis.AnalyDiaFields;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 import com.petterp.latte_ui.recyclear.MultipleRecyclearAdapter;
@@ -28,11 +29,18 @@ public class DateRvAdapter extends MultipleRecyclearAdapter {
 
     @Override
     public void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
-        holder.setText(R.id.text_single,entity.getField(MultipleFidls.TEXT));
-        if (entity.getField(MultipleFidls.TAG)){
+        int mode = entity.getField(MultipleFidls.ID);
+        if (mode == AnalyDiaFields.DIA_SELECT_YEAR) {
+            holder.setText(R.id.text_single, entity.getField(MultipleFidls.TEXT) + "年");
             holder.setTextColor(R.id.text_single, Color.parseColor("#566974"));
-        }else{
-            holder.setTextColor(R.id.text_single, Color.parseColor("#93A8B1"));
+        } else {
+            holder.setText(R.id.text_single, entity.getField(MultipleFidls.TEXT));
+            if (entity.getField(MultipleFidls.TAG)) {
+                holder.setTextColor(R.id.text_single, Color.parseColor("#566974"));
+            } else {
+                holder.setTextColor(R.id.text_single, Color.parseColor("#93A8B1"));
+            }
         }
+
     }
 }

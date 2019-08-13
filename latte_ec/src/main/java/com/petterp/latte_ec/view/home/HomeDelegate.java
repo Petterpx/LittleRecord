@@ -9,13 +9,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +20,6 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -99,12 +93,12 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
 
     @OnClick(R2.id.img_draw_user_avatar)
     void onStartUser() {
-       fragmentStart(R.id.action_homeDelegate_to_userDelegate);
+        fragmentStart(R.id.action_homeDelegate_to_userDelegate);
     }
 
     @OnClick(R2.id.tv_draw_login)
     void onLogin() {
-       fragmentStart(R.id.action_homeDelegate_to_loginDelegate);
+        fragmentStart(R.id.action_homeDelegate_to_loginDelegate);
     }
 
 
@@ -115,7 +109,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
     @OnClick(R2.id.ic_toolbar_data_home)
-    void startAnalysis(){
+    void startAnalysis() {
         fragmentStart(R.id.action_homeDelegate_to_dataAnalysisDelegate);
     }
 
@@ -134,8 +128,6 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         //建立连接
         mPresenter = getPresenter();
-        //初始化view
-        mPresenter.showInfo();
         //侧滑监听
         drawerLayout.addDrawerListener(new HomeDrawerListener(getActivity(), this));
     }

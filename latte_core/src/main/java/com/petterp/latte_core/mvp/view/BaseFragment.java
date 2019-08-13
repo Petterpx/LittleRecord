@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
+import com.example.rxretifoit.ui.LatteLoader;
 import com.gyf.immersionbar.ImmersionBar;
 import com.petterp.latte_core.R;
 import com.petterp.latte_core.app.Latte;
@@ -24,6 +25,13 @@ import com.petterp.latte_core.util.callback.CallbackManager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Fragment基类
@@ -37,6 +45,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     private P presenter = null;
     private Unbinder unbinder = null;
     private View rootView = null;
+    private Disposable subscribe;
 
 //    public abstract boolean backMode();
 
@@ -46,6 +55,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * @return view
      */
     public abstract Object setLayout();
+
+
 
 
     /**
@@ -60,7 +71,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Navgation 内部执行replace方法，会导致onCreateView重新执行，这里选择保存View状态(即保存数据)
-
         if (rootView == null) {
             if (setLayout() instanceof Integer) {
                 rootView = inflater.inflate((Integer) setLayout(), container, false);
@@ -171,8 +181,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
     /**
-     * fragment 携带数据跳转
+     * fragment 携带数据跳转-Bundle
      * A->B
+     *
      * @param id
      * @param bundle
      */
@@ -183,10 +194,11 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     /**
      * fragment 携带数据新写法，Navigation 标准写法
      * 需要在 nav_host中添加相应的argument，自动生成 以下类
-     * 发送端 ClassName+Directions ，接收端ClassName+Args
+     * 传递端 ClassName+Directions ，接收端ClassName+Args
+     * <p>
+     * Demo: (传递端)RegisterDelegateDirections.actionRegisterDelegateToCreateUserDelegate(phone)
+     * (接收端)CreateUserDelegateArgs.fromBundle(getArguments()).getPhone()
      *
-     * Demo: RegisterDelegateDirections.actionRegisterDelegateToCreateUserDelegate(phone)
-     *       CreateUserDelegateArgs.fromBundle(getArguments()).getPhone()
      * @param directions
      */
     public void fragmentStart(@NonNull NavDirections directions) {
@@ -203,9 +215,22 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
 
     /**
      * 跳转方法，多级跳转
-     * A-B-C,C->A,避免Navigation 跳转后重新执行生命周期方法
+     * A->B->C,C->A,避免Navigation 跳转后重新执行生命周期方法
+     *
+     * @param id
+     * @return 如果退栈一次就返回true
      */
     public boolean fragmentStartToA(@IdRes int id) {
         return Navigation.findNavController(getRootView()).popBackStack(id, false);
+    }
+
+    @Override
+    public void showLoader() {
+        LatteLoader.showLoading(getContext());
+    }
+
+    @Override
+    public void stopLoader() {
+        LatteLoader.stopLoading();
     }
 }

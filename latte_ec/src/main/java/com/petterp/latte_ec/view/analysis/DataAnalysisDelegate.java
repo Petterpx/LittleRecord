@@ -1,7 +1,9 @@
 package com.petterp.latte_ec.view.analysis;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -9,14 +11,43 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.ColorUtils;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.rxretifoit.ui.LatteLoader;
+import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.charts.RadarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.util.color.ColorsUtils;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.model.analysis.AnalyInConsumeFields;
 import com.petterp.latte_ec.presenter.DataAnalysisPresenter;
 import com.petterp.latte_ec.view.analysis.dia.DateDialogFragment;
+import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,12 +62,60 @@ import butterknife.OnClick;
 public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> implements IDataAnalysisView {
     @BindView(R2.id.tv_title_date)
     AppCompatTextView tvDate = null;
-    private int year;
-    private int month;
+    @BindView(R2.id.tv_analysis_income_money)
+    AppCompatTextView tvIncome = null;
+    @BindView(R2.id.tv_analysis_balance_money)
+    AppCompatTextView tvBalance = null;
+    @BindView(R2.id.tv_analysis_consume_money)
+    AppCompatTextView tvConsume = null;
+    @BindView(R2.id.tv_analysis_day_money)
+    AppCompatTextView tvDayAverage = null;
+    @BindView(R2.id.lc_analysis_chart)
+    LineChart chart = null;
+    @BindView(R2.id.tv_select_consume)
+    AppCompatTextView tvSelectConsume = null;
+    @BindView(R2.id.tv_select_income)
+    AppCompatTextView tvSelectIncome = null;
+    @BindView(R2.id.tv_select_inconsume)
+    AppCompatTextView tvSelectInconsume = null;
+    @BindView(R2.id.pie_analysis_chart)
+    PieChart pieChart = null;
+    @BindView(R2.id.rv_analysis_classify)
+    RecyclerView rvClassify = null;
+
+
+    @OnClick({R2.id.tv_select_consume, R2.id.tv_select_income, R2.id.tv_select_inconsume})
+    public void setInConsumeBack(View view) {
+        if (view.getId() == R.id.tv_select_consume) {
+            tvSelectConsume.setBackgroundResource(R.drawable.analysis_dia_title_left);
+            tvSelectIncome.setBackgroundColor(Color.TRANSPARENT);
+            tvSelectInconsume.setBackgroundColor(Color.TRANSPARENT);
+            setMode(MONEY_CONSUME);
+        } else if (view.getId() == R.id.tv_select_income) {
+            tvSelectConsume.setBackgroundColor(Color.TRANSPARENT);
+            tvSelectIncome.setBackgroundColor(Color.parseColor("#93A8B1"));
+            tvSelectInconsume.setBackgroundColor(Color.TRANSPARENT);
+            setMode(MONEY_INCOME);
+        } else {
+            tvSelectConsume.setBackgroundColor(Color.TRANSPARENT);
+            tvSelectIncome.setBackgroundColor(Color.TRANSPARENT);
+            tvSelectInconsume.setBackgroundResource(R.drawable.analysis_dia_title_right);
+            setMode(MONEY_INCONSUME);
+        }
+    }
+
+    private List<List<Entry>> lists;
+    private List<String> times;
+    private final int MONEY_CONSUME = 1;
+    private final int MONEY_INCOME = 2;
+    private final int MONEY_INCONSUME = 3;
+    private int mode = MONEY_CONSUME;
+    private XAxis xAxisInConsume;
+    private DecimalFormat decimalFormat = new DecimalFormat("##.##%");
 
     @OnClick(R2.id.tv_title_date)
     void updateDate() {
-        new DateDialogFragment(year, month).show(getFragmentManager());
+        new DateDialogFragment().show(getFragmentManager());
     }
 
     @BindView(R2.id.bar_data_analysis)
@@ -50,12 +129,8 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-        String[] times = TimeUtils.build().getYearMonthDays();
-        year = Integer.parseInt(times[0]);
-        month = Integer.parseInt(times[1].replaceAll("^(0+)", ""));
-        String[] months = getResources().getStringArray(R.array.draw_analysis_dia_date);
-        StringBuilder stringBuilder=new StringBuilder();
-        tvDate.setText(stringBuilder.append(year).append("年").append(months[month-1]).toString());
+        infoInConsume();
+        infoPieClassify();
     }
 
     @Override
@@ -65,7 +140,179 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
 
 
     @Override
-    public void updateData() {
-        tvDate.setText(getPresenter().getTitleRes());
+    public void updateData(String date) {
+        tvDate.setText(date);
+    }
+
+    @Override
+    public void showLoader() {
+        LatteLoader.showLoading(getContext());
+    }
+
+    @Override
+    public void setInConsume(HashMap<AnalyInConsumeFields, String> map) {
+        tvConsume.setText(map.get(AnalyInConsumeFields.CONSUME));
+        tvDayAverage.setText(map.get(AnalyInConsumeFields.AVERAGE));
+        tvBalance.setText(map.get(AnalyInConsumeFields.BALANCE));
+        tvIncome.setText(map.get(AnalyInConsumeFields.INCOME));
+    }
+
+    @Override
+    public void setDayInConsume(List<List<Entry>> lists, List<String> times) {
+        this.lists = lists;
+        this.times = times;
+        setInConsume();
+    }
+
+    /**
+     * 初始化每天收支
+     */
+    private void infoInConsume() {
+        xAxisInConsume = chart.getXAxis();
+        xAxisInConsume.setDrawAxisLine(true);
+        xAxisInConsume.setDrawGridLines(false);
+        xAxisInConsume.setAxisMinimum(0);
+        xAxisInConsume.setTextSize(13f);
+        xAxisInConsume.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxisInConsume.setAxisLineColor(Color.parseColor("#93A8B1"));
+        xAxisInConsume.setTextColor(Color.parseColor("#566974"));
+        YAxis left = chart.getAxisLeft();
+        left.setAxisMinimum(0f);
+        chart.getAxisRight().setEnabled(false);
+        left.setDrawGridLines(false);
+        left.setAxisLineColor(Color.parseColor("#93A8B1"));
+        left.setTextColor(Color.parseColor("#566974"));
+        chart.getLegend().setEnabled(false);
+        chart.getDescription().setEnabled(false);
+        chart.setExtraBottomOffset(5);
+    }
+
+    /**
+     * 设置
+     */
+    private void setInConsume() {
+        LineDataSet set1 = null;
+        LineDataSet set2 = null;
+        int size = 0;
+        switch (mode) {
+            case MONEY_CONSUME:
+                size = lists.get(0).size();
+                set1 = new LineDataSet(lists.get(0), "");
+                set2 = new LineDataSet(null, "");
+                break;
+            case MONEY_INCOME:
+                size = lists.get(1).size();
+                set1 = new LineDataSet(null, "");
+                set2 = new LineDataSet(lists.get(1), "");
+                break;
+            case MONEY_INCONSUME:
+                size = lists.get(0).size() > lists.get(1).size() ? lists.get(0).size() : lists.get(1).size();
+                set1 = new LineDataSet(lists.get(0), "");
+                set2 = new LineDataSet(lists.get(1), "");
+                break;
+            default:
+                break;
+        }
+        xAxisInConsume.setAxisMaximum(size + 1);
+        xAxisInConsume.setLabelCount(size + 1);
+        int finalSize = size;
+        xAxisInConsume.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == 1 || (value == (finalSize + 1) / 2 && finalSize > 5) || value == finalSize) {
+                    return times.get((int) (value));
+                }
+                return "";
+            }
+        });
+        set1.setDrawCircleHole(false);
+        set1.setCircleColor(Color.RED);
+        set1.setCircleRadius(2f);
+        set1.setColor(Color.RED);
+        set1.setDrawValues(false);
+        set1.setDrawFilled(true);
+        set1.setFillColor(Color.RED);
+        set1.setFillAlpha(50);
+
+        set2.setDrawCircleHole(false);
+        set2.setCircleColor(Color.GREEN);
+        set2.setCircleRadius(2f);
+        set2.setColor(Color.GREEN);
+        set2.setDrawValues(false);
+        set2.setDrawFilled(true);
+        set2.setFillColor(Color.GREEN);
+        set2.setFillAlpha(50);
+        LineData data = new LineData(set1, set2);
+        chart.setData(data);
+        chart.invalidate();
+    }
+
+
+    @Override
+    public void setDayBill() {
+
+    }
+
+    private void setMode(int m) {
+        if (m != mode) {
+            mode = m;
+            setInConsume();
+        }
+    }
+
+    @SuppressLint("Range")
+    private void infoPieClassify() {
+        pieChart.setCenterText("消费比例");
+        pieChart.setCenterTextColor(Color.parseColor("#566974"));
+        pieChart.setCenterTextSize(15f);
+        pieChart.setTransparentCircleAlpha(100);
+        pieChart.getLegend().setEnabled(false);
+        pieChart.setAlpha(150);
+        pieChart.getDescription().setEnabled(false);
+        pieChart.animateXY(2000, 2000);
+        pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                String kind = (String) e.getData();
+                pieChart.setCenterText(kind + getPresenter().classifyPieMoney(kind));
+            }
+
+            @Override
+            public void onNothingSelected() {
+                pieChart.setCenterText("消费比例");
+            }
+        });
+
+    }
+
+    @Override
+    public void setClassifyBill(List<PieEntry> pieList, List<MultipleItemEntity> rvPieList) {
+        PieDataSet set = new PieDataSet(pieList, "");
+        int size = pieList.size();
+        List<Integer> colors = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            colors.add(Color.parseColor(ColorsUtils.getRandColor()));
+        }
+        set.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return decimalFormat.format(value);
+            }
+        });
+        set.setValueTextSize(13f);
+        set.setValueTextColor(Color.WHITE);
+        set.setColors(colors);
+        PieData data = new PieData(set);
+        pieChart.setData(data);
+        pieChart.invalidate();
+
+        DataAnalysisAdapter adapter = new DataAnalysisAdapter(rvPieList);
+        rvClassify.setAdapter(adapter);
+        rvClassify.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
+                .color(Color.parseColor("#F0F1F2"))
+                .size(2)
+                .build().addTo(rvClassify);
+        rvClassify.addOnItemTouchListener(new DataItemClickListener());
     }
 }

@@ -9,6 +9,7 @@ import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 import com.petterp.latte_ui.recyclear.MultipleRecyclearAdapter;
 import com.petterp.latte_ui.recyclear.MultipleViewHolder;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -17,6 +18,9 @@ import java.util.List;
  * 邮箱：1509492795@qq.com
  */
 public class HomeAdapter extends MultipleRecyclearAdapter {
+
+    private DecimalFormat decimalFormat = new DecimalFormat("###################.##");
+
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
@@ -37,12 +41,12 @@ public class HomeAdapter extends MultipleRecyclearAdapter {
             case HomeItemType.HOME_DETAIL_HEADER:
                 holder.setText(R.id.tv_index_rv_time, entity.getField(IHomeRvFields.YEAR_MONTH_DAY));
                 holder.setText(R.id.tv_index_rv_day, entity.getField(IHomeRvFields.DAY));
-                double consume=entity.getField(IHomeRvFields.CONSUME);
-                holder.setText(R.id.tv_index_rv_consume, "支出: " + Math.abs(consume));
+                float consume = entity.getField(IHomeRvFields.CONSUME);
+                holder.setText(R.id.tv_index_rv_consume, "支出: " + decimalFormat.format(Math.abs(consume)));
                 break;
             case HomeItemType.HOME_DETAIL_LIST:
                 holder.setText(R.id.tv_index_rv_kind, entity.getField(IHomeRvFields.KIND));
-                holder.setText(R.id.tv_index_rv_consume_i, entity.getField(IHomeRvFields.CONSUME_I)+"");
+                holder.setText(R.id.tv_index_rv_consume_i,  decimalFormat.format(entity.getField(IHomeRvFields.CONSUME_I)));
                 if (entity.getField(IHomeRvFields.CATEGORY).equals(IHomeTitleRvItems.CONSUME)) {
                     holder.setTextColor(R.id.it_index_rv_dot, Color.RED);
                 } else {

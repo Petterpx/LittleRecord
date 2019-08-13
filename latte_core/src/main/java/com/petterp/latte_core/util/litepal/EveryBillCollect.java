@@ -23,15 +23,15 @@ public class EveryBillCollect extends LitePalSupport {
     private String name;
 
     //每日消费
-    private Double consume;
+    private float consume;
 
     //每日收入
-    private Double income;
+    private float income;
 
     //当日添加次数
     private int sum;
 
-    public EveryBillCollect(String key, long longDate, String name, Double consume, Double income, int sum) {
+    public EveryBillCollect(String key, long longDate, String name, float consume, float income, int sum) {
         this.key = key;
         this.longDate = longDate;
         this.name = name;
@@ -68,19 +68,19 @@ public class EveryBillCollect extends LitePalSupport {
         this.name = name;
     }
 
-    public Double getConsume() {
+    public float getConsume() {
         return consume;
     }
 
-    public void setConsume(Double consume) {
+    public void setConsume(float consume) {
         this.consume = consume;
     }
 
-    public Double getIncome() {
+    public float getIncome() {
         return income;
     }
 
-    public void setIncome(Double income) {
+    public void setIncome(float income) {
         this.income = income;
     }
 

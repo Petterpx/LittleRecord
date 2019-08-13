@@ -47,7 +47,7 @@ public class IAddImpl implements IAddModel {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
                     .setField(MultipleFidls.NAME, "{icon-award}")
-                    .setField(IHomeRvFields.KIND, "三餐")
+                    .setField(IHomeRvFields.KIND, "打工")
                     .setField(MultipleFidls.ID, "" + i)
                     .build();
             itemEntities.add(itemEntity);

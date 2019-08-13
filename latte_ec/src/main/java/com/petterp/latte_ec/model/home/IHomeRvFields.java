@@ -13,6 +13,7 @@ public enum IHomeRvFields {
     YEAR_MONTH_DAY,
     //年-月
     YEAR_MONTH,
+    MONTH_DAY,
     //周几
     DAY,
     //支出
@@ -32,5 +33,10 @@ public enum IHomeRvFields {
     //Rv每个Header所对应的子条目长度
     HEADER_SUM,
     //日期Key
-    KEY
+    KEY,
+    MONEY,
+    //同类型KIND个数
+    SUM,
+    //所占比例
+    SCALE
 }

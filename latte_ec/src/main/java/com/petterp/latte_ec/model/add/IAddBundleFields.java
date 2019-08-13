@@ -13,11 +13,11 @@ public class IAddBundleFields implements Parcelable {
     private String kind;
     private long time;
     private String cargoy;
-    private double money;
+    private float money;
     private String remark;
     private String key;
 
-    public IAddBundleFields(String name, String kind, long time, String cargoy, double money, String remark, String key) {
+    public IAddBundleFields(String name, String kind, long time, String cargoy, float money, String remark, String key) {
         this.name = name;
         this.kind = kind;
         this.time = time;
@@ -32,7 +32,7 @@ public class IAddBundleFields implements Parcelable {
         kind = in.readString();
         time = in.readLong();
         cargoy = in.readString();
-        money = in.readDouble();
+        money = in.readFloat();
         remark = in.readString();
         key=in.readString();
     }
@@ -81,11 +81,11 @@ public class IAddBundleFields implements Parcelable {
         this.cargoy = cargoy;
     }
 
-    public double getMoney() {
+    public float getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(float money) {
         this.money = money;
     }
 
@@ -116,7 +116,7 @@ public class IAddBundleFields implements Parcelable {
         parcel.writeString(kind);
         parcel.writeLong(time);
         parcel.writeString(cargoy);
-        parcel.writeDouble(money);
+        parcel.writeFloat(money);
         parcel.writeString(remark);
         parcel.writeString(key);
     }
