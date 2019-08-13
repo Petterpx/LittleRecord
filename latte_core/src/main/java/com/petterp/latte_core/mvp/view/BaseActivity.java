@@ -1,6 +1,7 @@
 package com.petterp.latte_core.mvp.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import androidx.annotation.Nullable;
@@ -37,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
+        Log.e("demo", "Activity");
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();

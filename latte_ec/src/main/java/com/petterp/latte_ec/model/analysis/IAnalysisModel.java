@@ -63,9 +63,37 @@ public interface IAnalysisModel {
      */
     List<PieEntry> classifyPieChart();
 
+    /**
+     * 分类账单外围
+     * @return
+     */
     List<MultipleItemEntity> classifyRvList();
 
     List<MultipleItemEntity> classifyRvItemList(String kind);
 
+    /**
+     * 根据kind获取相应money
+     * @param kind
+     * @return
+     */
     String classifyPieKindMoney(String kind);
+
+    /**
+     * 每日账单-外层Rv
+     * @return
+     */
+    List<MultipleItemEntity> billRvList();
+
+    /**
+     * 每日平均支出
+     * @return
+     */
+    float billScaleMoney();
+
+    /**
+     * 每日账单-内层Rv
+     * @param date
+     * @return
+     */
+    List<MultipleItemEntity> billRvItemList(String date);
 }

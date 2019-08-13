@@ -24,7 +24,7 @@ import java.util.List;
  * @author by petterp
  * @date 2019-08-13
  */
-public class DataAnalysisAdapter extends MultipleRecyclearAdapter {
+public class DataAnalysisClassifyAdapter extends MultipleRecyclearAdapter {
 
     private DecimalFormat decimalFormat = new DecimalFormat("###################.##");
 
@@ -35,7 +35,7 @@ public class DataAnalysisAdapter extends MultipleRecyclearAdapter {
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    public DataAnalysisAdapter(List<MultipleItemEntity> data) {
+    public DataAnalysisClassifyAdapter(List<MultipleItemEntity> data) {
         super(data);
         addItemType(DataAnalysisItemType.DATA_ANALYSIS_PIE_LIST, R.layout.item_analysis_pie_list);
     }

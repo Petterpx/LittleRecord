@@ -16,7 +16,7 @@ import java.util.List;
  * @author by petterp
  * @date 2019-08-13
  */
-public class DataDialogRvAdapter extends MultipleRecyclearAdapter {
+public class DataClassifyItemAdapter extends MultipleRecyclearAdapter {
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -25,7 +25,7 @@ public class DataDialogRvAdapter extends MultipleRecyclearAdapter {
      *
      * @param data A new list is created out of this one to avoid mutable list
      */
-    public DataDialogRvAdapter(List<MultipleItemEntity> data) {
+    public DataClassifyItemAdapter(List<MultipleItemEntity> data) {
         super(data);
         addItemType(DataAnalysisItemType.DATA_ANALYSIS_PIE_ITEM_LIST, R.layout.item_analysis_pie_dia);
     }

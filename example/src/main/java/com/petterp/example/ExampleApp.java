@@ -20,21 +20,24 @@ public class ExampleApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("demo","application");
-        Handler handler=new Handler();
-        Latte.init(this)
-                .withIcon(new FontAwesomeModule())
-                .withIcon(new FontEcModule())
-//                .withLoaderDelayed(1000)
-                .withApiHost("http://101.132.64.249:80")
-                .withHandler(handler)
-                .withJavascriptInterface("latte")
-                .withLaucherMode(false)
-                .configure();
-        //初始化LitePal
+        Log.e("demo", "application");
+        Handler handler = new Handler();
         LitePal.initialize(getApplicationContext());
-        //初始化Mobsdk
-        MobSDK.init(this);
+        new Thread(() -> {
+            Latte.init(getApplicationContext())
+                    .withIcon(new FontAwesomeModule())
+                    .withIcon(new FontEcModule())
+//                .withLoaderDelayed(1000)
+                    .withApiHost("http://101.132.64.249:80")
+                    .withHandler(handler)
+                    .withJavascriptInterface("latte")
+                    .withLaucherMode(false)
+                    .configure();
+            //初始化Mobsdk
+            MobSDK.init(getBaseContext());
+        }).start();
+        //初始化LitePal
+
 //        initStetho();
 //        DatabaseManager.getInstance().init(this);
 //        //开启极光推送

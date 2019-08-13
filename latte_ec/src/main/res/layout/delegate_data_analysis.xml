@@ -184,7 +184,7 @@
                 android:paddingRight="15dp"
                 android:paddingBottom="@dimen/dp_10">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -271,7 +271,7 @@
                 android:orientation="vertical"
                 android:paddingTop="15dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="分类账单统计"
@@ -284,7 +284,7 @@
                     android:layout_height="300dp"
                     android:layout_marginTop="20dp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -315,30 +315,33 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="20dp">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="每日账单统计"
                     android:textColor="@color/app_text_color_dark"
                     android:textSize="18sp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_analysis_day_consume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:text="平均每日支出: -44.89"
                     android:textColor="@color/app_text_color_light"
                     android:textSize="15sp" />
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#F0F1F2"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_analysis_bill"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"

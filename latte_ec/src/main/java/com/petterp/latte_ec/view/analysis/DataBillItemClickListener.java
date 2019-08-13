@@ -6,22 +6,22 @@ import androidx.fragment.app.FragmentManager;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
+import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_ec.model.analysis.AnalysisFields;
 import com.petterp.latte_ec.presenter.DataAnalysisPresenter;
-import com.petterp.latte_ec.view.analysis.dia.DataRvItem;
-import com.petterp.latte_ec.view.analysis.dia.DateDialogFragment;
+import com.petterp.latte_ec.view.analysis.dia.DataBillRvItem;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 /**
  * @author by petterp
- * @date 2019-08-13
+ * @date 2019-08-14
  */
-public class DataItemClickListener extends SimpleClickListener {
+public class DataBillItemClickListener extends SimpleClickListener {
 
     private DataAnalysisPresenter presenter;
     private FragmentManager fragmentManager;
 
-    public DataItemClickListener(DataAnalysisPresenter presenter, FragmentManager fragmentManager) {
+    public DataBillItemClickListener(DataAnalysisPresenter presenter, FragmentManager fragmentManager) {
         this.presenter = presenter;
         this.fragmentManager = fragmentManager;
     }
@@ -29,7 +29,8 @@ public class DataItemClickListener extends SimpleClickListener {
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         MultipleItemEntity entity= (MultipleItemEntity) adapter.getItem(position);
-        new DataRvItem(presenter.classifyRvItemList(entity.getField(AnalysisFields.KIND))).show(fragmentManager,"dia");
+        new DataBillRvItem(presenter.billRvItemList(entity.getField(AnalysisFields.YEAR_MONTH_DAY)))
+                .show(fragmentManager,"billDia");
     }
 
     @Override

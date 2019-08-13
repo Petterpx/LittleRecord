@@ -105,5 +105,4 @@ dependencies {
 
     //图片选择
     api 'com.lwkandroid:ImagePicker:1.4.4'
-
 }

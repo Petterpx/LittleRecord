@@ -50,6 +50,13 @@ public class IAnalysisImpl implements IAnalysisModel {
     private List<PieEntry> pieChartList = new ArrayList<>();
     private HashMap<String, Float> pieMap;
 
+    //每日账单-外围List
+    private List<MultipleItemEntity> dayBillList = new ArrayList<>();
+    //内围
+    private HashMap<String, List<MultipleItemEntity>> dayBillItemMap = new HashMap<>();
+    //平均每日支出
+    private float dayConsume;
+
     public IAnalysisImpl() {
         //获取当前时间
         String[] times = TimeUtils.build().getYearMonthDays();
@@ -99,6 +106,10 @@ public class IAnalysisImpl implements IAnalysisModel {
             charList.get(i).clear();
         }
 
+        //清空每日账单统计
+        dayBillList.clear();
+        dayBillItemMap.clear();
+
         //kind
         List<String> kindList = new ArrayList<>();
         //存储数据库item
@@ -120,6 +131,7 @@ public class IAnalysisImpl implements IAnalysisModel {
                 ++charSum;
                 charTimes.add(TimeUtils.build().getMonthDay(all.get(i).getLongDate()));
 
+                List<MultipleItemEntity> daylist = new ArrayList<>();
                 //分类账单
                 //根据key查询天数数据
                 List<BillInfo> billInfos = LitePal.where("key=?", all.get(i).getKey()).find(BillInfo.class);
@@ -128,27 +140,68 @@ public class IAnalysisImpl implements IAnalysisModel {
                     kindList.add(billInfos.get(j).getKind());
                     String category = billInfos.get(j).getCategory();
                     String kind = billInfos.get(j).getKind();
+                    float money = Math.abs(billInfos.get(j).getMoney());
+                    long date = billInfos.get(j).getLongDate();
                     //储存category
                     pieClassify.add(MultipleItemEntity
                             .builder()
                             .setItemType(DataAnalysisItemType.DATA_ANALYSIS_PIE_ITEM_LIST)
                             .setField(AnalysisFields.KIND, kind)
-                            .setField(AnalysisFields.MONEY, Math.abs(billInfos.get(j).getMoney()))
+                            .setField(AnalysisFields.MONEY, money)
                             .setField(AnalysisFields.CATEGORY, category)
                             .setField(MultipleFidls.NAME, billInfos.get(j).getKindIcon())
-                            .setField(AnalysisFields.MONTH_DAY, TimeUtils.build().getMonthDay(billInfos.get(j).getLongDate()))
+                            .setField(AnalysisFields.MONTH_DAY, TimeUtils.build().getMonthDay(date))
+                            .build());
+                    daylist.add(MultipleItemEntity
+                            .builder()
+                            .setItemType(DataAnalysisItemType.DATA_BILL_RV_ITEM_LIST)
+                            .setField(AnalysisFields.KIND, kind)
+                            .setField(AnalysisFields.MONEY, money)
+                            .setField(AnalysisFields.CATEGORY, category)
                             .build());
                 }
+                int billItemSize = daylist.size();
+                String times = TimeUtils.build().getYearMonthDay(billInfos.get(i).getLongDate());
+                StringBuilder stringBuilder = new StringBuilder();
+                daylist.add(0, MultipleItemEntity
+                        .builder()
+                        .setItemType(ItemType.TEXT)
+                        .setField(MultipleFidls.TEXT, stringBuilder.append(times).append("(").append(billItemSize).append(")").toString())
+                        .build());
+                dayBillItemMap.put(times, daylist);
+                dayBillList.add(MultipleItemEntity
+                        .builder()
+                        .setItemType(DataAnalysisItemType.DATA_BILL_RV_LIST)
+                        .setField(AnalysisFields.YEAR_MONTH_DAY, times)
+                        .setField(AnalysisFields.SUM, billItemSize)
+                        .setField(AnalysisFields.INCOME_MONEY, incomeMoney)
+                        .setField(AnalysisFields.CONSUME_MONEY, consumeMoney)
+                        .build());
             }
         }
         charTimes.add("");
         balance = income + consum;
         String[] times = TimeUtils.build().getYearMonthDays();
+        int day;
         if ((year + month).equals(times[0] + times[1])) {
-            avg = balance / Integer.parseInt(times[2].replaceAll("^(0+)", ""));
+            day = Integer.parseInt(times[2].replaceAll("^(0+)", ""));
         } else {
-            avg = balance / 30;
+            int months = Integer.parseInt(month);
+            if (months == 1 || months == 3 || months == 5 || months == 7 || months == 8 || months == 10 || months == 12) {
+                day = 31;
+            } else if (months == 2) {
+                int years = Integer.parseInt(year);
+                if (years % 4 == 0) {
+                    day = 29;
+                } else {
+                    day = 28;
+                }
+            } else {
+                day = 30;
+            }
         }
+        avg = balance / day;
+        dayConsume = consum / day;
         //每天收支结束
 
 
@@ -225,7 +278,6 @@ public class IAnalysisImpl implements IAnalysisModel {
                     .build());
         }
         //分类账单结束
-//        Log.e("demo", "父" + pieRvMap.size() + "---子-" + pieRvItemMap.get("三餐").size());
     }
 
 
@@ -263,5 +315,21 @@ public class IAnalysisImpl implements IAnalysisModel {
     public String classifyPieKindMoney(String kind) {
         return decimalFormat.format(pieMap.get(kind));
     }
+
+    @Override
+    public List<MultipleItemEntity> billRvList() {
+        return dayBillList;
+    }
+
+    @Override
+    public float billScaleMoney() {
+        return dayConsume;
+    }
+
+    @Override
+    public List<MultipleItemEntity> billRvItemList(String date) {
+        return dayBillItemMap.get(date);
+    }
+
 
 }

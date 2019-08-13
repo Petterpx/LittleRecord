@@ -10,5 +10,8 @@ public enum  AnalysisFields {
     KIND,
     MONEY,
     CATEGORY,
-    MONTH_DAY
+    MONTH_DAY,
+    YEAR_MONTH_DAY,
+    INCOME_MONEY,
+    CONSUME_MONEY
 }

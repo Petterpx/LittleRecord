@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
@@ -58,6 +60,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @author by Petterp
  * @date 2019-07-23
  */
+@GlideModule
 @CreatePresenter(HomePresenter.class)
 public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeView, IHomeDrListener, IHomeRvListener {
 
@@ -125,6 +128,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+        Log.e("demo", "home");
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         //建立连接
         mPresenter = getPresenter();

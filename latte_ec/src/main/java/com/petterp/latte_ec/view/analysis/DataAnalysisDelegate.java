@@ -3,15 +3,12 @@ package com.petterp.latte_ec.view.analysis;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +16,6 @@ import com.example.rxretifoit.ui.LatteLoader;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -28,20 +24,17 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.view.BaseFragment;
 import com.petterp.latte_core.util.color.ColorsUtils;
-import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.analysis.AnalyInConsumeFields;
 import com.petterp.latte_ec.presenter.DataAnalysisPresenter;
 import com.petterp.latte_ec.view.analysis.dia.DateDialogFragment;
-import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -82,8 +75,12 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
     PieChart pieChart = null;
     @BindView(R2.id.rv_analysis_classify)
     RecyclerView rvClassify = null;
-    private DataAnalysisAdapter analysisAdapter;
-
+    @BindView(R2.id.rv_analysis_bill)
+    RecyclerView rvBill = null;
+    @BindView(R2.id.tv_analysis_day_consume)
+    AppCompatTextView tvDayConsume=null;
+    private DataAnalysisClassifyAdapter analysisAdapter;
+    private DataAnalysisBillAdapter billAdapter;
 
     @OnClick({R2.id.tv_select_consume, R2.id.tv_select_income, R2.id.tv_select_inconsume})
     public void setInConsumeBack(View view) {
@@ -132,6 +129,7 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         infoInConsume();
         infoPieClassify();
+        infoDayBill();
     }
 
     @Override
@@ -279,14 +277,14 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
             }
         });
 
-        analysisAdapter = new DataAnalysisAdapter(getPresenter().classifyRvList());
+        analysisAdapter = new DataAnalysisClassifyAdapter(getPresenter().classifyRvList());
         rvClassify.setAdapter(analysisAdapter);
         rvClassify.setLayoutManager(new LinearLayoutManager(getContext()));
         RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
                 .color(Color.parseColor("#F0F1F2"))
                 .size(2)
                 .build().addTo(rvClassify);
-        rvClassify.addOnItemTouchListener(new DataItemClickListener(getPresenter(),getFragmentManager()));
+        rvClassify.addOnItemTouchListener(new DataClassifyItemClickListener(getPresenter(),getFragmentManager()));
     }
 
     @Override
@@ -312,9 +310,21 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
         analysisAdapter.notifyDataSetChanged();
     }
 
+    private void infoDayBill(){
+        billAdapter = new DataAnalysisBillAdapter(getPresenter().billRvList());
+        rvBill.setAdapter(billAdapter);
+        rvBill.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
+                .color(Color.parseColor("#F0F1F2"))
+                .size(2)
+                .build().addTo(rvBill);
+        rvBill.addOnItemTouchListener(new DataBillItemClickListener(getPresenter(),getFragmentManager()));
+    }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void setDayBill() {
-
+        tvDayConsume.setText("平均每日支出："+getPresenter().getBillScaleMoney());
+        billAdapter.notifyDataSetChanged();
     }
 }

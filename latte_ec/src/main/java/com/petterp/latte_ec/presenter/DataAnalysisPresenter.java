@@ -90,4 +90,16 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
     public List<MultipleItemEntity> classifyRvItemList(String kind) {
         return model.classifyRvItemList(kind);
     }
+
+    public List<MultipleItemEntity> billRvList(){
+        return model.billRvList();
+    }
+
+    public List<MultipleItemEntity> billRvItemList(String date){
+        return model.billRvItemList(date);
+    }
+
+    public float getBillScaleMoney(){
+        return model.billScaleMoney();
+    }
 }
