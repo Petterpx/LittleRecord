@@ -9,10 +9,13 @@ import com.petterp.latte_ec.model.analysis.AnalyMessages;
 import com.petterp.latte_ec.model.analysis.IAnalysisImpl;
 import com.petterp.latte_ec.model.analysis.IAnalysisModel;
 import com.petterp.latte_ec.view.analysis.IDataAnalysisView;
+import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.List;
 
 /**
  * @author by petterp
@@ -68,15 +71,23 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
     @Override
     public void rxGetData() {
         super.rxGetData();
-        Log.e("demo","再次致谢");
+        Log.e("demo", "再次致谢");
         view.updateData(getTitleRes());
         view.setInConsume(model.getInConsume());
-        view.setDayInConsume(model.getDaysInConsume(),model.getTimes());
-        view.setClassifyBill(model.classifyPieChart(),model.classifyRvList());
+        view.setDayInConsume(model.getDaysInConsume(), model.getTimes());
+        view.setClassifyBill(model.classifyPieChart());
         view.setDayBill();
     }
 
-    public String classifyPieMoney(String kind){
+    public String classifyPieMoney(String kind) {
         return model.classifyPieKindMoney(kind);
+    }
+
+    public List<MultipleItemEntity> classifyRvList() {
+        return model.classifyRvList();
+    }
+
+    public List<MultipleItemEntity> classifyRvItemList(String kind) {
+        return model.classifyRvItemList(kind);
     }
 }

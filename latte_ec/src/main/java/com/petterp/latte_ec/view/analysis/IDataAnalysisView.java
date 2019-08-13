@@ -37,7 +37,7 @@ public interface IDataAnalysisView extends IBaseView {
     /**
      * 设置分类账单统计
      */
-    void setClassifyBill(List<PieEntry> pieList, List< MultipleItemEntity> rvPieList);
+    void setClassifyBill(List<PieEntry> pieList);
 
 
     /**

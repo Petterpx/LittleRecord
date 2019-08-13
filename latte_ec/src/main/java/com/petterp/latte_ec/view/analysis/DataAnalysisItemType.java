@@ -6,4 +6,5 @@ package com.petterp.latte_ec.view.analysis;
  */
 public class DataAnalysisItemType {
     public static final int DATA_ANALYSIS_PIE_LIST = 550;
+    public static final int DATA_ANALYSIS_PIE_ITEM_LIST = 740;
 }

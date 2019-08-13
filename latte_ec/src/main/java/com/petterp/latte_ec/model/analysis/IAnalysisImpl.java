@@ -12,6 +12,7 @@ import com.petterp.latte_core.util.litepal.EveryBillCollect;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.view.analysis.DataAnalysisItemType;
+import com.petterp.latte_ui.recyclear.ItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -130,6 +131,7 @@ public class IAnalysisImpl implements IAnalysisModel {
                     //储存category
                     pieClassify.add(MultipleItemEntity
                             .builder()
+                            .setItemType(DataAnalysisItemType.DATA_ANALYSIS_PIE_ITEM_LIST)
                             .setField(AnalysisFields.KIND, kind)
                             .setField(AnalysisFields.MONEY, Math.abs(billInfos.get(j).getMoney()))
                             .setField(AnalysisFields.CATEGORY, category)
@@ -190,7 +192,6 @@ public class IAnalysisImpl implements IAnalysisModel {
             //类别。支出还是收入
             String category = "";
 
-            Log.e("demo",""+kind);
             //子item的个数及数量
             List<MultipleItemEntity> list = new ArrayList<>();
             for (int j = 0; j < pieSize; j++) {
@@ -200,6 +201,13 @@ public class IAnalysisImpl implements IAnalysisModel {
                     category = pieClassify.get(j).getField(AnalysisFields.CATEGORY);
                 }
             }
+            StringBuilder stringBuilder = new StringBuilder();
+            int itemSize = list.size();
+            list.add(0, MultipleItemEntity
+                    .builder()
+                    .setItemType(ItemType.TEXT)
+                    .setField(MultipleFidls.TEXT, stringBuilder.append(kind).append("(").append(itemSize).append(")").toString())
+                    .build());
             pieRvItemMap.put(kind, list);
 
             float data = entryList.get(i).getValue();
@@ -210,10 +218,10 @@ public class IAnalysisImpl implements IAnalysisModel {
                     .setItemType(DataAnalysisItemType.DATA_ANALYSIS_PIE_LIST)
                     .setField(AnalysisFields.KIND, kind)
                     .setField(AnalysisFields.MONEY, entryList.get(i).getValue())
-                    .setField(AnalysisFields.SUM, list.size())
+                    .setField(AnalysisFields.SUM, itemSize)
                     .setField(MultipleFidls.NAME, kind_icon)
                     .setField(AnalysisFields.CATEGORY, category)
-                    .setField(AnalysisFields.SCALE, data/ moneySum)
+                    .setField(AnalysisFields.SCALE, data / moneySum)
                     .build());
         }
         //分类账单结束

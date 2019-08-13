@@ -82,6 +82,7 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
     PieChart pieChart = null;
     @BindView(R2.id.rv_analysis_classify)
     RecyclerView rvClassify = null;
+    private DataAnalysisAdapter analysisAdapter;
 
 
     @OnClick({R2.id.tv_select_consume, R2.id.tv_select_income, R2.id.tv_select_inconsume})
@@ -248,11 +249,6 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
     }
 
 
-    @Override
-    public void setDayBill() {
-
-    }
-
     private void setMode(int m) {
         if (m != mode) {
             mode = m;
@@ -283,10 +279,18 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
             }
         });
 
+        analysisAdapter = new DataAnalysisAdapter(getPresenter().classifyRvList());
+        rvClassify.setAdapter(analysisAdapter);
+        rvClassify.setLayoutManager(new LinearLayoutManager(getContext()));
+        RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
+                .color(Color.parseColor("#F0F1F2"))
+                .size(2)
+                .build().addTo(rvClassify);
+        rvClassify.addOnItemTouchListener(new DataItemClickListener(getPresenter(),getFragmentManager()));
     }
 
     @Override
-    public void setClassifyBill(List<PieEntry> pieList, List<MultipleItemEntity> rvPieList) {
+    public void setClassifyBill(List<PieEntry> pieList) {
         PieDataSet set = new PieDataSet(pieList, "");
         int size = pieList.size();
         List<Integer> colors = new ArrayList<>();
@@ -305,14 +309,12 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
         PieData data = new PieData(set);
         pieChart.setData(data);
         pieChart.invalidate();
+        analysisAdapter.notifyDataSetChanged();
+    }
 
-        DataAnalysisAdapter adapter = new DataAnalysisAdapter(rvPieList);
-        rvClassify.setAdapter(adapter);
-        rvClassify.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
-                .color(Color.parseColor("#F0F1F2"))
-                .size(2)
-                .build().addTo(rvClassify);
-        rvClassify.addOnItemTouchListener(new DataItemClickListener());
+
+    @Override
+    public void setDayBill() {
+
     }
 }
