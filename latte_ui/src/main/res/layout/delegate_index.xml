@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="@android:color/transparent">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <android.support.v7.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            android:id="@+id/icon_index_scan"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingRight="10dp"
+                            android:text="{fa-bars}"
+                            android:textColor="#ff808080"
+                            android:textSize="25sp" />
+
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/et_search_view"
+                            android:layout_width="0dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_weight="4"
+                            android:background="@android:color/white"
+                            android:gravity="center_vertical"
+                            android:hint="搜索"
+                            android:paddingLeft="20dp" />
+
+                        <com.joanzapata.iconify.widget.IconTextView
+                            android:id="@+id/icon_index_message"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="right"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingRight="10dp"
+                            android:text="{fa-bullhorn}"
+                            android:textColor="#ff808080"
+                            android:textSize="25sp"
+                            tools:ignore="RtlHardcoded" />
+                    </android.support.v7.widget.LinearLayoutCompat>
+
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tablayout_index"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabBackground="@android:color/white"
+                app:tabMode="scrollable"
+                app:tabSelectedTextColor="#f97297"
+                app:tabTextColor="#ff808080" />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_index"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>

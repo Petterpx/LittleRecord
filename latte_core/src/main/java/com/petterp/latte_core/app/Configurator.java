@@ -1,8 +1,6 @@
 package com.petterp.latte_core.app;
 
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Handler;
 
 import androidx.annotation.NonNull;
@@ -11,7 +9,7 @@ import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
-import com.petterp.latte_core.mvp.view.BaseActivity;
+import com.petterp.latte_core.activity.BaseActivity;
 
 
 import java.util.ArrayList;

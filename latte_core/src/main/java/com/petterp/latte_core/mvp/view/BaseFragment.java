@@ -1,12 +1,9 @@
 package com.petterp.latte_core.mvp.view;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
@@ -17,21 +14,14 @@ import androidx.navigation.Navigation;
 
 import com.example.rxretifoit.ui.LatteLoader;
 import com.gyf.immersionbar.ImmersionBar;
-import com.petterp.latte_core.R;
+import com.petterp.latte_core.activity.BaseActivity;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.mvp.factory.PresenterFactoryImpl;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
-import com.petterp.latte_core.util.callback.CallbackManager;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Fragment基类
@@ -45,7 +35,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     private P presenter = null;
     private Unbinder unbinder = null;
     private View rootView = null;
-    private Disposable subscribe;
 
 //    public abstract boolean backMode();
 
@@ -55,8 +44,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * @return view
      */
     public abstract Object setLayout();
-
-
 
 
     /**

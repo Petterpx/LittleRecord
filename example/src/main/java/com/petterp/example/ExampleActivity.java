@@ -1,20 +1,9 @@
 package com.petterp.example;
 
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
+import android.Manifest;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.petterp.latte_core.app.Latte;
-import com.petterp.latte_core.mvp.view.BaseActivity;
-import com.petterp.latte_core.mvp.view.BaseFragment;
-import com.petterp.latte_core.util.callback.CallbackManager;
-import com.petterp.latte_core.util.callback.IGlobalCallback;
+import com.petterp.latte_core.activity.BaseActivity;
 
 
 /**
@@ -28,5 +17,12 @@ public class ExampleActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+    @Override
+    public boolean setJurisdication() {
+        addPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        addPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+        addPermission(Manifest.permission.CAMERA);
+        return true;
+    }
 
 }

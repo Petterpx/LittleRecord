@@ -24,6 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.mob.tools.MobUIShell">
+
+        </activity>
         <meta-data
             android:name="android.notch_support"
             android:value="true"/>
@@ -40,5 +43,6 @@
             android:name="Mob-AppSecret"
             android:value="5828fa70de47daeeacc67f79e4a34d10" />
     </application>
+
 
 </manifest>
