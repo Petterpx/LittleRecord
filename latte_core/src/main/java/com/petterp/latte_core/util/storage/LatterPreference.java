@@ -101,7 +101,7 @@ public final class LatterPreference {
     }
 
     /**
-     * 设置用户key
+     * 设置用户key->账号唯一
      * @param id
      */
     public static void setUserId(String id){

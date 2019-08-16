@@ -27,7 +27,7 @@ public class IUserImpl implements IUserModel {
 
     @Override
     public HashMap<Object, String> queryData() {
-        List<UserInfo> userId = LitePal.where("key=?", LatterPreference.getUserId()).limit(1).find(UserInfo.class);
+        List<UserInfo> userId = LitePal.where("account=?", LatterPreference.getUserId()).limit(1).find(UserInfo.class);
         map = new HashMap<>();
         map.put(MuiltFileds.USER_ICON_URL, userId.get(0).getIconUrl());
         map.put(MuiltFileds.USER_NAME, userId.get(0).getName());
@@ -39,8 +39,6 @@ public class IUserImpl implements IUserModel {
 
     @Override
     public void saveData() {
-        Log.e("demo",map.size()+"");
-        Log.e("demo",map.get(MuiltFileds.USER_NAME)+"");
         UserInfo userInfo = new UserInfo();
         userInfo.setName(map.get(MuiltFileds.USER_NAME));
         userInfo.setSex(map.get(MuiltFileds.USER_SEX));

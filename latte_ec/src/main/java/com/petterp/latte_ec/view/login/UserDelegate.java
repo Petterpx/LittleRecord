@@ -1,5 +1,6 @@
 package com.petterp.latte_ec.view.login;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -75,13 +76,11 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
 
     @OnClick(R2.id.rl_login_user_name)
     void updateName() {
-        mode = true;
         getPresenter().updateName(getFragmentManager());
     }
 
     @OnClick(R2.id.rl_login_user_sex)
     void updateSex() {
-        mode = true;
         getPresenter().updateSex(getFragmentManager());
     }
 
@@ -89,8 +88,7 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
     void save() {
         if (mode) {
             getPresenter().save();
-        } else {
-            getPresenter().stateSaveData(getFragmentManager());
+            mode = false;
         }
     }
 
@@ -111,12 +109,13 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
         return R.layout.delegate_login_user;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         HashMap<Object, String> map = getPresenter().getData();
         Glide.with(this).load(map.get(MuiltFileds.USER_ICON_URL)).into(circleImageView);
         userName.setText(map.get(MuiltFileds.USER_NAME));
-        userSex.setText(map.get(MuiltFileds.USER_SEX));
+        userSex.setText(map.get(MuiltFileds.USER_SEX) + "");
         //0代表手机登录，1代表qq
         if (map.get(MuiltFileds.USER_ACCOUNT_MODE).equals("0")) {
             userAccount.setText(R.string.user_login_phone);
@@ -147,18 +146,16 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
 
     @Override
     public void updateName(String name) {
+        mode = true;
         userName.setText(name);
     }
 
     @Override
     public void updateSex(String sex) {
+        mode = true;
         userSex.setText(sex);
     }
 
-    @Override
-    public void saveUp() {
-        Toast.makeText(getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public boolean setBackPress() {

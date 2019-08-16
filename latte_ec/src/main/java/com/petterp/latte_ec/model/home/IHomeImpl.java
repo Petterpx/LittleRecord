@@ -394,7 +394,7 @@ public class IHomeImpl implements IHomeModel {
 
     @Override
     public String getDrawUserIcon() {
-        List<UserInfo> userId = LitePal.where("key=?", LatterPreference.getUserId()).limit(1).find(UserInfo.class);
+        List<UserInfo> userId = LitePal.where("account=?", LatterPreference.getUserId()).limit(1).find(UserInfo.class);
         return userId.get(0).getIconUrl();
     }
 

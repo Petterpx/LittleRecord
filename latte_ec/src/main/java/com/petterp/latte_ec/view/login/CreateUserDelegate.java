@@ -111,7 +111,6 @@ public class CreateUserDelegate extends BaseFragment<LoginCreatePresenter> imple
         map.put(MuiltFileds.USER_ICON_URL, imgUrl);
         map.put(MuiltFileds.USER_SEX, mSex);
         map.put(MuiltFileds.USER_ACCOUNT_MODE, "0");
-        map.put(MuiltFileds.KEY,"user"+ TimeUtils.build().getTimelong());
         getPresenter().setSave(map);
         Toast.makeText(getContext(), "注册成功", Toast.LENGTH_SHORT).show();
         EventBus.getDefault().post(new MessageItems(1));

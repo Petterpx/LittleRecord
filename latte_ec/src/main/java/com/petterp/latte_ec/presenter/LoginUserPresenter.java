@@ -74,27 +74,25 @@ public class LoginUserPresenter extends BasePresenter<IUserView> {
                     viewHolder.setText(R.id.tv_dia_radio_title, "修改性别", false);
                     viewHolder.setText(R.id.rad_dia_radio_left, "男", true);
                     viewHolder.setText(R.id.rad_dia_radio_right, "女", true);
-                    viewHolder.setText(R.id.tv_dia_radio_ensure, "保存", true);
-                    viewHolder.setText(R.id.tv_dia_radio_back, "取消", true);
                 })
                 .setOnClickListener((view, viewHolder) -> {
                     int id = view.getId();
                     if (id == R.id.rad_dia_radio_left) {
                         model.updateData(MuiltFileds.USER_SEX, "男");
                         mView.updateSex("男");
-                    } else if (id == R.id.rad_dia_radio_right) {
+                    } else {
                         model.updateData(MuiltFileds.USER_SEX, "女");
                         mView.updateSex("女");
-                    } else {
-                        viewHolder.dismiss();
                     }
+                    viewHolder.dismiss();
                 })
                 .show(fragmentManager);
     }
 
     public void save() {
         model.saveData();
-        mView.saveUp();
+        Toast.makeText(Latte.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+        mView.fragmentUP();
     }
 
     public void updateData(Object key, String value) {
@@ -111,11 +109,13 @@ public class LoginUserPresenter extends BasePresenter<IUserView> {
                     viewHolder.setText(R.id.tv_dia_message_title, "保存数据", false);
                     viewHolder.setText(R.id.tv_dia_message_message, "您修改了数据,是否保存吗？", false);
                     viewHolder.setText(R.id.tv_dia_message_ensure, "确定", true);
-                    viewHolder.setText(R.id.tv_dia_message_back, "取消", false);
+                    viewHolder.setText(R.id.tv_dia_message_back, "取消", true);
                 })
                 .setOnClickListener((view, viewHolder) -> {
                     if (view.getId() == R.id.tv_dia_message_ensure) {
                         save();
+                    } else {
+                        mView.fragmentUP();
                     }
                     viewHolder.dismiss();
                 })

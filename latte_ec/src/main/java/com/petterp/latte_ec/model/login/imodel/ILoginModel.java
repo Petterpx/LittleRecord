@@ -1,5 +1,7 @@
 package com.petterp.latte_ec.model.login.imodel;
 
+import cn.sharesdk.framework.Platform;
+
 /**
  * Login -> 数据层
  *
@@ -7,20 +9,5 @@ package com.petterp.latte_ec.model.login.imodel;
  * @date 2019-07-31
  */
 public interface ILoginModel {
-
-    /**
-     * 保存
-     * @param t
-     * @param <T>
-     */
-    <T> void saveData(T t);
-
-    /**
-     * 返回数据
-     * @param <T>
-     * @return
-     */
-    <T> T getData();
-
-
+    void qqSave(Platform platform);
 }

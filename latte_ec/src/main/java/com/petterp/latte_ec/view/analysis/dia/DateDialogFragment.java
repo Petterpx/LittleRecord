@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,7 +58,7 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
         month = Integer.parseInt(times[1].replaceAll("^(0+)", ""));
         messages = new AnalyMessages();
         messages.setYear(String.valueOf(year));
-        messages.setMode(AnalyDiaFields.DIA_SELECT_MONTH);
+//        messages.setMode(AnalyDiaFields.DIA_SELECT_MONTH);
     }
 
     @Nullable
@@ -76,36 +77,50 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
     }
 
     private void setData() {
-        itemEntitiesMonth = new ArrayList<>();
         itemEntitiesYear = new ArrayList<>();
         itemEntities = new ArrayList<>();
+
+        setItemMonth(String.valueOf(year));
+
         for (int i = 0; i < 12; i++) {
             String mode = String.valueOf(year--);
-            itemEntitiesYear.add(MultipleItemEntity.builder().setField(MultipleFidls.ID,AnalyDiaFields.DIA_SELECT_YEAR).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, mode).build());
-            tabLayout.addTab(tabLayout.newTab().setText(mode+"年"));
+            itemEntitiesYear.add(MultipleItemEntity.builder().setField(MultipleFidls.ID, AnalyDiaFields.DIA_SELECT_YEAR).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, mode).build());
+            tabLayout.addTab(tabLayout.newTab().setText(mode + "年"));
         }
-        String[] months = getResources().getStringArray(R.array.draw_analysis_dia_date);
-        for (int i = 0; i < 12; i++) {
-            if (i < month) {
-                itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID,AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, true).build());
-            } else {
-                itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID,AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, false).build());
-            }
-        }
-        itemEntities.addAll(itemEntitiesMonth);
         adapter = new DateRvAdapter(itemEntities);
         rvDate.setAdapter(adapter);
         rvDate.setLayoutManager(new GridLayoutManager(getContext(), 3));
         rvDate.addOnItemTouchListener(new DateItemClcikListener(getDialog(), messages));
     }
 
+    private void setItemMonth(String year) {
+        itemEntities.clear();
+        itemEntitiesMonth = new ArrayList<>();
+        String[] months = getResources().getStringArray(R.array.draw_analysis_dia_date);
+        if (String.valueOf(year).equals(TimeUtils.build().getYear())) {
+            for (int i = 0; i < 12; i++) {
+                if (i < month) {
+                    itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID, AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, true).build());
+                } else {
+                    itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID, AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, false).build());
+                }
+            }
+        } else {
+            for (int i = 0; i < 12; i++) {
+                itemEntitiesMonth.add(MultipleItemEntity.builder().setField(MultipleFidls.ID, AnalyDiaFields.DIA_SELECT_MONTH).setItemType(ItemType.TEXT).setField(MultipleFidls.TEXT, months[i]).setField(MultipleFidls.TAG, true).build());
+            }
+        }
+        itemEntities.addAll(itemEntitiesMonth);
+    }
+
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.tv_select_month) {
-            selectData(itemEntitiesMonth, View.VISIBLE, AnalyDiaFields.DIA_SELECT_MONTH);
+//            selectData(itemEntitiesMonth, View.VISIBLE, AnalyDiaFields.DIA_SELECT_MONTH);
         } else {
-            selectData(itemEntitiesYear, View.GONE, AnalyDiaFields.DIA_SELECT_YEAR);
+//            selectData(itemEntitiesYear, View.GONE, AnalyDiaFields.DIA_SELECT_YEAR);
+            Toast.makeText(getContext(), "正在开发", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -157,7 +172,12 @@ public class DateDialogFragment extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        messages.setYear(tab.getText().toString().replace("年",""));
+        String year = tab.getText().toString().replace("年", "");
+        if (adapter != null) {
+            setItemMonth(year);
+            adapter.notifyDataSetChanged();
+        }
+        messages.setYear(year);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -112,7 +113,8 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
     @OnClick(R2.id.ic_toolbar_data_home)
-    void startAnalysis() {
+    void startAnalysis()
+    {
         fragmentStart(R.id.action_homeDelegate_to_dataAnalysisDelegate);
     }
 
@@ -256,7 +258,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public boolean setBackPress() {
-        if (drawerLayout.isAttachedToWindow()) {
+        if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
             return true;
         }

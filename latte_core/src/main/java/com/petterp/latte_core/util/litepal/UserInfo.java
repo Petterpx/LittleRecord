@@ -10,23 +10,20 @@ import org.litepal.crud.LitePalSupport;
 public class UserInfo extends LitePalSupport {
 
     private long id;
-    //key
-    private String key;
+    //账号
+    private String account;
     //用户名
     private String name;
     //密码
     private String pswd;
-    //账号
-    private String account;
     //性别
     private String sex;
     //头像url
     private String iconUrl;
-    //账号类型
+    //账号类型,0为注册用户，1为QQ登录
     private String accountMode;
 
     public UserInfo( String key, String name, String pswd, String account, String sex, String iconUrl, String accountMode) {
-        this.key = key;
         this.name = name;
         this.pswd = pswd;
         this.account = account;
@@ -39,13 +36,6 @@ public class UserInfo extends LitePalSupport {
 
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
 
     public String getName() {
         return name;

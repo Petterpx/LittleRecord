@@ -7,7 +7,6 @@ package com.petterp.latte_ec.model.login;
  */
 public enum MuiltFileds {
     ID,
-    KEY,
     USER_NAME,
     USER_PSWD,
     USER_SEX,

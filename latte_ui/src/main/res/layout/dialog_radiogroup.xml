@@ -40,7 +40,6 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
                 android:buttonTint="@color/app_title_color"
-                android:checked="true"
                 android:textColor="@color/app_text_color_dark"
                 android:textSize="16sp" />
 
@@ -59,34 +58,6 @@
                 android:textColor="@color/app_text_color_dark"
                 android:textSize="16sp" />
         </RadioGroup>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="right"
-            tools:ignore="RtlHardcoded">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_dia_radio_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="50dp"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_dia_radio_ensure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_title_color"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                tools:ignore="HardcodedText" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 

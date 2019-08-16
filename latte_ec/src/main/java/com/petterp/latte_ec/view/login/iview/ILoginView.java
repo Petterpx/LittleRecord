@@ -8,6 +8,5 @@ import com.petterp.latte_core.mvp.view.IBaseView;
  * @date 2019-07-30
  */
 public interface ILoginView extends IBaseView {
-    void login();
-    void qqLgoin();
+
 }

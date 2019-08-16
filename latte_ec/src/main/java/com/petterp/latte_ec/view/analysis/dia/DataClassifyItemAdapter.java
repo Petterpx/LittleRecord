@@ -33,6 +33,7 @@ public class DataClassifyItemAdapter extends MultipleRecyclearAdapter {
     @Override
     public void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
         super.convert(holder, entity);
+
         if (holder.getItemViewType() == DataAnalysisItemType.DATA_ANALYSIS_PIE_ITEM_LIST) {
             if (entity.getField(AnalysisFields.CATEGORY).equals("收入")) {
                 holder.setTextColor(R.id.tv_analysis_dia_category, Color.GREEN);
