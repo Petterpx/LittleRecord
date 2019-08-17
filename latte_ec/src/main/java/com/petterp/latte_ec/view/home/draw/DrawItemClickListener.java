@@ -4,6 +4,9 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
+import com.petterp.latte_ec.R;
+import com.petterp.latte_ec.presenter.HomePresenter;
+import com.petterp.latte_ec.view.home.HomeDelegate;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -12,6 +15,11 @@ import com.petterp.latte_ui.recyclear.MultipleItemEntity;
  * @date 2019-07-30
  */
 public class DrawItemClickListener extends SimpleClickListener {
+    private HomeDelegate delegate;
+
+    public DrawItemClickListener(HomeDelegate delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -21,12 +29,16 @@ public class DrawItemClickListener extends SimpleClickListener {
             case 0:
                 break;
             case 1:
+                delegate.fragmentStart(R.id.action_homeDelegate_to_dataAnalysisDelegate);
                 break;
             case 2:
+                delegate.fragmentStart(R.id.action_homeDelegate_to_reportDelegate);
                 break;
             case 3:
+                delegate.fragmentStart(R.id.action_homeDelegate_to_settingDelegate);
                 break;
             case 4:
+                delegate.fragmentStart(R.id.action_homeDelegate_to_introDelegate);
                 break;
             default:
                 break;

@@ -29,8 +29,8 @@
         <item>同步账单</item>
         <item>报表统计</item>
         <item>打小报告</item>
-        <item>捐赠</item>
         <item>设置</item>
+        <item>关于</item>
     </string-array>
     <string-array name="draw_analysis_dia_date_scale">
         <item>按月</item>

@@ -54,8 +54,15 @@
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
+    <ViewStub
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scr_stub_analysis"
+        android:background="@android:color/white"
+        android:layout="@layout/stub_analysis_data"
+        />
     <ScrollView
+        android:id="@+id/scr_analysis_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

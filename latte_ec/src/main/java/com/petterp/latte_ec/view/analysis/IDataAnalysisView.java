@@ -44,4 +44,9 @@ public interface IDataAnalysisView extends IBaseView {
      * 设置每日账单统计
      */
     void setDayBill();
+
+    /**
+     * 设置有无数据时的操作
+     */
+    void setDataMode(boolean mode);
 }

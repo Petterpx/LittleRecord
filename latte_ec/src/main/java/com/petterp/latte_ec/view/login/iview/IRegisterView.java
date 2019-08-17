@@ -7,16 +7,6 @@ import com.petterp.latte_core.mvp.view.IBaseView;
  * @date 2019-07-31
  */
 public interface IRegisterView extends IBaseView {
-    /**
-     * 显示Loader
-     */
-    void showLoader();
-
-    /**
-     * 隐藏Loader
-     */
-    void hideLoader();
-
 
     /**
      * 设置倒计时

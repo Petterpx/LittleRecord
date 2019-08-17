@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_back"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/bar_report"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="top"
+        android:background="@color/app_title_color"
+        app:layout_collapseMode="pin">
+
+        <com.joanzapata.iconify.widget.IconTextView
+            android:id="@+id/ic_login_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="20dp"
+            android:text="{fa-arrow-left}"
+            android:textColor="@android:color/white" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="打小报告"
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingLeft="15dp"
+        android:paddingTop="20dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="反馈类型"
+            android:textColor="@color/app_text_color_light"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:id="@+id/text_report_suggest"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/report_text_to"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="建议"
+            android:textColor="@color/app_title_color"
+            android:textSize="16sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:id="@+id/text_report_error"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/report_text_up"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="错误"
+            android:textColor="@color/app_text_color_light"
+            android:textSize="16sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_weight="1"
+            android:id="@+id/text_report_rest"
+            android:gravity="center"
+            android:text="其他"
+            android:paddingTop="2dp"
+            android:background="@drawable/report_text_up"
+            android:paddingBottom="2dp"
+            android:textColor="@color/app_text_color_light"
+            android:textSize="16sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:padding="@dimen/dp_10"
+        android:textSize="16sp"
+        android:id="@+id/edit_report"
+        android:singleLine="false"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/report_edit"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/app_text_color_light"
+        android:layout_height="160dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:hint="请尽量详细描述你要反馈的问题，以便我们尽快为你解决"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textColor="@android:color/white"
+        android:text="提交"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:id="@+id/text_report_submit"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/btn_background_circle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</androidx.appcompat.widget.LinearLayoutCompat>

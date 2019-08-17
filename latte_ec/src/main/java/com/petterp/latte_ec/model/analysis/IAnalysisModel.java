@@ -96,4 +96,10 @@ public interface IAnalysisModel {
      * @return
      */
     List<MultipleItemEntity> billRvItemList(String date);
+
+    /**
+     * 是否有数据
+     * @return
+     */
+    boolean getDataMode();
 }

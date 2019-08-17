@@ -31,6 +31,14 @@ public class EveryBillCollect extends LitePalSupport {
     //当日添加次数
     private int sum;
 
+    //年
+    private String year;
+    //月
+    private String month;
+    //日
+    private String day;
+
+
     public EveryBillCollect(String key, long longDate, String name, float consume, float income, int sum) {
         this.key = key;
         this.longDate = longDate;
@@ -38,6 +46,7 @@ public class EveryBillCollect extends LitePalSupport {
         this.consume = consume;
         this.income = income;
         this.sum = sum;
+        setTimes(longDate);
     }
 
     public EveryBillCollect() {
@@ -58,6 +67,14 @@ public class EveryBillCollect extends LitePalSupport {
 
     public void setLongDate(long longDate) {
         this.longDate = longDate;
+        setTimes(longDate);
+    }
+
+    private void setTimes(long longDate) {
+        String[] times = TimeUtils.build().getYearMonthDays(longDate);
+        this.year = times[0];
+        this.month = times[1];
+        this.day = times[2];
     }
 
     public String getName() {
@@ -99,5 +116,29 @@ public class EveryBillCollect extends LitePalSupport {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
     }
 }

@@ -5,6 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
+import android.widget.ScrollView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -79,9 +82,14 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
     @BindView(R2.id.rv_analysis_bill)
     RecyclerView rvBill = null;
     @BindView(R2.id.tv_analysis_day_consume)
-    AppCompatTextView tvDayConsume=null;
+    AppCompatTextView tvDayConsume = null;
+    @BindView(R2.id.scr_stub_analysis)
+    ViewStub viewStub = null;
+    @BindView(R2.id.scr_analysis_data)
+    ScrollView scrollView = null;
     private DataAnalysisClassifyAdapter analysisAdapter;
     private DataAnalysisBillAdapter billAdapter;
+    private View stubView;
 
     @OnClick({R2.id.tv_select_consume, R2.id.tv_select_income, R2.id.tv_select_inconsume})
     public void setInConsumeBack(View view) {
@@ -285,7 +293,7 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
                 .color(Color.parseColor("#F0F1F2"))
                 .size(2)
                 .build().addTo(rvClassify);
-        rvClassify.addOnItemTouchListener(new DataClassifyItemClickListener(getPresenter(),getFragmentManager()));
+        rvClassify.addOnItemTouchListener(new DataClassifyItemClickListener(getPresenter(), getFragmentManager()));
     }
 
     @Override
@@ -311,7 +319,7 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
         analysisAdapter.notifyDataSetChanged();
     }
 
-    private void infoDayBill(){
+    private void infoDayBill() {
         billAdapter = new DataAnalysisBillAdapter(getPresenter().billRvList());
         rvBill.setAdapter(billAdapter);
         rvBill.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -319,13 +327,29 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
                 .color(Color.parseColor("#F0F1F2"))
                 .size(2)
                 .build().addTo(rvBill);
-        rvBill.addOnItemTouchListener(new DataBillItemClickListener(getPresenter(),getFragmentManager()));
+        rvBill.addOnItemTouchListener(new DataBillItemClickListener(getPresenter(), getFragmentManager()));
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void setDayBill() {
-        tvDayConsume.setText("平均每日支出："+getPresenter().getBillScaleMoney());
+        tvDayConsume.setText("平均每日支出：" + getPresenter().getBillScaleMoney());
         billAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setDataMode(boolean mode) {
+        if (mode) {
+            scrollView.setVisibility(View.VISIBLE);
+            if (stubView!=null){
+                stubView.setVisibility(View.GONE);
+            }
+        } else {
+            if (stubView == null) {
+                stubView = viewStub.inflate();
+            }
+            stubView.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+        }
     }
 }

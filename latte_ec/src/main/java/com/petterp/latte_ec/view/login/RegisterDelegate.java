@@ -89,15 +89,6 @@ public class RegisterDelegate extends BaseFragment<LoginRegisterPresenter> imple
         return toolbar;
     }
 
-    @Override
-    public void showLoader() {
-        LatteLoader.showLoading(getContext());
-    }
-
-    @Override
-    public void hideLoader() {
-        LatteLoader.stopLoading();
-    }
 
     @Override
     public void setTvCode(String time) {

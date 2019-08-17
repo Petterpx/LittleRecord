@@ -189,7 +189,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         DrawAdapter adapter = new DrawAdapter(list);
         drawRv.setAdapter(adapter);
         drawRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        drawRv.addOnItemTouchListener(new DrawItemClickListener());
+        drawRv.addOnItemTouchListener(new DrawItemClickListener(this));
         Glide.with(this).asBitmap().load(R.mipmap.backimg).into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {

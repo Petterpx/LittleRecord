@@ -46,17 +46,17 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
     }
 
 
-    public int getYear() {
-        return model.getYear();
-    }
-
-    public int getMonth() {
-        return model.getMonth();
-    }
-
-    public void showInConume() {
-
-    }
+//    public int getYear() {
+//        return model.getYear();
+//    }
+//
+//    public int getMonth() {
+//        return model.getMonth();
+//    }
+//
+//    public void showInConume() {
+//
+//    }
 
     @Override
     public boolean startRxMode() {
@@ -71,12 +71,15 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
     @Override
     public void rxGetData() {
         super.rxGetData();
-        Log.e("demo", "再次致谢");
+        boolean mode = model.getDataMode();
+        view.setDataMode(mode);
         view.updateData(getTitleRes());
-        view.setInConsume(model.getInConsume());
-        view.setDayInConsume(model.getDaysInConsume(), model.getTimes());
-        view.setClassifyBill(model.classifyPieChart());
-        view.setDayBill();
+        if (mode) {
+            view.setInConsume(model.getInConsume());
+            view.setDayInConsume(model.getDaysInConsume(), model.getTimes());
+            view.setClassifyBill(model.classifyPieChart());
+            view.setDayBill();
+        }
     }
 
     public String classifyPieMoney(String kind) {
@@ -91,15 +94,15 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
         return model.classifyRvItemList(kind);
     }
 
-    public List<MultipleItemEntity> billRvList(){
+    public List<MultipleItemEntity> billRvList() {
         return model.billRvList();
     }
 
-    public List<MultipleItemEntity> billRvItemList(String date){
+    public List<MultipleItemEntity> billRvItemList(String date) {
         return model.billRvItemList(date);
     }
 
-    public float getBillScaleMoney(){
+    public float getBillScaleMoney() {
         return model.billScaleMoney();
     }
 }

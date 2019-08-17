@@ -57,7 +57,7 @@ public class LoginRegisterPresenter extends BasePresenter<IRegisterView> {
 
     private void hideAvLoader() {
         if (iView != null) {
-            iView.hideLoader();
+            iView.stopLoader();
         }
     }
 

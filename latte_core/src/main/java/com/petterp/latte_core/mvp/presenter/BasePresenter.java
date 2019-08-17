@@ -41,6 +41,10 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
 
     public abstract void getView(V view);
 
+    public V getView(){
+        return mView.get();
+    }
+
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
         if (startRxMode()) {

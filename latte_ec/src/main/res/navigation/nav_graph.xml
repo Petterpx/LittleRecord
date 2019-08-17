@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/homeDelegate"
         android:name="com.petterp.latte_ec.view.home.HomeDelegate"
-        tools:layout="@layout/delegate_home"
-        android:label="HomeDelegate" >
+        android:label="HomeDelegate"
+        tools:layout="@layout/delegate_home">
         <action
             android:id="@+id/action_homeDelegate_to_addDelegate"
             app:destination="@id/addDelegate"
@@ -30,7 +30,7 @@
             app:enterAnim="@anim/dialog_right_in"
             app:exitAnim="@anim/dialog_left_out"
             app:popEnterAnim="@anim/dialog_left_in"
-            app:popExitAnim="@anim/dialog_right_out"/>
+            app:popExitAnim="@anim/dialog_right_out" />
         <action
             android:id="@+id/action_homeDelegate_to_dataAnalysisDelegate"
             app:destination="@id/dataAnalysisDelegate"
@@ -38,17 +38,38 @@
             app:exitAnim="@anim/dialog_left_out"
             app:popEnterAnim="@anim/dialog_left_in"
             app:popExitAnim="@anim/dialog_right_out" />
+        <action
+            android:id="@+id/action_homeDelegate_to_reportDelegate"
+            app:destination="@id/reportDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
+        <action
+            android:id="@+id/action_homeDelegate_to_introDelegate"
+            app:destination="@id/introDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out" />
+        <action
+            android:id="@+id/action_homeDelegate_to_settingDelegate"
+            app:destination="@id/settingDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out"/>
     </fragment>
     <fragment
         android:id="@+id/addDelegate"
-        tools:layout="@layout/delegate_add"
         android:name="com.petterp.latte_ec.view.add.AddDelegate"
-        android:label="AddDelegate" />
+        android:label="AddDelegate"
+        tools:layout="@layout/delegate_add" />
     <fragment
         android:id="@+id/loginDelegate"
-        tools:layout="@layout/delegate_login_login"
         android:name="com.petterp.latte_ec.view.login.LoginDelegate"
-        android:label="LoginDelegate" >
+        android:label="LoginDelegate"
+        tools:layout="@layout/delegate_login_login">
         <action
             android:id="@+id/action_loginDelegate_to_registerDelegate"
             app:destination="@id/registerDelegate"
@@ -59,9 +80,9 @@
     </fragment>
     <fragment
         android:id="@+id/registerDelegate"
-        tools:layout="@layout/delegate_login_register"
         android:name="com.petterp.latte_ec.view.login.RegisterDelegate"
-        android:label="RegisterDelegate" >
+        android:label="RegisterDelegate"
+        tools:layout="@layout/delegate_login_register">
         <action
             android:id="@+id/action_registerDelegate_to_createUserDelegate"
             app:destination="@id/createUserDelegate"
@@ -79,9 +100,9 @@
     </fragment>
     <fragment
         android:id="@+id/createUserDelegate"
-        tools:layout="@layout/delegate_login_user_create"
         android:name="com.petterp.latte_ec.view.login.CreateUserDelegate"
-        android:label="CreateUserDelegate" >
+        android:label="CreateUserDelegate"
+        tools:layout="@layout/delegate_login_user_create">
         <action
             android:id="@+id/action_createUserDelegate_to_homeDelegate"
             app:destination="@id/homeDelegate"
@@ -95,12 +116,27 @@
     </fragment>
     <fragment
         android:id="@+id/userDelegate"
-        tools:layout="@layout/delegate_login_user"
         android:name="com.petterp.latte_ec.view.login.UserDelegate"
-        android:label="UserDelegate" />
+        android:label="UserDelegate"
+        tools:layout="@layout/delegate_login_user" />
     <fragment
         android:id="@+id/dataAnalysisDelegate"
-        tools:layout="@layout/delegate_data_analysis"
         android:name="com.petterp.latte_ec.view.analysis.DataAnalysisDelegate"
-        android:label="DataAnalysisDelegate" />
+        android:label="DataAnalysisDelegate"
+        tools:layout="@layout/delegate_data_analysis" />
+    <fragment
+        android:id="@+id/reportDelegate"
+        android:name="com.petterp.latte_ec.view.report.ReportDelegate"
+        android:label="ReportDelegate"
+        tools:layout="@layout/delegate_report" />
+    <fragment
+        android:id="@+id/introDelegate"
+        android:name="com.petterp.latte_ec.view.intro.IntroDelegate"
+        android:label="IntroDelegate"
+        tools:layout="@layout/delegate_intro" />
+    <fragment
+        android:id="@+id/settingDelegate"
+        tools:layout="@layout/delegate_setting"
+        android:name="com.petterp.latte_ec.view.setting.SettingDelegate"
+        android:label="SettingDelegate" />
 </navigation>
