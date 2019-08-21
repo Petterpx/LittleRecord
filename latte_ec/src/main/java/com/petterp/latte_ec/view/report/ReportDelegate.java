@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 
-import com.petterp.latte_core.mvp.view.BaseFragment;
-import com.petterp.latte_core.util.time.RxTimerUtil;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 
@@ -24,7 +22,6 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 
 /**
  * @author by petterp

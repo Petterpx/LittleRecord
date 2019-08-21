@@ -10,12 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.Navigation;
 
-import com.example.rxretifoit.ui.LatteLoader;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
-import com.petterp.latte_core.mvp.view.BaseFragment;
-import com.petterp.latte_core.util.edittext.SoftHideBoardUtils;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_core.util.phone.PhoneUtil;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;

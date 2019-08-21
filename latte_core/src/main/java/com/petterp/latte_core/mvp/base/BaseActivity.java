@@ -1,4 +1,4 @@
-package com.petterp.latte_core.activity;
+package com.petterp.latte_core.mvp.base;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -17,6 +17,9 @@ import androidx.core.app.ActivityCompat;
 
 import com.petterp.latte_core.app.Latte;
 
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,24 +30,27 @@ import java.util.List;
  * @date 2019-08-07
  */
 public abstract class BaseActivity extends AppCompatActivity {
+
     //要申请的权限
-    private List<String> permissions = new ArrayList<>();
+    List<Reference<String>> references=new ArrayList<>();
+
+//    private List<String> permissions = new ArrayList<>();
     //权限申请码
     private final int mRequestCode = 100;
 
 
-    private BackPressFragment iBack;
+    private IBackPress iBack;
 
-    public interface BackPressFragment {
+    public interface IBackPress {
         /**
          * 相应逻辑方法
          *
          * @return
          */
-        boolean setBackPress();
+        boolean setBackPress(int keyCode);
     }
 
-    public void setiBack(BackPressFragment back) {
+    public void setIBack(IBackPress back) {
         this.iBack = back;
     }
 
@@ -69,30 +75,40 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         //执行相应方法，成功拦截，否则默认执行
-        if (iBack.setBackPress()) {
-            return true;
+        if (iBack != null) {
+            if (iBack.setBackPress(keyCode)) {
+                return true;
+            }
         }
         return super.onKeyUp(keyCode, event);
     }
 
+    /**
+     * 是否需要动态权限
+     * @return
+     */
     public boolean setJurisdication() {
         return false;
     }
 
+    /**
+     * 添加权限
+     * @param permission
+     */
     public void addPermission(String permission) {
-        permissions.add(permission);
+        references.add(new SoftReference<>(permission));
     }
 
     public void setPremission() {
         //用来判断哪些权限没有申请
         List<String> mPermissionList = new ArrayList<>();
         //需要申请的权限长度
-        int size = permissions.size();
+        int size = references.size();
         if (size > 0) {
             //逐个判断你要的权限是否已经通过
             for (int i = 0; i < size; i++) {
-                if (ActivityCompat.checkSelfPermission(this, permissions.get(i)) != PackageManager.PERMISSION_GRANTED) {
-                    mPermissionList.add(permissions.get(i));//添加还未授予的权限
+                if (ActivityCompat.checkSelfPermission(this, references.get(i).get()) != PackageManager.PERMISSION_GRANTED) {
+                    mPermissionList.add(references.get(i).get());//添加还未授予的权限
                 }
             }
         }
@@ -140,6 +156,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         //优化内存
         System.gc();
         System.runFinalization();
-
     }
 }

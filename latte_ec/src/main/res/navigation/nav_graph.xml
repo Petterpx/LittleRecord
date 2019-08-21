@@ -133,10 +133,23 @@
         android:id="@+id/introDelegate"
         android:name="com.petterp.latte_ec.view.intro.IntroDelegate"
         android:label="IntroDelegate"
-        tools:layout="@layout/delegate_intro" />
+        tools:layout="@layout/delegate_intro" >
+        <action
+            android:id="@+id/action_introDelegate_to_introWebDelegate"
+            app:enterAnim="@anim/dialog_right_in"
+            app:exitAnim="@anim/dialog_left_out"
+            app:popEnterAnim="@anim/dialog_left_in"
+            app:popExitAnim="@anim/dialog_right_out"
+            app:destination="@id/introWebDelegate" />
+    </fragment>
     <fragment
         android:id="@+id/settingDelegate"
         tools:layout="@layout/delegate_setting"
         android:name="com.petterp.latte_ec.view.setting.SettingDelegate"
         android:label="SettingDelegate" />
+    <fragment
+        tools:layout="@layout/delegate_report_webview"
+        android:id="@+id/introWebDelegate"
+        android:name="com.petterp.latte_ec.view.intro.webview.IntroWebDelegate"
+        android:label="IntroWebDelegate" />
 </navigation>

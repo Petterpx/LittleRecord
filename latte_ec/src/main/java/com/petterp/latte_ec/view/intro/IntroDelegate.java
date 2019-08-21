@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
-import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
@@ -56,7 +56,7 @@ public class IntroDelegate extends BaseFragment {
         IntroAdapter adapter = new IntroAdapter(list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addOnItemTouchListener(new IntroItemClcikListener());
+        recyclerView.addOnItemTouchListener(new IntroItemClcikListener(this));
         //设置Rv分割线
         RecyclerViewDivider.with(Objects.requireNonNull(getContext()))
                 .color(Color.parseColor("#F0F1F2"))

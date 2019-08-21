@@ -9,7 +9,7 @@ import com.joanzapata.iconify.IconFontDescriptor;
 import com.joanzapata.iconify.Iconify;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
-import com.petterp.latte_core.activity.BaseActivity;
+import com.petterp.latte_core.mvp.base.BaseActivity;
 
 
 import java.util.ArrayList;

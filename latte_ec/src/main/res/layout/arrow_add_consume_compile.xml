@@ -13,7 +13,7 @@
         android:layout_marginTop="5dp"
         android:paddingEnd="15dp"
         android:paddingRight="15dp"
-        android:text="0"
+        tools:text="0"
         android:layout_marginBottom="4dp"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="25sp"

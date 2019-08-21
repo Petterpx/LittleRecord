@@ -3,7 +3,7 @@ package com.petterp.example;
 
 import android.Manifest;
 
-import com.petterp.latte_core.activity.BaseActivity;
+import com.petterp.latte_core.mvp.base.BaseActivity;
 
 
 /**

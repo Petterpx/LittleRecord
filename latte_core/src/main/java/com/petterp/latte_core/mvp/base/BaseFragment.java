@@ -1,4 +1,4 @@
-package com.petterp.latte_core.mvp.view;
+package com.petterp.latte_core.mvp.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,14 +14,13 @@ import androidx.navigation.Navigation;
 
 import com.example.rxretifoit.ui.LatteLoader;
 import com.gyf.immersionbar.ImmersionBar;
-import com.petterp.latte_core.activity.BaseActivity;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.mvp.factory.PresenterFactoryImpl;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
+import com.petterp.latte_core.mvp.view.IBaseView;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.disposables.Disposable;
 
 /**
  * Fragment基类
@@ -31,7 +30,7 @@ import io.reactivex.disposables.Disposable;
  * @author by Petterp
  * @date 2019-08-03
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBaseView, BaseActivity.BackPressFragment {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment implements IBaseView, BaseActivity.IBackPress {
     private P presenter = null;
     private Unbinder unbinder = null;
     private View rootView = null;
@@ -94,7 +93,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
         super.onViewCreated(view, savedInstanceState);
         setTitleToolbar();
         //传递返回监听事件给Activity
-        Latte.getBaseActivity().setiBack(this);
+        Latte.getBaseActivity().setIBack(this);
     }
 
     /**
@@ -152,7 +151,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
      * 返回事件重写,默认不重写
      */
     @Override
-    public boolean setBackPress() {
+    public boolean setBackPress(int keycode) {
         return false;
     }
 

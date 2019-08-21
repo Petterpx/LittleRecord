@@ -1,16 +1,12 @@
 package com.petterp.latte_core.mvp.presenter;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
 
 import com.petterp.latte_core.app.Latte;
-import com.petterp.latte_core.mvp.view.BaseFragment;
 import com.petterp.latte_core.mvp.view.IBaseView;
-import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_core.util.edittext.SoftHideBoardUtils;
 
 import java.lang.ref.Reference;

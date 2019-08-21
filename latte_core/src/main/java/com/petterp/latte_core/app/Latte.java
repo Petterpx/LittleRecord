@@ -3,7 +3,7 @@ package com.petterp.latte_core.app;
 import android.content.Context;
 import android.os.Handler;
 
-import com.petterp.latte_core.activity.BaseActivity;
+import com.petterp.latte_core.mvp.base.BaseActivity;
 
 import java.util.HashMap;
 

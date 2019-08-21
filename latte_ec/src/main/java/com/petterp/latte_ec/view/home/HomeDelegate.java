@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +31,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
-import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_core.util.storage.LatterPreference;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
@@ -255,9 +254,8 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
     @SuppressLint("WrongConstant")
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
-    public boolean setBackPress() {
+    public boolean setBackPress(int keycode) {
         if (drawerLayout.isDrawerOpen(Gravity.START)) {
             drawerLayout.closeDrawer(Gravity.START);
             return true;

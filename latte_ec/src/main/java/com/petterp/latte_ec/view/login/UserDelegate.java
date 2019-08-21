@@ -2,18 +2,15 @@ package com.petterp.latte_ec.view.login;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.lwkandroid.imagepicker.ImagePicker;
@@ -21,18 +18,13 @@ import com.lwkandroid.imagepicker.data.ImageBean;
 import com.lwkandroid.imagepicker.data.ImagePickType;
 import com.lwkandroid.imagepicker.utils.GlideImagePickerDisplayer;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
-import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_core.util.file.FileUtil;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
-import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.login.MuiltFileds;
 import com.petterp.latte_ec.presenter.LoginUserPresenter;
 import com.petterp.latte_ec.view.login.iview.IUserView;
-import com.petterp.latte_ui.dialog.BaseDialogFragment;
-import com.wang.avi.AVLoadingIndicatorView;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -156,9 +148,9 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
         userSex.setText(sex);
     }
 
-
+    @SuppressLint("WrongConstant")
     @Override
-    public boolean setBackPress() {
+    public boolean setBackPress(int keycode) {
         if (mode) {
             getPresenter().stateSaveData(getFragmentManager());
             return true;

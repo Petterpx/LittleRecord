@@ -14,7 +14,7 @@ buildscript {
         // in the individual module build.gradle files
         classpath "com.mob.sdk:MobSDK:2018.0319.1724"
 
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-beta02"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.2.0-alpha01"
 
     }
 }

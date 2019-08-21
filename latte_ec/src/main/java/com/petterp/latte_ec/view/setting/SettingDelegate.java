@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
-import com.petterp.latte_core.mvp.view.BaseFragment;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 

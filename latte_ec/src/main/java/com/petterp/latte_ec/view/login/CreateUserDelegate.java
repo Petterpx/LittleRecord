@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.Toolbar;
-import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -20,16 +19,13 @@ import com.lwkandroid.imagepicker.data.ImageBean;
 import com.lwkandroid.imagepicker.data.ImagePickType;
 import com.lwkandroid.imagepicker.utils.GlideImagePickerDisplayer;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
-import com.petterp.latte_core.mvp.view.BaseFragment;
-import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_core.util.file.FileUtil;
-import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.login.MuiltFileds;
 import com.petterp.latte_ec.presenter.LoginCreatePresenter;
-import com.petterp.latte_ec.view.home.draw.DrawUserUpdateFieds;
 import com.petterp.latte_ec.view.login.iview.ICreateUserView;
 
 import org.greenrobot.eventbus.EventBus;
