@@ -34,5 +34,9 @@
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rv_settings"
+        android:layout_height="wrap_content" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

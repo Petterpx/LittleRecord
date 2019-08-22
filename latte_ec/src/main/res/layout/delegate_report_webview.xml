@@ -28,7 +28,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="打小报告"
+            android:text="宁小记-开源代码"
             android:textColor="@android:color/white"
             android:textSize="20sp" />
     </androidx.appcompat.widget.Toolbar>

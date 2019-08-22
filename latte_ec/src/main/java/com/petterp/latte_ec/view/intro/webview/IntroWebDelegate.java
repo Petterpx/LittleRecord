@@ -1,7 +1,6 @@
 package com.petterp.latte_ec.view.intro.webview;
 
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -16,6 +15,7 @@ import com.petterp.latte_ec.R2;
 import butterknife.BindView;
 
 /**
+ * Intro WebViewDelegate
  * @author by petterp
  * @date 2019-08-21
  */
@@ -32,7 +32,7 @@ public class IntroWebDelegate extends BaseFragment {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-        webViewUtils.loadUrl("https://www.baidu.com");
+        webViewUtils.loadUrl("https://github.com/Petterpx/LittleRecord/blob/master/README.md");
     }
 
     @Override
@@ -48,8 +48,8 @@ public class IntroWebDelegate extends BaseFragment {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         webViewUtils.onDestroy();
+        super.onDestroy();
     }
 
     @Override

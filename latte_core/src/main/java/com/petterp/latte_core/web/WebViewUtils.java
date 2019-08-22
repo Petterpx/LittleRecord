@@ -172,7 +172,10 @@ public class WebViewUtils extends FrameLayout {
     }
 
     public void onDestroy() {
-        webView.setVisibility(GONE);
-        webView.destroy();
+        if (webView != null) {
+            webView.setVisibility(GONE);
+            webView.removeAllViews();
+            webView.destroy();
+        }
     }
 }

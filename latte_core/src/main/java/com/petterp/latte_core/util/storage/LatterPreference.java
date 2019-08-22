@@ -112,5 +112,11 @@ public final class LatterPreference {
         return getAppPreference().getString("userId", "");
     }
 
+    public static void setFinderPaintf(boolean mode){
+        getAppPreference().edit().putBoolean("finder",mode).apply();
+    }
+    public static boolean getFinderPaintf(){
+        return getAppPreference().getBoolean("finder",false);
+    }
 
 }

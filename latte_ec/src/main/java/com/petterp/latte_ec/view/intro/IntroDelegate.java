@@ -44,12 +44,12 @@ public class IntroDelegate extends BaseFragment {
         MultipleItemEntity entityIntro = MultipleItemEntity
                 .builder()
                 .setItemType(IntroItemType.INTRO_TYPE)
-                .setField(MultipleFidls.TEXT, "关于宁小记")
+                .setField(MultipleFidls.TEXT, "开源代码")
                 .setField(MultipleFidls.ID, 1).build();
         MultipleItemEntity entityF = MultipleItemEntity
                 .builder()
                 .setItemType(IntroItemType.INTRO_TYPE)
-                .setField(MultipleFidls.TEXT, "分享给好友")
+                .setField(MultipleFidls.TEXT, "分享好友")
                 .setField(MultipleFidls.ID, 2).build();
         list.add(entityIntro);
         list.add(entityF);
