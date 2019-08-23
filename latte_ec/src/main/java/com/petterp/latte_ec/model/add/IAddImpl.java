@@ -2,6 +2,7 @@ package com.petterp.latte_ec.model.add;
 
 import android.os.Bundle;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;

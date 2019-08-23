@@ -22,7 +22,6 @@ import butterknife.BindView;
 public class RecordFragment extends Fragment {
     @BindView(R2.id.rv_add_vp_consume)
     RecyclerView mRecyclerView = null;
-    private RecordListAdapter adapter;
     private List<MultipleItemEntity> list;
     private String name;
 
@@ -36,7 +35,8 @@ public class RecordFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.arrow_add_vp_consume, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rv_add_vp_consume);
-        adapter = new RecordListAdapter(list, name);
+        RecordListAdapter adapter = new RecordListAdapter(list, name);
+//        adapter.addFooterView()
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);

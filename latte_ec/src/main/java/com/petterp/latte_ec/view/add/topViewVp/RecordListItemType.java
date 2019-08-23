@@ -1,8 +1,11 @@
 package com.petterp.latte_ec.view.add.topViewVp;
 
 /**
- * 标记位
+ * Add_标记位
  */
 public class RecordListItemType {
+    //ADD_Consume 的titleRv
     public static final int ITEM_CONSUME_LIST=30;
+    //每次add的位置
+    public static final int ITEM_ADD = 407;
 }
