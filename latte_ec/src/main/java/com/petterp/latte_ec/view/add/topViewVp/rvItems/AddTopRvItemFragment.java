@@ -27,11 +27,9 @@ import java.util.List;
  */
 public class AddTopRvItemFragment extends Fragment {
     private List<MultipleItemEntity> list;
-    private String mode;
 
-    public AddTopRvItemFragment(List<MultipleItemEntity> list, String mode) {
+    public AddTopRvItemFragment(List<MultipleItemEntity> list) {
         this.list = list;
-        this.mode = mode;
     }
 
 
@@ -41,7 +39,6 @@ public class AddTopRvItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.arrow_add_vp_consume, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rv_add_vp_consume);
         AddTopRvItemAdapter adapter = new AddTopRvItemAdapter(list);
-
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);

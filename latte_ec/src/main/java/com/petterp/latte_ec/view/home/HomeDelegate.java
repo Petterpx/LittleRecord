@@ -129,7 +129,6 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-        Log.e("demo", "home");
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         //建立连接
         mPresenter = getPresenter();

@@ -1,5 +1,7 @@
 package com.petterp.latte_ec.view.add.topViewVp.rvItems;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 
@@ -16,10 +18,12 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.mvp.base.BaseFragment;
+import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.add.IAddTitleItems;
+import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
 import com.petterp.latte_ec.view.add.topViewVp.RecordCallbackFields;
 import com.petterp.latte_ec.view.add.topViewVp.RecordFragment;
 import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
@@ -34,7 +38,8 @@ import butterknife.BindView;
  * @author by petterp
  * @date 2019-08-24
  */
-public class AddTopRvItemDelegate extends BaseFragment {
+@CreatePresenter(AddTopRvItemPresenter.class)
+public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> implements IAddTopRvItemView{
     @BindView(R2.id.add_top_rv_item_bar)
     Toolbar toolbar = null;
     @BindView(R2.id.vp_add_top_rv_item)
@@ -53,18 +58,25 @@ public class AddTopRvItemDelegate extends BaseFragment {
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-//        AddTopRvItemFragment consumeFragment = new AddTopRvItemFragment();
-//        AddTopRvItemFragment incomeFragment = new AddTopRvItemFragment();
+        AddTopRvItemFragment consumeFragment = new AddTopRvItemFragment(getPresenter().consumeList());
+        AddTopRvItemFragment incomeFragment = new AddTopRvItemFragment(getPresenter().incomeList());
         String[] sums = {IAddTitleItems.CONSUME_ITEMS, IAddTitleItems.INCOME_ITEMS};
         List<Fragment> list = new ArrayList<>();
-//        list.add(consumeFragment);
-//        list.add(incomeFragment);
+        list.add(consumeFragment);
+        list.add(incomeFragment);
         RecordPagerAdapter adapter = new RecordPagerAdapter(getChildFragmentManager(), list, sums);
         viewPager.setAdapter(adapter);
         tabLayout.addTab(tabLayout.newTab().setText(sums[0]));
         tabLayout.addTab(tabLayout.newTab().setText(sums[1]));
         //关联Tablayout
         tabLayout.setupWithViewPager(viewPager);
+        if (AddTopRvItemDelegateArgs.fromBundle(getArguments()).getMode().equals(IHomeTitleRvItems.CONSUME)) {
+            viewPager.setCurrentItem(0);
+            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+        } else {
+            viewPager.setCurrentItem(1);
+            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+        }
 //        viewPager.addOnPageChangeListener(new RecordOnPageChangeListener(mPresenter));
         //注册CallBack
 //        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);

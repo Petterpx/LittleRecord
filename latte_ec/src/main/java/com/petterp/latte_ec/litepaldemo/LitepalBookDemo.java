@@ -24,6 +24,7 @@ public class LitepalBookDemo {
         book2.save();
         book3.save();
 
+
         BookRack bookRack1=new BookRack();
         bookRack1.setName("A1");
         //建立连接

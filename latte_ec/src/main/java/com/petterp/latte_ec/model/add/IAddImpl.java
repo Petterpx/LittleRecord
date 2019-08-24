@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.petterp.latte_core.util.litepal.ClassifyConsume;
+import com.petterp.latte_core.util.litepal.ClassifyIncome;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
@@ -11,6 +13,8 @@ import com.petterp.latte_ec.view.add.BootomCompile.CompileListItemType;
 import com.petterp.latte_ec.view.add.topViewVp.RecordListItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.List;
 public class IAddImpl implements IAddModel {
     private String mode = IAddTitleItems.CONSUME_ITEMS;
     private List<MultipleItemEntity> list;
-    private String[] kind = {"{icon-kind}", "三餐"};
+    private String[] kind;
     //默认状态添加
     private int state = IHomeStateType.ADD;
     private IAddBundleFields iAddBundleFields = null;
@@ -30,11 +34,13 @@ public class IAddImpl implements IAddModel {
     @Override
     public List<MultipleItemEntity> getConsumeRvList() {
         List<MultipleItemEntity> itemConsumes = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        List<ClassifyConsume> consumes= LitePal.findAll(ClassifyConsume.class);
+        int size=consumes.size();
+        for (int i = 0; i < size; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
-                    .setField(MultipleFidls.NAME, "{icon-award}")
-                    .setField(IHomeRvFields.KIND, "三餐")
+                    .setField(MultipleFidls.NAME, consumes.get(i).getIcon())
+                    .setField(IHomeRvFields.KIND,consumes.get(i).getKind())
                     .setField(MultipleFidls.ID, "" + i)
                     .setField(MultipleFidls.TAG,false)
 //                    .setField()
@@ -49,11 +55,13 @@ public class IAddImpl implements IAddModel {
     @Override
     public List<MultipleItemEntity> getIncomeRvList() {
         List<MultipleItemEntity> itemIncome = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        List<ClassifyIncome> incomes= LitePal.findAll(ClassifyIncome.class);
+        int size=incomes.size();
+        for (int i = 0; i < size; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
-                    .setField(MultipleFidls.NAME, "{icon-award}")
-                    .setField(IHomeRvFields.KIND, "打工")
+                    .setField(MultipleFidls.NAME, incomes.get(i).getIcon())
+                    .setField(IHomeRvFields.KIND, incomes.get(i).getKind())
                     .setField(MultipleFidls.ID, "" + i)
                     .build();
             itemIncome.add(itemEntity);

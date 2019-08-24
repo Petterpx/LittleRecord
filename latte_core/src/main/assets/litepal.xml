@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="Record"/>
-    <version value="4"/>
+    <version value="2"/>
     <list>
         <mapping class="com.petterp.latte_core.util.litepal.EveryBillCollect"/>
         <mapping class="com.petterp.latte_core.util.litepal.BillInfo"/>
         <mapping class="com.petterp.latte_core.util.litepal.UserInfo"/>
+        <mapping class="com.petterp.latte_core.util.litepal.ClassifyConsume"/>
+        <mapping class="com.petterp.latte_core.util.litepal.ClassifyIncome"/>
     </list>
 </litepal>

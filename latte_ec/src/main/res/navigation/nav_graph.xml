@@ -164,5 +164,9 @@
         android:id="@+id/addTopRvItemDelegate"
         tools:layout="@layout/delegate_add_top_item"
         android:name="com.petterp.latte_ec.view.add.topViewVp.rvItems.AddTopRvItemDelegate"
-        android:label="AddTopRvItemDelegate" />
+        android:label="AddTopRvItemDelegate" >
+        <argument
+            android:name="mode"
+            app:argType="string" />
+    </fragment>
 </navigation>

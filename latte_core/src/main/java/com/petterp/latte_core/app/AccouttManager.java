@@ -13,14 +13,14 @@ public class AccouttManager {
     }
 
     /**
-     * 保存用户登录状态，登录后调用
+     * 保存用户进入状态
      * @param state
      */
     public static void setSignState(boolean state){
         LatterPreference.setAppFlag(SignTag.SIGN_TAG.name(),state);
     }
 
-    private  static  boolean isSignIn(){
+    public  static  boolean isSignIn(){
         return LatterPreference.getAppFlag(SignTag.SIGN_TAG.name());
     }
     public  static  void checkAccount(IUserCheker cheker){

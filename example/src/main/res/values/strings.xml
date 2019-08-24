@@ -1,3 +1,62 @@
 <resources>
     <string name="app_name">宁小记</string>
+    <array name="add_consume_kind_names">
+        <item>"三餐"</item>
+        <item>"零食"</item>
+        <item>"衣服"</item>
+        <item>"交通"</item>
+        <item>"孩子"</item>
+        <item>"其他"</item>
+        <item>"医疗"</item>
+        <item>"美妆"</item>
+        <item>"住房"</item>
+        <item>"话费网费"</item>
+        <item>"烟酒"</item>
+        <item>"学习"</item>
+        <item>"日用品"</item>
+        <item>"汽车/加油"</item>
+        <item>"娱乐"</item>
+        <item>"请客送礼"</item>
+        <item>"电器数码"</item>
+        <item>"旅行"</item>
+        <item>"运动"</item>
+        <item>"公积金"</item>
+    </array>
+    <array name="add_consume_kind_icons">
+        <item>icon-sancan</item>
+        <item>icon-lingshi</item>
+        <item>icon-yifu</item>
+        <item>icon-jiaotong</item>
+        <item>icon-haizi</item>
+        <item>icon-qita</item>
+        <item>icon-yiliao</item>
+        <item>icon-zhufang</item>
+        <item>icon-huafei</item>
+        <item>icon-yanjiu</item>
+        <item>icon-xuexi</item>
+        <item>icon-riyongping</item>
+        <item>icon-jiayou</item>
+        <item>icon-yule</item>
+        <item>icon-qingke</item>
+        <item>icon-shuma</item>
+        <item>icon-lvxing</item>
+        <item>icon-yundong</item>
+        <item>icon-gongjijing</item>
+    </array>
+    <array name="add_income_kind_names">
+        <item>"工资"</item>
+        <item>"生活费"</item>
+        <item>"红包"</item>
+        <item>"外快"</item>
+        <item>"其他"</item>
+        <item>"礼金"</item>
+    </array>
+    <array name="add_income_kind_icons">
+        <item>icon-gongzi</item>
+        <item>icon-shenghuofei</item>
+        <item>icon-hongbao</item>
+        <item>icon-waikuai</item>
+        <item>icon-qita</item>
+        <item>icon-lijing</item>
+    </array>
 </resources>
