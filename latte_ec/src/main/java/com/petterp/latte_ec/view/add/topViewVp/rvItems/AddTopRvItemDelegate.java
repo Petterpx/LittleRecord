@@ -1,0 +1,77 @@
+package com.petterp.latte_ec.view.add.topViewVp.rvItems;
+
+import android.os.Bundle;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
+import com.petterp.latte_core.mvp.base.BaseFragment;
+import com.petterp.latte_core.util.callback.CallbackManager;
+import com.petterp.latte_ec.R;
+import com.petterp.latte_ec.R2;
+import com.petterp.latte_ec.model.add.IAddTitleItems;
+import com.petterp.latte_ec.view.add.topViewVp.RecordCallbackFields;
+import com.petterp.latte_ec.view.add.topViewVp.RecordFragment;
+import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
+import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+
+/**
+ * @author by petterp
+ * @date 2019-08-24
+ */
+public class AddTopRvItemDelegate extends BaseFragment {
+    @BindView(R2.id.add_top_rv_item_bar)
+    Toolbar toolbar = null;
+    @BindView(R2.id.vp_add_top_rv_item)
+    ViewPager viewPager = null;
+    @BindView(R2.id.tl_add_vp)
+    TabLayout tabLayout = null;
+    @BindView(R2.id.fb_add_top_rv_item)
+    FloatingActionButton floatingActionButton = null;
+
+//    private  List<>
+
+    @Override
+    public Object setLayout() {
+        return R.layout.delegate_add_top_item;
+    }
+
+    @Override
+    public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+//        AddTopRvItemFragment consumeFragment = new AddTopRvItemFragment();
+//        AddTopRvItemFragment incomeFragment = new AddTopRvItemFragment();
+        String[] sums = {IAddTitleItems.CONSUME_ITEMS, IAddTitleItems.INCOME_ITEMS};
+        List<Fragment> list = new ArrayList<>();
+//        list.add(consumeFragment);
+//        list.add(incomeFragment);
+        RecordPagerAdapter adapter = new RecordPagerAdapter(getChildFragmentManager(), list, sums);
+        viewPager.setAdapter(adapter);
+        tabLayout.addTab(tabLayout.newTab().setText(sums[0]));
+        tabLayout.addTab(tabLayout.newTab().setText(sums[1]));
+        //关联Tablayout
+        tabLayout.setupWithViewPager(viewPager);
+//        viewPager.addOnPageChangeListener(new RecordOnPageChangeListener(mPresenter));
+        //注册CallBack
+//        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);
+    }
+
+    @Override
+    public View setToolbar() {
+        return toolbar;
+    }
+}

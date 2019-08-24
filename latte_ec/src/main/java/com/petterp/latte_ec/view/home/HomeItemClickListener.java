@@ -95,7 +95,8 @@ public class HomeItemClickListener extends SimpleClickListener implements IDialo
         diaQuery.dismiss();
         Bundle args = new Bundle();
         args.putParcelable(IAddBundleType.KEY_UPDATE_LIST, fields);
-        Navigation.findNavController(this.view).navigate(R.id.addDelegate,args);
+        presenter.getView().fragmentStart(R.id.addDelegate,args);
+//        Navigation.findNavController(this.view).navigate();
     }
 
     @Override

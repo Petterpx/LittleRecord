@@ -64,7 +64,15 @@
         android:id="@+id/addDelegate"
         android:name="com.petterp.latte_ec.view.add.AddDelegate"
         android:label="AddDelegate"
-        tools:layout="@layout/delegate_add" />
+        tools:layout="@layout/delegate_add" >
+        <action
+            android:id="@+id/action_addDelegate_to_addTopRvItemDelegate"
+            app:destination="@id/addTopRvItemDelegate"
+            app:enterAnim="@anim/dialog_bottom_in"
+            app:exitAnim="@anim/dialog_top_out"
+            app:popEnterAnim="@anim/dialog_top_in"
+            app:popExitAnim="@anim/dialog_bottom_out" />
+    </fragment>
     <fragment
         android:id="@+id/loginDelegate"
         android:name="com.petterp.latte_ec.view.login.LoginDelegate"
@@ -152,4 +160,9 @@
         android:id="@+id/introWebDelegate"
         android:name="com.petterp.latte_ec.view.intro.webview.IntroWebDelegate"
         android:label="IntroWebDelegate" />
+    <fragment
+        android:id="@+id/addTopRvItemDelegate"
+        tools:layout="@layout/delegate_add_top_item"
+        android:name="com.petterp.latte_ec.view.add.topViewVp.rvItems.AddTopRvItemDelegate"
+        android:label="AddTopRvItemDelegate" />
 </navigation>

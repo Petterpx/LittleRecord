@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_marginBottom="@dimen/dp_10"
+    android:orientation="vertical">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="45dp"
+        android:gravity="center"
+        android:id="@+id/tv_item_vp_consume_icon"
+        android:text="{fa-gear}"
+        android:layout_height="45dp"
+        android:textSize="18sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:id="@+id/tv_item_vp_consume_title"
+        android:gravity="center"
+        android:textColor="@color/app_title_color"
+        android:text="管理"
+        android:textSize="15sp" />
+</androidx.appcompat.widget.LinearLayoutCompat>

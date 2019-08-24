@@ -1,6 +1,7 @@
 package com.petterp.latte_ec.model.add;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.petterp.latte_core.util.time.TimeUtils;
@@ -28,22 +29,26 @@ public class IAddImpl implements IAddModel {
 
     @Override
     public List<MultipleItemEntity> getConsumeRvList() {
-        List<MultipleItemEntity> itemEntities = new ArrayList<>();
+        List<MultipleItemEntity> itemConsumes = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
                     .setField(MultipleFidls.NAME, "{icon-award}")
                     .setField(IHomeRvFields.KIND, "三餐")
                     .setField(MultipleFidls.ID, "" + i)
+                    .setField(MultipleFidls.TAG,false)
+//                    .setField()
                     .build();
-            itemEntities.add(itemEntity);
+            itemConsumes.add(itemEntity);
         }
-        return itemEntities;
+        state=IHomeStateType.ADD;
+        kind=new String[]{itemConsumes.get(0).getField(MultipleFidls.NAME), itemConsumes.get(0).getField(IHomeRvFields.KIND)};
+        return itemConsumes;
     }
 
     @Override
     public List<MultipleItemEntity> getIncomeRvList() {
-        List<MultipleItemEntity> itemEntities = new ArrayList<>();
+        List<MultipleItemEntity> itemIncome = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
@@ -51,9 +56,9 @@ public class IAddImpl implements IAddModel {
                     .setField(IHomeRvFields.KIND, "打工")
                     .setField(MultipleFidls.ID, "" + i)
                     .build();
-            itemEntities.add(itemEntity);
+            itemIncome.add(itemEntity);
         }
-        return itemEntities;
+        return itemIncome;
     }
 
     @Override

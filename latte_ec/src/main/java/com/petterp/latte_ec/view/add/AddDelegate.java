@@ -24,6 +24,7 @@ import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.add.IAddBundleFields;
+import com.petterp.latte_ec.model.add.IAddTitleItems;
 import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
 import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileItemClcikList;
@@ -84,9 +85,9 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
 
     @Override
     public void topViewPagerInfo() {
-        RecordFragment consumeFragment = new RecordFragment(mPresenter.getConsumeRvList(), mPresenter.getTitleRvKind()[1]);
-        RecordFragment incomeFragment = new RecordFragment(mPresenter.getIncomeRvList(), mPresenter.getTitleRvKind()[1]);
-        String[] sums = {"支出", "收入"};
+        RecordFragment consumeFragment = new RecordFragment(mPresenter,IAddTitleItems.CONSUME_ITEMS);
+        RecordFragment incomeFragment = new RecordFragment(mPresenter,IAddTitleItems.INCOME_ITEMS);
+        String[] sums = {IAddTitleItems.CONSUME_ITEMS, IAddTitleItems.INCOME_ITEMS};
         List<Fragment> list = new ArrayList<>();
         list.add(consumeFragment);
         list.add(incomeFragment);
