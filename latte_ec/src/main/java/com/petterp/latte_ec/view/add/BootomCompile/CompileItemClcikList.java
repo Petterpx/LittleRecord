@@ -1,5 +1,6 @@
 package com.petterp.latte_ec.view.add.BootomCompile;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.navigation.Navigation;
@@ -215,6 +216,7 @@ public class CompileItemClcikList extends SimpleClickListener {
                     .setField(IHomeRvFields.LONG_TIME, SystemClock.now())
                     .setField(IHomeRvFields.KEY, null)
                     .build();
+            Log.e("demo","点击保存时"+kindRes[1]);
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));
             TEXT_BUILDER.setLength(0);

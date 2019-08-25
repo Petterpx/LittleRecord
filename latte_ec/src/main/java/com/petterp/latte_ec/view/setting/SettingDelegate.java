@@ -38,6 +38,7 @@ public class SettingDelegate extends BaseFragment {
         ListBean fingerprint = new ListBean.Builder()
                 .setmItemtype(ListItemType.ITEM_SWITCH)
                 .setmText("指纹进入验证")
+                .setIcon("{icon-zhiwen}")
                 .build();
         List<ListBean> list = new ArrayList<>();
         list.add(fingerprint);

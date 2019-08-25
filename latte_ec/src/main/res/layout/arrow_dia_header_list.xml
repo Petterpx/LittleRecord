@@ -15,6 +15,15 @@
         android:layout_centerVertical="true"
         android:text="{icon-update}"
         android:textSize="25sp" />
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="修改"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/ic_dia_header_update"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="wrap_content"

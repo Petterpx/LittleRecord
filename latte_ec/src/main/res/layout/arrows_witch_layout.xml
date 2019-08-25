@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="5dp"
+    android:paddingLeft="20dp"
     android:background="@android:color/white"
-    tools:ignore="MissingDefaultResource">
+    tools:ignore="MissingDefaultResource,RtlSymmetry"
+    android:paddingStart="20dp">
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:id="@+id/ic_icon_kind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:textSize="18sp"
+        android:layout_marginEnd="@dimen/dp_10" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_arrow_switch_text"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="20dp"
-        android:gravity="center" />
+        android:layout_toRightOf="@id/ic_icon_kind"
+        android:gravity="center"
+        android:layout_toEndOf="@id/ic_icon_kind"
+        tools:ignore="RelativeOverlap" />
 
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/list_item_switch"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:thumbTint="@color/app_title_color"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp" />
+        android:layout_marginRight="20dp"
+        app:thumbTint="@color/app_title_color" />
 
 </RelativeLayout>

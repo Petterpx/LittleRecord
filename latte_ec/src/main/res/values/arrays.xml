@@ -19,11 +19,11 @@
         <item>保存</item>
     </string-array>
     <string-array name="draw_home_ic_values">
-        <item>{fa-pie-chart}</item>
-        <item>{fa-pie-chart}</item>
-        <item>{fa-pie-chart}</item>
-        <item>{fa-pie-chart}</item>
-        <item>{fa-pie-chart}</item>
+        <item>{icon-yun}</item>
+        <item>{icon-tongji}</item>
+        <item>{icon-jianyi}</item>
+        <item>{icon-shezhi}</item>
+        <item>{icon-guanyu}</item>
     </string-array>
     <string-array name="draw_home_tv_values">
         <item>同步账单</item>
@@ -49,5 +49,15 @@
         <item>十月</item>
         <item>十一月</item>
         <item>十二月</item>
+    </string-array>
+
+    <string-array name="info_name">
+        <item>开源代码</item>
+        <item>分享好友</item>
+    </string-array>
+
+    <string-array name="info_icon">
+        <item>{icon-git}</item>
+        <item>{icon-fenxiang}</item>
     </string-array>
 </resources>

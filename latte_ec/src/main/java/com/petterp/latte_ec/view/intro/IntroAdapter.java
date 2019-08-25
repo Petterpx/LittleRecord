@@ -28,5 +28,6 @@ public class IntroAdapter extends MultipleRecyclearAdapter {
     @Override
     public void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
         holder.setText(R.id.text_single, entity.getField(MultipleFidls.TEXT));
+        holder.setText(R.id.ic_icon_kind, entity.getField(MultipleFidls.NAME));
     }
 }

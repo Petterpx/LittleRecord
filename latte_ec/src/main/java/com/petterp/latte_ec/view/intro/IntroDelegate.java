@@ -41,18 +41,17 @@ public class IntroDelegate extends BaseFragment {
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         List<MultipleItemEntity> list = new ArrayList<>();
-        MultipleItemEntity entityIntro = MultipleItemEntity
-                .builder()
-                .setItemType(IntroItemType.INTRO_TYPE)
-                .setField(MultipleFidls.TEXT, "开源代码")
-                .setField(MultipleFidls.ID, 1).build();
-        MultipleItemEntity entityF = MultipleItemEntity
-                .builder()
-                .setItemType(IntroItemType.INTRO_TYPE)
-                .setField(MultipleFidls.TEXT, "分享好友")
-                .setField(MultipleFidls.ID, 2).build();
-        list.add(entityIntro);
-        list.add(entityF);
+        String[] names=getResources().getStringArray(R.array.info_name);
+        String[] icons=getResources().getStringArray(R.array.info_icon);
+        for (int i=0;i<2;i++){
+            MultipleItemEntity entityIntro = MultipleItemEntity
+                    .builder()
+                    .setItemType(IntroItemType.INTRO_TYPE)
+                    .setField(MultipleFidls.TEXT, names[i])
+                    .setField(MultipleFidls.NAME,icons[i])
+                    .setField(MultipleFidls.ID, i).build();
+            list.add(entityIntro);
+        }
         IntroAdapter adapter = new IntroAdapter(list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

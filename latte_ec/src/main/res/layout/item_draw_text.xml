@@ -5,12 +5,13 @@
     android:layout_height="wrap_content"
     android:paddingStart="20dp"
     android:paddingLeft="20dp"
+    android:gravity="center_vertical"
     android:paddingTop="15dp"
     android:paddingBottom="15dp"
     tools:ignore="RtlSymmetry">
 
     <com.joanzapata.iconify.widget.IconTextView
-        android:layout_width="wrap_content"
+        android:layout_width="40sp"
         android:id="@+id/ic_draw_rv_item"
         android:layout_height="wrap_content"
         android:textSize="20sp" />
@@ -19,7 +20,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_draw_rv_item"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:textSize="20sp" />
+        android:textSize="18sp" />
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -10,10 +10,21 @@
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/kind"
         android:text="{icon-kind}"
         android:textColor="@android:color/black"
         android:layout_centerVertical="true"
         android:textSize="18sp" />
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="类别"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/kind"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:textSize="15sp" />
+
 
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="wrap_content"
@@ -21,6 +32,7 @@
         android:layout_marginRight="@dimen/dp_10"
         android:textSize="18sp"
         android:layout_toLeftOf="@id/tv_dia_kind"
+        android:layout_centerVertical="true"
         android:id="@+id/ic_dia_kind"
         android:layout_marginEnd="@dimen/dp_10"
         android:layout_toStartOf="@id/tv_dia_kind" />
@@ -31,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:textSize="15sp"
         tools:ignore="RelativeOverlap" />
 </RelativeLayout>

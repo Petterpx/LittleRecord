@@ -13,7 +13,18 @@
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
         android:text="{icon-time}"
+        android:id="@+id/kind"
         android:textSize="18sp" />
+
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="时间"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_toRightOf="@id/kind"
+        android:textColor="@android:color/black"
+        android:layout_centerVertical="true"
+        android:textSize="15sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_dia_time"

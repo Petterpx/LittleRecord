@@ -198,6 +198,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
             itemEntity.setFild(IHomeRvFields.KEY, getKey());
             switch (getStateMode()) {
                 case IHomeStateType.ADD:
+                    Log.e("demo","执行Add操作");
                     iModel.add(itemEntity);
                     break;
                 case IHomeStateType.UPDATE:

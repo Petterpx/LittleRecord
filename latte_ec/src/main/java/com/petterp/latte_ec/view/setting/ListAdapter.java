@@ -35,6 +35,7 @@ public class ListAdapter extends BaseMultiItemQuickAdapter<ListBean, BaseViewHol
     protected void convert(BaseViewHolder helper, ListBean item) {
         if (item.getItemType() == ListItemType.ITEM_SWITCH) {
             helper.setText(R.id.tv_arrow_switch_text, item.getmText());
+            helper.setText(R.id.ic_icon_kind, item.getIcon());
             SwitchCompat switchCompat = helper.getView(R.id.list_item_switch);
             switchCompat.setChecked(LatterPreference.getFinderPaintf());
             switchCompat.setOnClickListener(view -> {

@@ -5,16 +5,24 @@
     android:paddingRight="15dp"
     android:layout_height="45dp"
     android:orientation="horizontal">
-
+    <com.joanzapata.iconify.widget.IconTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dp_10"
+        android:id="@+id/ic_icon_kind"
+        />
     <TextView
         android:id="@+id/text_single"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:layout_toRightOf="@id/ic_icon_kind"
         android:background="@android:color/white"
         android:text="123"
         android:gravity="center"
         android:textColor="#566974"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <com.joanzapata.iconify.widget.IconTextView
         android:layout_width="wrap_content"

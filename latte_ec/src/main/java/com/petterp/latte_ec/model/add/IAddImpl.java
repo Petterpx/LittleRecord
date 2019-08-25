@@ -9,6 +9,7 @@ import com.petterp.latte_core.util.litepal.ClassifyIncome;
 import com.petterp.latte_core.util.time.TimeUtils;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
+import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileListItemType;
 import com.petterp.latte_ec.view.add.topViewVp.RecordListItemType;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
@@ -26,7 +27,8 @@ import java.util.List;
 public class IAddImpl implements IAddModel {
     private String mode = IAddTitleItems.CONSUME_ITEMS;
     private List<MultipleItemEntity> list;
-    private String[] kind;
+    private String[] conSumekind;
+    private String[] inComekind;
     //默认状态添加
     private int state = IHomeStateType.ADD;
     private IAddBundleFields iAddBundleFields = null;
@@ -34,29 +36,29 @@ public class IAddImpl implements IAddModel {
     @Override
     public List<MultipleItemEntity> getConsumeRvList() {
         List<MultipleItemEntity> itemConsumes = new ArrayList<>();
-        List<ClassifyConsume> consumes= LitePal.findAll(ClassifyConsume.class);
-        int size=consumes.size();
+        List<ClassifyConsume> consumes = LitePal.findAll(ClassifyConsume.class);
+        int size = consumes.size();
         for (int i = 0; i < size; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
                     .setField(MultipleFidls.NAME, consumes.get(i).getIcon())
-                    .setField(IHomeRvFields.KIND,consumes.get(i).getKind())
+                    .setField(IHomeRvFields.KIND, consumes.get(i).getKind())
                     .setField(MultipleFidls.ID, "" + i)
-                    .setField(MultipleFidls.TAG,false)
+                    .setField(MultipleFidls.TAG, false)
 //                    .setField()
                     .build();
             itemConsumes.add(itemEntity);
         }
-        state=IHomeStateType.ADD;
-        kind=new String[]{itemConsumes.get(0).getField(MultipleFidls.NAME), itemConsumes.get(0).getField(IHomeRvFields.KIND)};
+        state = IHomeStateType.ADD;
+        conSumekind = new String[]{itemConsumes.get(0).getField(MultipleFidls.NAME), itemConsumes.get(0).getField(IHomeRvFields.KIND)};
         return itemConsumes;
     }
 
     @Override
     public List<MultipleItemEntity> getIncomeRvList() {
         List<MultipleItemEntity> itemIncome = new ArrayList<>();
-        List<ClassifyIncome> incomes= LitePal.findAll(ClassifyIncome.class);
-        int size=incomes.size();
+        List<ClassifyIncome> incomes = LitePal.findAll(ClassifyIncome.class);
+        int size = incomes.size();
         for (int i = 0; i < size; i++) {
             MultipleItemEntity itemEntity = MultipleItemEntity.builder()
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
@@ -103,12 +105,19 @@ public class IAddImpl implements IAddModel {
 
     @Override
     public void setTitleRvKind(String[] kind) {
-        this.kind = kind;
+        if (mode.equals(IHomeTitleRvItems.CONSUME)) {
+            this.conSumekind = kind;
+        } else {
+            this.inComekind = kind;
+        }
     }
 
     @Override
     public String[] getTitleRvKind() {
-        return kind;
+        if (mode.equals(IHomeTitleRvItems.CONSUME)) {
+            return conSumekind;
+        }
+        return inComekind;
     }
 
     @Override
@@ -123,7 +132,13 @@ public class IAddImpl implements IAddModel {
             iAddBundleFields = bundle.getParcelable(IAddBundleType.KEY_UPDATE_LIST);
             if (iAddBundleFields != null) {
                 state = IHomeStateType.UPDATE;
-                kind = new String[]{iAddBundleFields.getName(), iAddBundleFields.getKind()};
+                mode = iAddBundleFields.getCargoy();
+                String[] kind = new String[]{iAddBundleFields.getName(), iAddBundleFields.getKind()};
+                if (mode.equals(IHomeTitleRvItems.CONSUME)) {
+                    this.conSumekind = kind;
+                } else {
+                    this.inComekind = kind;
+                }
             }
         }
     }

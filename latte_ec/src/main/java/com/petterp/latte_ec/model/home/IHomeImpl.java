@@ -1,6 +1,7 @@
 package com.petterp.latte_ec.model.home;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.petterp.latte_core.util.exception.ExecptionFiels;
 import com.petterp.latte_core.util.litepal.BillInfo;
@@ -240,9 +241,11 @@ public class IHomeImpl implements IHomeModel {
         }
         billCollect.setSum(collect.get(0).getSum() - 1);
         if (billCollect.getSum() == 0) {
-            LitePal.deleteAllAsync(EveryBillCollect.class,"key=?",timeKey).listen(rowsAffected -> {});
+            LitePal.deleteAllAsync(EveryBillCollect.class, "key=?", timeKey).listen(rowsAffected -> {
+            });
         } else {
-            billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> { });
+            billCollect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
+            });
         }
         surplusMoney = incomeMoney + consumeMoney;
         itemEntities.remove(itemEntity);
@@ -276,8 +279,6 @@ public class IHomeImpl implements IHomeModel {
 
     /**
      * 用于每次更新完后，header头的自动相加，避免数据库操作
-     *
-     * @param i
      */
     private void addHeaderSum(int i) {
         int sum = itemEntities.get(i).getField(IHomeRvFields.HEADER_SUM);
@@ -420,7 +421,7 @@ public class IHomeImpl implements IHomeModel {
         float money = itemEntity.getField(IHomeRvFields.CONSUME_I);
         String category = itemEntity.getField(IHomeRvFields.CATEGORY);
         long time = itemEntity.getField(IHomeRvFields.LONG_TIME);
-        String kindIcon=itemEntity.getField(MultipleFidls.NAME);
+        String kindIcon = itemEntity.getField(MultipleFidls.NAME);
 
         //如果是支出
         if (category.equals(IHomeTitleRvItems.CONSUME)) {
@@ -442,16 +443,10 @@ public class IHomeImpl implements IHomeModel {
             }
 
         }
-        collect.updateAllAsync("key=?", timeKey).listen(rowsAffected -> {
-
-        });
+        collect.updateAll("key=?", timeKey);
         //新增到日账单详细
-        BillInfo info = new BillInfo(timeKey, time, money, itemEntity.getField(IHomeRvFields.REMARK), kind, category,kindIcon);
-        info.saveAsync().listen(success -> {
-            if (!success) {
-                throw new RuntimeException(ExecptionFiels.KEY_LITE_PAL_ADD_ERROR);
-            }
-        });
+        BillInfo info = new BillInfo(timeKey, time, money, itemEntity.getField(IHomeRvFields.REMARK), kind, category, kindIcon);
+        info.save();
     }
 
     private void addHeaderSql(float consume, float income, long time) {

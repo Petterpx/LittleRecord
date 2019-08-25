@@ -12,11 +12,13 @@ public class ListBean implements MultiItemEntity {
     private int mItemtype;
     private String mText;
     private int id;
+    private String icon;
 
-    public ListBean(int mItemtype, String mText, int id) {
+    public ListBean(int mItemtype, String mText, int id,String icon) {
         this.mItemtype = mItemtype;
         this.mText = mText;
         this.id = id;
+        this.icon=icon;
     }
 
     @Override
@@ -28,7 +30,7 @@ public class ListBean implements MultiItemEntity {
         private int mItemtype;
         private String mText;
         private int id;
-
+        private String icon;
         public Builder setmItemtype(int mItemtype) {
             this.mItemtype = mItemtype;
             return this;
@@ -43,9 +45,12 @@ public class ListBean implements MultiItemEntity {
             this.id = id;
             return this;
         }
-
+        public Builder setIcon(String icon){
+            this.icon=icon;
+            return this;
+        }
         public ListBean build() {
-            return new ListBean(mItemtype, mText, id);
+            return new ListBean(mItemtype, mText, id,icon);
         }
     }
 
@@ -59,5 +64,9 @@ public class ListBean implements MultiItemEntity {
 
     public int getId() {
         return id;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 }

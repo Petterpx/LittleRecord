@@ -23,25 +23,26 @@
         <item>"公积金"</item>
     </array>
     <array name="add_consume_kind_icons">
-        <item>icon-sancan</item>
-        <item>icon-lingshi</item>
-        <item>icon-yifu</item>
-        <item>icon-jiaotong</item>
-        <item>icon-haizi</item>
-        <item>icon-qita</item>
-        <item>icon-yiliao</item>
-        <item>icon-zhufang</item>
-        <item>icon-huafei</item>
-        <item>icon-yanjiu</item>
-        <item>icon-xuexi</item>
-        <item>icon-riyongping</item>
-        <item>icon-jiayou</item>
-        <item>icon-yule</item>
-        <item>icon-qingke</item>
-        <item>icon-shuma</item>
-        <item>icon-lvxing</item>
-        <item>icon-yundong</item>
-        <item>icon-gongjijing</item>
+        <item>{icon-sancan}</item>
+        <item>{icon-lingshi}</item>
+        <item>{icon-yifu}</item>
+        <item>{icon-jiaotong}</item>
+        <item>{icon-haizi}</item>
+        <item>{icon-qita}</item>
+        <item>{icon-yiliao}</item>
+        <item>{icon-meizhuang}</item>
+        <item>{icon-zhufang}</item>
+        <item>{icon-huafei}</item>
+        <item>{icon-yanjiu}</item>
+        <item>{icon-xuexi}</item>
+        <item>{icon-riyongping}</item>
+        <item>{icon-jiayou}</item>
+        <item>{icon-yule}</item>
+        <item>{icon-qingke}</item>
+        <item>{icon-shuma}</item>
+        <item>{icon-lvxing}</item>
+        <item>{icon-yundong}</item>
+        <item>{icon-gongjijing}</item>
     </array>
     <array name="add_income_kind_names">
         <item>"工资"</item>
@@ -52,11 +53,11 @@
         <item>"礼金"</item>
     </array>
     <array name="add_income_kind_icons">
-        <item>icon-gongzi</item>
-        <item>icon-shenghuofei</item>
-        <item>icon-hongbao</item>
-        <item>icon-waikuai</item>
-        <item>icon-qita</item>
-        <item>icon-lijing</item>
+        <item>{icon-gongzi}</item>
+        <item>{icon-shenghuofei}</item>
+        <item>{icon-hongbao}</item>
+        <item>{icon-waikuai}</item>
+        <item>{icon-qita}</item>
+        <item>{icon-lijing}</item>
     </array>
 </resources>
