@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <litepal>
     <dbname value="Record"/>
-    <version value="2"/>
+    <version value="1"/>
     <list>
         <mapping class="com.petterp.latte_core.util.litepal.EveryBillCollect"/>
         <mapping class="com.petterp.latte_core.util.litepal.BillInfo"/>

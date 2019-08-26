@@ -65,5 +65,20 @@ public class IAddTopRvItemImpl implements IAddTopRvItemModel {
         }
     }
 
+    @Override
+    public void updateKind(String kindNew, String kind, String category) {
+
+    }
+
+    @Override
+    public void addKind(String kind, String category) {
+
+    }
+
+    @Override
+    public void delegate(String kind, String category) {
+
+    }
+
 
 }

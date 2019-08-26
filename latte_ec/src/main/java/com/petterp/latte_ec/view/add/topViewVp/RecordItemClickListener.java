@@ -21,6 +21,8 @@ import java.util.List;
 public class RecordItemClickListener extends SimpleClickListener {
     public int mode = 0;
     private IRvItemKind iRvItemKind;
+    private IconTextView iconTextView;
+    private AppCompatTextView textView;
 
     public RecordItemClickListener(IRvItemKind itemKind) {
         this.iRvItemKind = itemKind;
@@ -31,8 +33,8 @@ public class RecordItemClickListener extends SimpleClickListener {
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         adapter.notifyItemChanged(mode);
         final MultipleItemEntity entity = (MultipleItemEntity) baseQuickAdapter.getData().get(position);
-        IconTextView iconTextView = view.findViewById(R.id.tv_item_vp_consume_icon);
-        AppCompatTextView textView = view.findViewById(R.id.tv_item_vp_consume_title);
+        iconTextView = view.findViewById(R.id.tv_item_vp_consume_icon);
+        textView = view.findViewById(R.id.tv_item_vp_consume_title);
         iconTextView.setBackgroundResource(R.drawable.item_vp_add_up);
         iconTextView.setTextColor(Color.WHITE);
         textView.setTextColor(Color.parseColor("#ff0099cc"));
@@ -54,5 +56,14 @@ public class RecordItemClickListener extends SimpleClickListener {
     @Override
     public void onItemChildLongClick(BaseQuickAdapter adapter, View view, int position) {
 
+    }
+
+    /**
+     * 设置Item更新
+     */
+    public void updateItem(){
+        textView.setTextColor(Color.parseColor("#757575"));
+        iconTextView.setTextColor(Color.parseColor("#757575"));
+        iconTextView.setBackgroundResource(R.drawable.item_vp_add_to);
     }
 }

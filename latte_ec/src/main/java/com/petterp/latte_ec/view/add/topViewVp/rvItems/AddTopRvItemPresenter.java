@@ -60,13 +60,15 @@ public class AddTopRvItemPresenter extends BasePresenter<IAddTopRvItemView> {
         super.rxGetData();
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    /**
+     * 分发EvenBus
+     * @param message
+     */
     public void modeState(AddMessage message) {
         int mode = message.getMode();
         updateViewMode=true;
         if (mode == 0) {
             mModel.addKind(message.getKindNew(), message.getCategory());
-
         } else if (mode == 1) {
             mModel.updateKind(message.getKindNew(), message.getKind(), message.getCategory());
         } else {

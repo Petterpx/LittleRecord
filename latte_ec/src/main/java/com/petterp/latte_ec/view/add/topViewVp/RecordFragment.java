@@ -29,6 +29,7 @@ public class RecordFragment extends Fragment implements IRvItemKind {
     private String mode;
     private List<MultipleItemEntity> list;
     private RecordListAdapter adapter;
+    private RecordItemClickListener listener;
 
     public RecordFragment(AddPresenter addPresenter, String mode) {
         this.addPresenter = addPresenter;
@@ -53,7 +54,8 @@ public class RecordFragment extends Fragment implements IRvItemKind {
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnItemTouchListener(new RecordItemClickListener(this));
+        listener = new RecordItemClickListener(this);
+        recyclerView.addOnItemTouchListener(listener);
         return view;
     }
 
@@ -77,5 +79,12 @@ public class RecordFragment extends Fragment implements IRvItemKind {
     @Override
     public void setKinds(String[] kinds) {
         addPresenter.setTitleRvKind(kinds);
+    }
+
+    /**
+     * 更新Item
+     */
+    public void updateItem(){
+        listener.updateItem();
     }
 }

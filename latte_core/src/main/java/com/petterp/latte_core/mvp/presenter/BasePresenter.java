@@ -35,6 +35,8 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
         getView(mView.get());
     }
 
+
+
     public abstract void getView(V view);
 
     public V getView(){
@@ -44,9 +46,6 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
     @Override
     public void onCreate(@NonNull LifecycleOwner owner) {
         if (startRxMode()) {
-            if (mView.get() != null) {
-                mView.get().showLoader();
-            }
             startRxData();
         }
     }
@@ -88,6 +87,9 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
     }
 
     public void startRxData() {
+        if (mView.get() != null) {
+            mView.get().showLoader();
+        }
         subscribe = Observable
                 .create(emitter -> {
                     rxPostData();
@@ -98,6 +100,7 @@ public abstract class BasePresenter<V extends IBaseView> implements DefaultLifec
                 .doOnComplete(this::rxGetData)
                 .subscribe();
     }
+
 
 
     /**

@@ -59,6 +59,9 @@
             app:exitAnim="@anim/dialog_left_out"
             app:popEnterAnim="@anim/dialog_left_in"
             app:popExitAnim="@anim/dialog_right_out"/>
+        <action
+            android:id="@+id/action_homeDelegate_to_testFragment"
+            app:destination="@id/testFragment" />
     </fragment>
     <fragment
         android:id="@+id/addDelegate"
@@ -169,4 +172,8 @@
             android:name="mode"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/testFragment"
+        android:name="com.petterp.latte_ec.view.home.test.TestFragment"
+        android:label="TestFragment" />
 </navigation>

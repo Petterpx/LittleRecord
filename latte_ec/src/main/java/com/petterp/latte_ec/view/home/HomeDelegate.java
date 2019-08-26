@@ -38,12 +38,16 @@ import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
+import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.presenter.HomePresenter;
 import com.petterp.latte_ec.view.home.draw.DrawAdapter;
 import com.petterp.latte_ec.view.home.draw.DrawFields;
 import com.petterp.latte_ec.view.home.draw.DrawItemClickListener;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -261,4 +265,6 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         }
         return false;
     }
+
+
 }

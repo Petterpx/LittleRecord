@@ -23,7 +23,7 @@ public class HomeDrawerListener implements DrawerLayout.DrawerListener {
     private Activity activity;
     private IHomeDrListener iHomeDrListener;
 
-    public HomeDrawerListener(Activity activity, IHomeDrListener iHomeDrListener) {
+    HomeDrawerListener(Activity activity, IHomeDrListener iHomeDrListener) {
         this.activity = activity;
         this.iHomeDrListener = iHomeDrListener;
     }

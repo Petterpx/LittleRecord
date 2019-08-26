@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
+import com.petterp.latte_core.mvp.rxutils.IRxConsuming;
+import com.petterp.latte_core.mvp.rxutils.RxUtils;
 import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeImpl;
 import com.petterp.latte_ec.model.home.IHomeModel;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
 import com.petterp.latte_ec.model.home.IHomeStateType;
+import com.petterp.latte_ec.view.home.HomeMessage;
 import com.petterp.latte_ec.view.home.IHomeView;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
@@ -21,6 +24,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * home-控制层
@@ -238,4 +243,5 @@ public class HomePresenter extends BasePresenter<IHomeView> {
         //初始化侧滑
         showDraw();
     }
+
 }
