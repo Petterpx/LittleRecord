@@ -45,4 +45,7 @@
     <string name="tv_login_user_manage">资料管理</string>
     <string name="login_user_qq">通过 QQ 登录</string>
     <string name="login_user_phone">通过 手机 登录</string>
+    <string name="dia_rv_item_select">操作</string>
+    <string name="dia_rv_item_update">修改</string>
+    <string name="dia_rv_item_delegate">删除</string>
 </resources>

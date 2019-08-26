@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -21,6 +22,7 @@ import androidx.annotation.StyleRes;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.petterp.latte_core.app.Latte;
@@ -44,16 +46,11 @@ public class BaseDialogFragment extends DialogFragment {
     //默认动画样式
     private int animations = AnimStyle.DEFAULT;
 
-    private BaseDialogFragment() {
+    private FragmentManager manager;
 
-    }
-
-    private static class Client {
-        private static final BaseDialogFragment BASE_FRAGMENT = new BaseDialogFragment();
-    }
-
-    public static BaseDialogFragment Builder() {
-        return Client.BASE_FRAGMENT;
+    public BaseDialogFragment Builder(FragmentManager manager) {
+        this.manager = manager;
+        return this;
     }
 
 
@@ -117,10 +114,17 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 显示View
      */
-    public BaseDialogFragment show(FragmentManager fragmentManager) {
-        show(fragmentManager, getClass().getName());
+    public BaseDialogFragment show() {
+        show(manager, getClass().getName());
         return this;
     }
+
+    /**
+     * Dialog中弹出 Dialog
+     * @param tag
+     * @param fragmentManager
+     * @return
+     */
 
 
     /**
@@ -149,6 +153,15 @@ public class BaseDialogFragment extends DialogFragment {
         }
 
         /**
+         * 设置点击事件
+         *
+         * @param id
+         */
+        public void setOnclick(@IdRes int id) {
+            window.findViewById(id).setOnClickListener(this);
+        }
+
+        /**
          * 根据Id设置Text Color
          *
          * @param viewId
@@ -171,6 +184,7 @@ public class BaseDialogFragment extends DialogFragment {
             return editText.getText().toString().trim();
         }
 
+
         @Override
         public void onClick(View view) {
             ionClickListener.diaOnclick(view, this);
@@ -182,19 +196,9 @@ public class BaseDialogFragment extends DialogFragment {
         public void dismiss() {
             if (getDialog() != null && getDialog().isShowing()) {
                 getDialog().dismiss();
+                SoftHideBoardUtils.hidekey(Latte.getBaseActivity());
             }
         }
     }
 
-
-    @Override
-    public void onDismiss(@NonNull DialogInterface dialog) {
-        super.onDismiss(dialog);
-        window = null;
-        layout = 0;
-        animations = AnimStyle.DEFAULT;
-        ionClickListener = null;
-        iWindowsView = null;
-        SoftHideBoardUtils.hidekey(Latte.getBaseActivity());
-    }
 }

@@ -125,5 +125,8 @@ public class AddPresenter extends BasePresenter<IAddView> {
         return model.getStateUpdate();
     }
 
+    public void setRvItemPosition(int position){
+        model.setItemPosition(position);
+    }
 
 }

@@ -12,12 +12,19 @@ import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ui.recyclear.MultipleFidls;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
+import java.util.List;
+
 public class RecordItemClickListener extends SimpleClickListener {
     public int mode = 0;
+    private IRvItemKind iRvItemKind;
 
+    public RecordItemClickListener(IRvItemKind itemKind) {
+        this.iRvItemKind = itemKind;
+    }
 
     @SuppressLint("ResourceAsColor")
     @Override
@@ -30,9 +37,8 @@ public class RecordItemClickListener extends SimpleClickListener {
         iconTextView.setTextColor(Color.WHITE);
         textView.setTextColor(Color.parseColor("#ff0099cc"));
         mode = position;
-        CallbackManager.getInstance()
-                .getCallback(RecordCallbackFields.ADD_RV_KIND)
-                .executeCallback(new String[]{entity.getField(MultipleFidls.NAME),entity.getField(IHomeRvFields.KIND)});
+        iRvItemKind.setPosition(position);
+        iRvItemKind.setKinds(new String[]{entity.getField(MultipleFidls.NAME), entity.getField(IHomeRvFields.KIND)});
     }
 
     @Override

@@ -29,6 +29,9 @@ import java.util.HashMap;
 public class LoginUserPresenter extends BasePresenter<IUserView> {
     private IUserModel model;
     private IUserView mView;
+    private BaseDialogFragment diaName;
+    private BaseDialogFragment diaSex;
+    private BaseDialogFragment diaSave;
 
     @Override
     public void getView(IUserView view) {
@@ -47,46 +50,50 @@ public class LoginUserPresenter extends BasePresenter<IUserView> {
     }
 
     public void updateName(FragmentManager fragmentManager) {
-        BaseDialogFragment.Builder()
-                .setLayout(R.layout.dialog_edit)
-                .setWindowsView((view, viewHolder) -> {
-                    viewHolder.setText(R.id.tv_dia_edit_title, "修改昵称", false);
-                    viewHolder.setText(R.id.tv_dia_edit_ensure, "确定", true);
-                    viewHolder.setText(R.id.tv_dia_edit_back, "取消", true);
-                })
-                .setOnClickListener((view, viewHolder) -> {
-                    if (view.getId() == R.id.tv_dia_edit_ensure) {
-                        String name = viewHolder.getText(R.id.edit_dia);
-                        model.updateData(MuiltFileds.USER_NAME, name);
-                        if (mView != null) {
-                            mView.updateName(name);
+        if (diaName == null) {
+            diaName= new BaseDialogFragment().Builder(fragmentManager)
+                    .setLayout(R.layout.dialog_edit)
+                    .setWindowsView((view, viewHolder) -> {
+                        viewHolder.setText(R.id.tv_dia_edit_title, "修改昵称", false);
+                        viewHolder.setText(R.id.tv_dia_edit_ensure, "确定", true);
+                        viewHolder.setText(R.id.tv_dia_edit_back, "取消", true);
+                    })
+                    .setOnClickListener((view, viewHolder) -> {
+                        if (view.getId() == R.id.tv_dia_edit_ensure) {
+                            String name = viewHolder.getText(R.id.edit_dia);
+                            model.updateData(MuiltFileds.USER_NAME, name);
+                            if (mView != null) {
+                                mView.updateName(name);
+                            }
                         }
-                    }
-                    viewHolder.dismiss();
-                })
-                .show(fragmentManager);
+                        viewHolder.dismiss();
+                    });
+        }
+        diaName.show();
     }
 
     public void updateSex(FragmentManager fragmentManager) {
-        BaseDialogFragment.Builder()
-                .setLayout(R.layout.dialog_radiogroup)
-                .setWindowsView((view, viewHolder) -> {
-                    viewHolder.setText(R.id.tv_dia_radio_title, "修改性别", false);
-                    viewHolder.setText(R.id.rad_dia_radio_left, "男", true);
-                    viewHolder.setText(R.id.rad_dia_radio_right, "女", true);
-                })
-                .setOnClickListener((view, viewHolder) -> {
-                    int id = view.getId();
-                    if (id == R.id.rad_dia_radio_left) {
-                        model.updateData(MuiltFileds.USER_SEX, "男");
-                        mView.updateSex("男");
-                    } else {
-                        model.updateData(MuiltFileds.USER_SEX, "女");
-                        mView.updateSex("女");
-                    }
-                    viewHolder.dismiss();
-                })
-                .show(fragmentManager);
+        if (diaSex == null) {
+            diaSex = new BaseDialogFragment().Builder(fragmentManager)
+                    .setLayout(R.layout.dialog_radiogroup)
+                    .setWindowsView((view, viewHolder) -> {
+                        viewHolder.setText(R.id.tv_dia_radio_title, "修改性别", false);
+                        viewHolder.setText(R.id.rad_dia_radio_left, "男", true);
+                        viewHolder.setText(R.id.rad_dia_radio_right, "女", true);
+                    })
+                    .setOnClickListener((view, viewHolder) -> {
+                        int id = view.getId();
+                        if (id == R.id.rad_dia_radio_left) {
+                            model.updateData(MuiltFileds.USER_SEX, "男");
+                            mView.updateSex("男");
+                        } else {
+                            model.updateData(MuiltFileds.USER_SEX, "女");
+                            mView.updateSex("女");
+                        }
+                        viewHolder.dismiss();
+                    });
+        }
+        diaSex.show();
     }
 
     public void save() {
@@ -103,23 +110,25 @@ public class LoginUserPresenter extends BasePresenter<IUserView> {
      * 是否保存
      */
     public void stateSaveData(FragmentManager fragmentManager) {
-        BaseDialogFragment.Builder()
-                .setLayout(R.layout.dialog_message)
-                .setWindowsView((view, viewHolder) -> {
-                    viewHolder.setText(R.id.tv_dia_message_title, "保存数据", false);
-                    viewHolder.setText(R.id.tv_dia_message_message, "您修改了数据,是否保存吗？", false);
-                    viewHolder.setText(R.id.tv_dia_message_ensure, "确定", true);
-                    viewHolder.setText(R.id.tv_dia_message_back, "取消", true);
-                })
-                .setOnClickListener((view, viewHolder) -> {
-                    if (view.getId() == R.id.tv_dia_message_ensure) {
-                        save();
-                    } else {
-                        mView.fragmentUP();
-                    }
-                    viewHolder.dismiss();
-                })
-                .show(fragmentManager);
+        if (diaSave == null) {
+            diaSave=new BaseDialogFragment().Builder(fragmentManager)
+                    .setLayout(R.layout.dialog_message)
+                    .setWindowsView((view, viewHolder) -> {
+                        viewHolder.setText(R.id.tv_dia_message_title, "保存数据", false);
+                        viewHolder.setText(R.id.tv_dia_message_message, "您修改了数据,是否保存吗？", false);
+                        viewHolder.setText(R.id.tv_dia_message_ensure, "确定", true);
+                        viewHolder.setText(R.id.tv_dia_message_back, "取消", true);
+                    })
+                    .setOnClickListener((view, viewHolder) -> {
+                        if (view.getId() == R.id.tv_dia_message_ensure) {
+                            save();
+                        } else {
+                            mView.fragmentUP();
+                        }
+                        viewHolder.dismiss();
+                    });
+        }
+        diaSave.show();
     }
 
 }

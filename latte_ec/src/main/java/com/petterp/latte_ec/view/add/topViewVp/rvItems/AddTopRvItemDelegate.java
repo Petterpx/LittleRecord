@@ -7,26 +7,18 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
-import com.petterp.latte_core.util.callback.CallbackManager;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.add.IAddTitleItems;
 import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
-import com.petterp.latte_ec.view.add.topViewVp.RecordCallbackFields;
-import com.petterp.latte_ec.view.add.topViewVp.RecordFragment;
-import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
 import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
 
 import java.util.ArrayList;
@@ -39,7 +31,7 @@ import butterknife.BindView;
  * @date 2019-08-24
  */
 @CreatePresenter(AddTopRvItemPresenter.class)
-public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> implements IAddTopRvItemView{
+public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> implements IAddTopRvItemView {
     @BindView(R2.id.add_top_rv_item_bar)
     Toolbar toolbar = null;
     @BindView(R2.id.vp_add_top_rv_item)
@@ -49,7 +41,6 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
     @BindView(R2.id.fb_add_top_rv_item)
     FloatingActionButton floatingActionButton = null;
 
-//    private  List<>
 
     @Override
     public Object setLayout() {
@@ -58,6 +49,18 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+
+        //注册CallBack
+//        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);
+    }
+
+    @Override
+    public View setToolbar() {
+        return toolbar;
+    }
+
+    @Override
+    public void showView() {
         AddTopRvItemFragment consumeFragment = new AddTopRvItemFragment(getPresenter().consumeList());
         AddTopRvItemFragment incomeFragment = new AddTopRvItemFragment(getPresenter().incomeList());
         String[] sums = {IAddTitleItems.CONSUME_ITEMS, IAddTitleItems.INCOME_ITEMS};
@@ -77,13 +80,24 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
             viewPager.setCurrentItem(1);
             floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
         }
-//        viewPager.addOnPageChangeListener(new RecordOnPageChangeListener(mPresenter));
-        //注册CallBack
-//        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);
-    }
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-    @Override
-    public View setToolbar() {
-        return toolbar;
+            }
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                } else {
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 }

@@ -81,4 +81,10 @@ public interface IAddModel {
      */
     IAddBundleFields getStateUpdate();
 
+
+    /**
+     * 保存当前按下位置item
+     * @param position
+     */
+    void setItemPosition(int position);
 }

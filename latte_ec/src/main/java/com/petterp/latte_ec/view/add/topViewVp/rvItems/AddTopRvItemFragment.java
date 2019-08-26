@@ -42,7 +42,7 @@ public class AddTopRvItemFragment extends Fragment {
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnItemTouchListener(new RecordItemClickListener());
+        recyclerView.addOnItemTouchListener(new AddTopRvItemClickListener(getFragmentManager()));
         return view;
     }
 }

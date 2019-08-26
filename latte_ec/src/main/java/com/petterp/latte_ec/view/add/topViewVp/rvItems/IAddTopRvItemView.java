@@ -7,4 +7,5 @@ import com.petterp.latte_core.mvp.view.IBaseView;
  * @date 2019-08-24
  */
 public interface IAddTopRvItemView extends IBaseView {
+    void showView();
 }

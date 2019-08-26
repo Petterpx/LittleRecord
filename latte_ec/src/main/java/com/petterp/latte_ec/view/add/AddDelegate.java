@@ -19,8 +19,6 @@ import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.base.BaseFragment;
-import com.petterp.latte_core.util.callback.CallbackManager;
-import com.petterp.latte_core.util.callback.IGlobalCallback;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.add.IAddBundleFields;
@@ -29,7 +27,6 @@ import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
 import com.petterp.latte_ec.presenter.AddPresenter;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileItemClcikList;
 import com.petterp.latte_ec.view.add.BootomCompile.CompileListAdapter;
-import com.petterp.latte_ec.view.add.topViewVp.RecordCallbackFields;
 import com.petterp.latte_ec.view.add.topViewVp.RecordFragment;
 import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
 import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
@@ -48,7 +45,7 @@ import butterknife.BindView;
  * @date 2019-07-24
  */
 @CreatePresenter(AddPresenter.class)
-public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView, IGlobalCallback<String[]> {
+public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView {
 
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
@@ -98,8 +95,6 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
         //关联Tablayout
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new RecordOnPageChangeListener(mPresenter));
-        //注册CallBack
-        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);
     }
 
     @Override
@@ -162,14 +157,5 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView,
     }
 
 
-    /**
-     * TopRv 点击的kind
-     *
-     * @param
-     */
-    @Override
-    public void executeCallback(@Nullable String[] args) {
-        mPresenter.setTitleRvKind(args);
-    }
 
 }

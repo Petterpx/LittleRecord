@@ -41,7 +41,6 @@ import static com.petterp.latte_ec.view.login.CreateUserDelegate.REQUEST_OPTIONS
  */
 @CreatePresenter(LoginUserPresenter.class)
 public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IUserView {
-    private String imgUrl;
     private static final int REQUEST_SELECT_IMAGES_CODE = 101;
     private boolean mode = false;
     @BindView(R2.id.bar_user_info)
@@ -129,7 +128,7 @@ public class UserDelegate extends BaseFragment<LoginUserPresenter> implements IU
             List<ImageBean> resultList = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
             if (resultList.size() > 0) {
                 mode = true;
-                imgUrl = resultList.get(0).getImagePath();
+                String imgUrl = resultList.get(0).getImagePath();
                 Glide.with(this).load(imgUrl).apply(REQUEST_OPTIONS).into(circleImageView);
                 getPresenter().updateData(MuiltFileds.USER_ICON_URL, imgUrl);
             }

@@ -29,6 +29,8 @@ public class IAddImpl implements IAddModel {
     private List<MultipleItemEntity> list;
     private String[] conSumekind;
     private String[] inComekind;
+    //当前Rvitem的手指按下位置
+    private int itemPosition;
     //默认状态添加
     private int state = IHomeStateType.ADD;
     private IAddBundleFields iAddBundleFields = null;
@@ -43,7 +45,7 @@ public class IAddImpl implements IAddModel {
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
                     .setField(MultipleFidls.NAME, consumes.get(i).getIcon())
                     .setField(IHomeRvFields.KIND, consumes.get(i).getKind())
-                    .setField(MultipleFidls.ID, "" + i)
+                    .setField(MultipleFidls.ID,i)
                     .setField(MultipleFidls.TAG, false)
 //                    .setField()
                     .build();
@@ -64,7 +66,7 @@ public class IAddImpl implements IAddModel {
                     .setItemType(RecordListItemType.ITEM_CONSUME_LIST)
                     .setField(MultipleFidls.NAME, incomes.get(i).getIcon())
                     .setField(IHomeRvFields.KIND, incomes.get(i).getKind())
-                    .setField(MultipleFidls.ID, "" + i)
+                    .setField(MultipleFidls.ID,i)
                     .build();
             itemIncome.add(itemEntity);
         }
@@ -152,6 +154,11 @@ public class IAddImpl implements IAddModel {
     @Override
     public IAddBundleFields getStateUpdate() {
         return iAddBundleFields;
+    }
+
+    @Override
+    public void setItemPosition(int position) {
+//        itemPosition
     }
 
 }

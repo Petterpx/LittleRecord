@@ -12,4 +12,12 @@ import java.util.List;
 public interface IAddTopRvItemModel {
     List<MultipleItemEntity> consumeList();
     List<MultipleItemEntity> incomeList();
+
+    void queryInfo();
+
+    void updateKind(String kindNew,String kind,String category);
+
+    void addKind(String kind,String category);
+
+    void delegate(String kind,String category);
 }

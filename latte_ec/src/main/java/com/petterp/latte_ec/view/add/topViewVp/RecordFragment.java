@@ -24,9 +24,11 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class RecordFragment extends Fragment {
+public class RecordFragment extends Fragment implements IRvItemKind {
     private AddPresenter addPresenter;
     private String mode;
+    private List<MultipleItemEntity> list;
+    private RecordListAdapter adapter;
 
     public RecordFragment(AddPresenter addPresenter, String mode) {
         this.addPresenter = addPresenter;
@@ -38,21 +40,42 @@ public class RecordFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.arrow_add_vp_consume, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.rv_add_vp_consume);
-        final List<MultipleItemEntity> list;
-        if (mode.equals(IAddTitleItems.CONSUME_ITEMS)){
-            list=addPresenter.getConsumeRvList();
-        }else{
-            list=addPresenter.getIncomeRvList();
+        if (mode.equals(IAddTitleItems.CONSUME_ITEMS)) {
+            list = addPresenter.getConsumeRvList();
+        } else {
+            list = addPresenter.getIncomeRvList();
         }
-        final String name=addPresenter.getTitleRvKind()[1];
-        RecordListAdapter adapter = new RecordListAdapter(list,name);
-        View flooter=inflater.inflate(R.layout.item_vp_flooter_list,container,false);
+        final String name = addPresenter.getTitleRvKind()[1];
+        adapter = new RecordListAdapter(list, name);
+        View flooter = inflater.inflate(R.layout.item_vp_flooter_list, container, false);
         adapter.addFooterView(flooter);
         flooter.setOnClickListener(view1 -> addPresenter.getView().fragmentStart(AddDelegateDirections.actionAddDelegateToAddTopRvItemDelegate(addPresenter.getTitleMode())));
         GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(manager);
-        recyclerView.addOnItemTouchListener(new RecordItemClickListener());
+        recyclerView.addOnItemTouchListener(new RecordItemClickListener(this));
         return view;
+    }
+
+    public void updateView() {
+        List<MultipleItemEntity> listbf;
+        if (mode.equals(IAddTitleItems.CONSUME_ITEMS)) {
+            listbf = addPresenter.getConsumeRvList();
+        } else {
+            listbf = addPresenter.getIncomeRvList();
+        }
+        list.clear();
+        list.addAll(listbf);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setPosition(int position) {
+        addPresenter.setRvItemPosition(position);
+    }
+
+    @Override
+    public void setKinds(String[] kinds) {
+        addPresenter.setTitleRvKind(kinds);
     }
 }
