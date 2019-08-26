@@ -35,13 +35,13 @@ public class RxUtils {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(() -> {
                     rxconsuming.rxOver();
-                    onDethoryRx();
+                    onDestoryRx();
                 })
                 .subscribe();
         rxconsuming.rxDisposable(disposable);
     }
 
-    public void onDethoryRx(){
+    public void onDestoryRx(){
         //取消Rx订阅
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();

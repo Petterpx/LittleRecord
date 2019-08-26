@@ -147,6 +147,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     }
 
 
+
     /**
      * 返回事件重写,默认不重写
      */
