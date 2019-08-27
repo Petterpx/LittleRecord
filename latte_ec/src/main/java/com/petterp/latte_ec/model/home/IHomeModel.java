@@ -132,4 +132,19 @@ public interface IHomeModel {
      */
     String getDrawRecord();
 
+    /**
+     * add更新时的数据情况
+     * @param kind
+     * @param kindNew
+     * @param category
+     */
+    void updateItem(String kind,String kindNew,String category);
+
+    /**
+     * add删除时的数据情况
+     * @param kind
+     * @param category
+     */
+    void delegateItem(String kind,String category);
+
 }

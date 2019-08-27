@@ -12,10 +12,11 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_marginRight="20dp"
-        android:background="@drawable/user_create_img_cricle"
-        android:text="{fa-heart}"
-        android:textColor="@android:color/white"
-        android:textSize="14sp" />
+        android:background="@drawable/item_vp_add_to"
+        android:textColor="@color/app_text_color_dark"
+        android:textSize="16sp"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="20dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_analysis_pie_kind"
@@ -24,7 +25,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:layout_toRightOf="@id/ic_analysis_pie_icon"
-        android:text="三餐"
         android:textSize="14sp" />
 
     <!--<View

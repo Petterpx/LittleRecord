@@ -3,6 +3,7 @@ package com.petterp.latte_ec.view.add;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,8 @@ import com.petterp.latte_ec.view.add.topViewVp.RecordOnPageChangeListener;
 import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -46,7 +49,6 @@ import butterknife.BindView;
  */
 @CreatePresenter(AddPresenter.class)
 public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView {
-
     @BindView(R2.id.index_bar_add)
     Toolbar toolbar = null;
     @BindView(R2.id.vp_index_add)
@@ -64,6 +66,8 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView 
     private AddPresenter mPresenter;
     private CompileListAdapter adapter;
     private DecimalFormat decimalFormat = new DecimalFormat("###################.##");
+    private RecordFragment consumeFragment;
+    private RecordFragment incomeFragment;
 
 
     @Override
@@ -75,15 +79,14 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView 
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
         mPresenter = getPresenter();
         //初始化View
-        mPresenter.showInfo(getArguments());
-
+        mPresenter.setBundle(getArguments());
     }
 
 
     @Override
     public void topViewPagerInfo() {
-        RecordFragment consumeFragment = new RecordFragment(mPresenter,IAddTitleItems.CONSUME_ITEMS);
-        RecordFragment incomeFragment = new RecordFragment(mPresenter,IAddTitleItems.INCOME_ITEMS);
+        consumeFragment = new RecordFragment(mPresenter, IAddTitleItems.CONSUME_ITEMS);
+        incomeFragment = new RecordFragment(mPresenter, IAddTitleItems.INCOME_ITEMS);
         String[] sums = {IAddTitleItems.CONSUME_ITEMS, IAddTitleItems.INCOME_ITEMS};
         List<Fragment> list = new ArrayList<>();
         list.add(consumeFragment);
@@ -143,19 +146,44 @@ public class AddDelegate extends BaseFragment<AddPresenter> implements IAddView 
         }
     }
 
+    @Override
+    public void removeView() {
+        consumeFragment.removeView();
+        incomeFragment.removeView();
+    }
+
+    @Override
+    public void addRvItem() {
+        if (mPresenter.getTitleMode().equals(IHomeTitleRvItems.CONSUME)) {
+            consumeFragment.addRvItem();
+        } else {
+            incomeFragment.addRvItem();
+        }
+    }
+
+    @Override
+    public void updateRvItem(int position) {
+        if (mPresenter.getTitleMode().equals(IHomeTitleRvItems.CONSUME)) {
+            consumeFragment.updateRvItem(position);
+        } else {
+            incomeFragment.updateRvItem(position);
+        }
+    }
+
+    @Override
+    public void delegateRvItem() {
+        if (mPresenter.getTitleMode().equals(IHomeTitleRvItems.CONSUME)) {
+            consumeFragment.delegateRvItem();
+        } else {
+            incomeFragment.delegateRvItem();
+        }
+    }
+
 
     @Override
     public View setToolbar() {
         return toolbar;
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //解除EvenBus绑定
-        EventBus.getDefault().unregister(this);
-    }
-
 
 
 }

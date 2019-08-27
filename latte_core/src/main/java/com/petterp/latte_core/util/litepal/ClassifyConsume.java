@@ -19,6 +19,10 @@ public class ClassifyConsume extends LitePalSupport {
         this.mode = mode;
     }
 
+    public ClassifyConsume(){
+
+    }
+
     public String getIcon() {
         return icon;
     }

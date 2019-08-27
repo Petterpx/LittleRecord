@@ -1,5 +1,7 @@
 package com.petterp.latte_core.mvp.base;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.navigation.Navigation;
 
 import com.example.rxretifoit.ui.LatteLoader;
 import com.gyf.immersionbar.ImmersionBar;
+import com.petterp.latte_core.R;
 import com.petterp.latte_core.app.Latte;
 import com.petterp.latte_core.mvp.factory.PresenterFactoryImpl;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
@@ -99,10 +102,14 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment imp
     /**
      * 沉浸式状态栏
      */
+    @SuppressLint("PrivateResource")
     private void setTitleToolbar() {
         ImmersionBar.with(this)
                 .titleBar(setToolbar())
                 .autoDarkModeEnable(true)
+                .transparentStatusBar()
+                .navigationBarColor(R.color.imagepicker_text_white)
+                .fullScreen(false)
                 .init();
     }
 

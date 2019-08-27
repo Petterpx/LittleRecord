@@ -454,5 +454,35 @@ public class IHomeImpl implements IHomeModel {
         new EveryBillCollect(timeKey, time, "petterp", consume, income, 1).save();
     }
 
+    @Override
+    public void updateItem(String kind, String kindNew, String category) {
+        BillInfo billInfo = new BillInfo();
+        billInfo.setKind(kindNew);
+        billInfo.updateAll("kind=?", kind);
+        int size = itemEntities.size();
+        for (int i = 0; i < size; i++) {
+            MultipleItemEntity itemEntity = itemEntities.get(i);
+            if (itemEntity.getItemType() == HomeItemType.HOME_DETAIL_LIST) {
+                if (itemEntity.getField(IHomeRvFields.KIND).equals(kind) && itemEntity.getField(IHomeRvFields.CATEGORY).equals(category)) {
+                    itemEntities.get(i).setFild(IHomeRvFields.KIND, kindNew);
+                }
+            }
+        }
+    }
 
+    @Override
+    public void delegateItem(String kind, String category) {
+        BillInfo billInfo = new BillInfo();
+        billInfo.setKind("其他");
+        billInfo.updateAll("kind=?", kind);
+        int size = itemEntities.size();
+        for (int i = 0; i < size; i++) {
+            MultipleItemEntity itemEntity = itemEntities.get(i);
+            if (itemEntity.getItemType() == HomeItemType.HOME_DETAIL_LIST) {
+                if (itemEntity.getField(IHomeRvFields.KIND).equals(kind) && itemEntity.getField(IHomeRvFields.CATEGORY).equals(category)) {
+                    itemEntities.get(i).setFild(IHomeRvFields.KIND, "其他");
+                }
+            }
+        }
+    }
 }

@@ -48,4 +48,5 @@
     <string name="dia_rv_item_select">操作</string>
     <string name="dia_rv_item_update">修改</string>
     <string name="dia_rv_item_delegate">删除</string>
+    <string name="analysis_bootom_text">———————到底了———————</string>
 </resources>

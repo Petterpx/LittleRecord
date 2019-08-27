@@ -1,27 +1,41 @@
 package com.petterp.latte_ec.view.add.topViewVp.rvItems;
 
+import com.petterp.latte_ec.view.add.AddItemFileds;
+
 /**
  * @author Petterp on 2019/8/25
  * Summary:AddMessage mode=0为add,mode=1为update,mode=2为delegate
  * 邮箱：1509492795@qq.com
  */
 public class AddMessage {
-    private int mode;
+    private AddItemFileds mode;
     private String kind;
     private String category;
     private String kindNew;
+    private int position;
 
-    public AddMessage(int mode, String kind,String kindNew,String category) {
+    public AddMessage(AddItemFileds mode, String kind,String kindNew,String category,int position) {
         this.mode = mode;
         this.kind = kind;
         this.category = category;
         this.kindNew=kindNew;
+        this.position=position;
     }
 
-    public AddMessage(int mode, String category) {
+    public AddMessage(AddItemFileds mode, String category) {
         this.mode = mode;
         this.category = category;
     }
+
+    public AddMessage(AddItemFileds mode, String kind, String category) {
+        this.mode = mode;
+        this.kind = kind;
+        this.kindNew=kind;
+        this.category = category;
+    }
+
+
+
 
     public String getKindNew() {
         return kindNew;
@@ -31,11 +45,11 @@ public class AddMessage {
         this.kindNew = kindNew;
     }
 
-    public int getMode() {
+    public AddItemFileds getMode() {
         return mode;
     }
 
-    public void setMode(int mode) {
+    public void setMode(AddItemFileds mode) {
         this.mode = mode;
     }
 
@@ -53,5 +67,9 @@ public class AddMessage {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getPosition() {
+        return position;
     }
 }

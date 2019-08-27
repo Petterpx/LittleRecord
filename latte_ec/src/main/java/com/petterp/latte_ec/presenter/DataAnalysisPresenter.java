@@ -1,9 +1,7 @@
 package com.petterp.latte_ec.presenter;
 
 
-import android.util.Log;
 
-import com.example.rxretifoit.ui.LatteLoader;
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
 import com.petterp.latte_ec.model.analysis.AnalyMessages;
 import com.petterp.latte_ec.model.analysis.IAnalysisImpl;
@@ -46,18 +44,6 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
     }
 
 
-//    public int getYear() {
-//        return model.getYear();
-//    }
-//
-//    public int getMonth() {
-//        return model.getMonth();
-//    }
-//
-//    public void showInConume() {
-//
-//    }
-
     @Override
     public boolean startRxMode() {
         return true;
@@ -70,7 +56,6 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
 
     @Override
     public void rxGetData() {
-        super.rxGetData();
         boolean mode = model.getDataMode();
         view.setDataMode(mode);
         view.updateData(getTitleRes());
@@ -80,6 +65,7 @@ public class DataAnalysisPresenter extends BasePresenter<IDataAnalysisView> {
             view.setClassifyBill(model.classifyPieChart());
             view.setDayBill();
         }
+        super.rxGetData();
     }
 
     public String classifyPieMoney(String kind) {

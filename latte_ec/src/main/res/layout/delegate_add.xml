@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/index_bar_add"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="top"
-        android:background="@android:color/holo_blue_dark">
+        android:background="#4A90F2">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,9 +23,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="{fa-arrow-left}"
+                android:textSize="25sp"
+                android:text="{icon-back}"
                 android:textColor="@android:color/white"
-                android:textSize="22sp" />
+                />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tl_add_vp"

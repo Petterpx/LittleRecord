@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="250dp"
-    android:background="@drawable/delegate_index_top"
+    android:id="@+id/ln_home_back"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dp_10"
@@ -15,23 +15,24 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/item_detail_top_surplus"
+        android:textStyle="bold"
         android:textColor="@android:color/white"
+        android:text="@string/item_detail_top_surplus"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginTop="@dimen/dp_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-150"
         android:textColor="@android:color/white"
+
         android:id="@+id/tv_index_tob_surplus"
         android:textSize="25sp"
         tools:ignore="HardcodedText" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -40,16 +41,20 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="50dp"
             android:textColor="@android:color/white"
+
             android:id="@+id/tv_index_tob_consume"
             android:text="月支出"
+            android:textStyle="bold"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:textColor="@android:color/white"
             android:layout_height="wrap_content"
             android:text="月收入"
+            android:textColor="@android:color/white"
+
+            android:textStyle="bold"
             android:id="@+id/tv_index_tob_income"
             android:textSize="15sp"
             tools:ignore="HardcodedText" />

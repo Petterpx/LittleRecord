@@ -123,10 +123,12 @@ public class CompileItemClcikList extends SimpleClickListener {
                 break;
             case "再记":
                 mPresenter.setBootomKey("0");
-                TEXT_BUILDER.setLength(0);
+                addSave();
                 break;
             case "保存":
-                addSave(view);
+                addSave();
+                //弹栈
+                Navigation.findNavController(view).navigateUp();
                 break;
         }
     }
@@ -188,7 +190,7 @@ public class CompileItemClcikList extends SimpleClickListener {
     /**
      * 普通添加
      */
-    private void addSave(View view) {
+    private void addSave() {
         String res = TEXT_BUILDER.toString();
         if (!res.equals("")) {
             //如果包含"+"
@@ -216,14 +218,12 @@ public class CompileItemClcikList extends SimpleClickListener {
                     .setField(IHomeRvFields.LONG_TIME, SystemClock.now())
                     .setField(IHomeRvFields.KEY, null)
                     .build();
-            Log.e("demo","点击保存时"+kindRes[1]);
             //发送消息
             EventBus.getDefault().post(new MessageItems(itemEntity));
             TEXT_BUILDER.setLength(0);
-            //弹栈
-            Navigation.findNavController(view).navigateUp();
         }
     }
+
 
 
     /**

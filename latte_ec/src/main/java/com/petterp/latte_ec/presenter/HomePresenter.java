@@ -1,14 +1,10 @@
 package com.petterp.latte_ec.presenter;
 
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
-import com.petterp.latte_core.mvp.rxutils.IRxConsuming;
-import com.petterp.latte_core.mvp.rxutils.RxUtils;
 import com.petterp.latte_ec.model.home.MessageItems;
 import com.petterp.latte_ec.model.home.IHomeImpl;
 import com.petterp.latte_ec.model.home.IHomeModel;
@@ -25,7 +21,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 
 /**
  * home-控制层
@@ -181,6 +176,7 @@ public class HomePresenter extends BasePresenter<IHomeView> {
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
         super.onDestroy(owner);
+        EventBus.getDefault().unregister(this);
     }
 
     public String getDrawRecord() {
@@ -220,6 +216,33 @@ public class HomePresenter extends BasePresenter<IHomeView> {
             showUpdateInfo();
             if (iView != null) {
                 iView.updateDrawKeySum();
+            }
+        }
+    }
+
+    /**
+     * 更新home
+     * update或者 Delegate 分类后的操作
+     * @param homeMessage
+     */
+    @Subscribe()
+    public void updateHomeItem(HomeMessage homeMessage) {
+        if (iView != null) {
+            String kind=homeMessage.getKind();
+            String kindNew=homeMessage.getKindNew();
+            String category=homeMessage.getCategory();
+            switch (homeMessage.getHomeItemFieds()) {
+                case HOME_DATA_UPDATE:
+                    iModel.updateItem(kind,kindNew,category);
+                    break;
+                case HOME_DATA_DELEGATE:
+                    iModel.delegateItem(kind,category);
+                    break;
+                case HOME_VIEW_UPDATE:
+                    iView.updateItem();
+                    break;
+                default:
+                    break;
             }
         }
     }

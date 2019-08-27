@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,6 +98,8 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     AppCompatTextView tvRecord = null;
     @BindView(R2.id.li_draw_home_back)
     LinearLayoutCompat liDrawback = null;
+    @BindView(R2.id.ln_home_back)
+    LinearLayoutCompat linearLayoutCompat=null;
 
     @OnClick(R2.id.img_draw_user_avatar)
     void onStartUser() {
@@ -131,13 +134,24 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
+        getActivity().getWindow().clearFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
         //建立连接
         mPresenter = getPresenter();
         //侧滑监听
         drawerLayout.addDrawerListener(new HomeDrawerListener(getActivity(), this));
+        Glide.with(this).asBitmap().load(R.mipmap.testbj).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                Drawable drawable = new BitmapDrawable(resource);
+                linearLayoutCompat.setBackground(drawable);
+//                linearLayoutCompat.getBackground().setAlpha(200);
+            }
+        });
     }
 
 
@@ -192,7 +206,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
         drawRv.setAdapter(adapter);
         drawRv.setLayoutManager(new LinearLayoutManager(getContext()));
         drawRv.addOnItemTouchListener(new DrawItemClickListener(this));
-        Glide.with(this).asBitmap().load(R.mipmap.backimg).into(new SimpleTarget<Bitmap>() {
+        Glide.with(this).asBitmap().load(R.mipmap.drawbj).into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 Drawable drawable = new BitmapDrawable(resource);
@@ -208,7 +222,7 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
     @Override
     public void updateDrawUser() {
         if (!LatterPreference.getLoginMode()) {
-            Glide.with(this).load(R.mipmap.androidq).into(circleImageView);
+            Glide.with(this).load(R.mipmap.icon).into(circleImageView);
             circleImageView.setEnabled(false);
             tvLogin.setVisibility(View.VISIBLE);
         } else {
@@ -221,6 +235,11 @@ public class HomeDelegate extends BaseFragment<HomePresenter> implements IHomeVi
 
     public void updateDrawKeySum() {
         tvRecord.setText(mPresenter.getDrawRecord());
+    }
+
+    @Override
+    public void updateItem() {
+        homeAdapter.notifyDataSetChanged();
     }
 
 

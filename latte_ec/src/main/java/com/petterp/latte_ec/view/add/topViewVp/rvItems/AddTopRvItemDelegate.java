@@ -15,11 +15,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.mvp.base.BaseFragment;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
+import com.petterp.latte_core.util.Context.ToastUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.add.IAddTitleItems;
 import com.petterp.latte_ec.model.home.IHomeTitleRvItems;
+import com.petterp.latte_ec.view.add.AddItemFileds;
 import com.petterp.latte_ec.view.add.topViewVp.RecordPagerAdapter;
+import com.petterp.latte_ui.dialog.BaseDialogFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +45,10 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
     TabLayout tabLayout = null;
     @BindView(R2.id.fb_add_top_rv_item)
     FloatingActionButton floatingActionButton = null;
-
+    private BaseDialogFragment addDialogFragment;
+    private String category = IHomeTitleRvItems.CONSUME;
+    private AddTopRvItemFragment consumeFragment;
+    private AddTopRvItemFragment incomeFragment;
 
     @Override
     public Object setLayout() {
@@ -49,9 +57,8 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
 
     @Override
     public void onBindView(@Nullable Bundle savedInstanceState, @NonNull View rootView) {
-
-        //注册CallBack
-//        CallbackManager.getInstance().addCallback(RecordCallbackFields.ADD_RV_KIND, this);
+        category = AddTopRvItemDelegateArgs.fromBundle(getArguments()).getMode();
+        getPresenter().setTitleMode(category);
     }
 
     @Override
@@ -61,8 +68,8 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
 
     @Override
     public void showView() {
-        AddTopRvItemFragment consumeFragment = new AddTopRvItemFragment(getPresenter().consumeList());
-        AddTopRvItemFragment incomeFragment = new AddTopRvItemFragment(getPresenter().incomeList());
+        consumeFragment = new AddTopRvItemFragment(getPresenter().consumeList());
+        incomeFragment = new AddTopRvItemFragment(getPresenter().incomeList());
         String[] sums = {IAddTitleItems.CONSUME_ITEMS, IAddTitleItems.INCOME_ITEMS};
         List<Fragment> list = new ArrayList<>();
         list.add(consumeFragment);
@@ -78,19 +85,22 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
             floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         } else {
             viewPager.setCurrentItem(1);
-            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+            floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4A90F2")));
         }
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
             }
+
             @Override
             public void onPageSelected(int position) {
                 if (position == 0) {
+                    category = IHomeTitleRvItems.CONSUME;
                     floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
                 } else {
-                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.GREEN));
+                    category = IHomeTitleRvItems.INCOME;
+                    floatingActionButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#4A90F2")));
                 }
             }
 
@@ -99,5 +109,55 @@ public class AddTopRvItemDelegate extends BaseFragment<AddTopRvItemPresenter> im
 
             }
         });
+        floatingActionButton.setOnClickListener(v -> showAddDialog());
     }
+
+    @Override
+    public void addView() {
+        if (consumeFragment != null) {
+            consumeFragment.addView();
+        }
+        if (incomeFragment != null) {
+            incomeFragment.addView();
+        }
+    }
+
+    @Override
+    public void delegateView() {
+        if (category.equals(IHomeTitleRvItems.CONSUME)){
+            consumeFragment.delegateView();
+        }else{
+            incomeFragment.delegateView();
+        }
+    }
+
+
+    private void showAddDialog() {
+        if (addDialogFragment == null) {
+            addDialogFragment = new BaseDialogFragment()
+                    .Builder(getFragmentManager())
+                    .setLayout(R.layout.dialog_edit)
+                    .setWindowsView((view, viewHolder) -> {
+                        viewHolder.setText(R.id.tv_dia_edit_title, "添加新分类", false);
+                        viewHolder.setText(R.id.tv_dia_edit_ensure, "确定", true);
+                        viewHolder.setText(R.id.tv_dia_edit_back, "取消", true);
+                    })
+                    .setOnClickListener((view, viewHolder) -> {
+                        if (view.getId() == R.id.tv_dia_edit_ensure) {
+                            String kind = viewHolder.getText(R.id.edit_dia);
+                            if (kind.isEmpty()) {
+                                ToastUtils.showCenterText("名字不能为null!");
+                            } else {
+                                EventBus.getDefault().post(new AddMessage(AddItemFileds.ADD_ITEM_ADD, kind, category));
+                                viewHolder.dismiss();
+                            }
+                        } else {
+                            viewHolder.dismiss();
+                        }
+                    });
+        }
+        addDialogFragment.show();
+    }
+
+
 }

@@ -1,12 +1,16 @@
 package com.petterp.latte_ec.view.add.topViewVp.rvItems;
 
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
-import com.petterp.latte_ec.model.home.IHomeRvFields;
-import com.petterp.latte_ec.model.home.IHomeStateType;
-import com.petterp.latte_ec.model.home.MessageItems;
+import com.petterp.latte_core.util.Context.ToastUtils;
+import com.petterp.latte_ec.view.add.AddItemFileds;
+import com.petterp.latte_ec.view.add.AddRvDataMessage;
+import com.petterp.latte_ec.view.add.AddRvViewMessage;
+import com.petterp.latte_ec.view.home.HomeItemFieds;
+import com.petterp.latte_ec.view.home.HomeMessage;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,7 +29,13 @@ public class AddTopRvItemPresenter extends BasePresenter<IAddTopRvItemView> {
     private IAddTopRvItemView mView;
     private IAddTopRvItemModel mModel;
     //是否刷新view
-    private boolean updateViewMode=false;
+    private boolean updateViewMode = false;
+    private AddItemFileds mode = AddItemFileds.ADD_ITEM_QUERY;
+    private boolean addMode;
+    private String kind;
+    private String kindNew;
+    private String category;
+    private int position;
 
     @Override
     public void getView(IAddTopRvItemView view) {
@@ -49,39 +59,90 @@ public class AddTopRvItemPresenter extends BasePresenter<IAddTopRvItemView> {
 
     @Override
     public void rxPostData() {
-        mModel.queryInfo();
+        switch (mode) {
+            case ADD_ITEM_QUERY:
+                mModel.queryInfo();
+                break;
+            case ADD_ITEM_ADD:
+                addMode = mModel.add(kindNew, category);
+                EventBus.getDefault().post(new AddRvDataMessage(mode, kindNew, category));
+                break;
+            case ADD_ITEM_UPDATE:
+                mModel.update(kindNew, kind, category);
+                EventBus.getDefault().post(new AddRvDataMessage(mode, kind, kindNew, category));
+                EventBus.getDefault().post(new HomeMessage(kind, kindNew, category, HomeItemFieds.HOME_DATA_UPDATE));
+                break;
+            case ADD_ITEM_DELEGATE:
+                mModel.delegate(kind,category);
+                EventBus.getDefault().post(new AddRvDataMessage(mode, kind, category));
+                EventBus.getDefault().post(new HomeMessage(kind, category, HomeItemFieds.HOME_DATA_DELEGATE));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void rxGetData() {
         if (mView != null) {
-            mView.showView();
+            switch (mode) {
+                case ADD_ITEM_QUERY:
+                    mView.showView();
+                    break;
+                case ADD_ITEM_ADD:
+                    if (addMode) {
+                        mView.addView();
+                    } else {
+                        ToastUtils.showCenterText("已存在此类别");
+                    }
+                    EventBus.getDefault().post(new AddRvViewMessage(mode));
+                    break;
+                case ADD_ITEM_UPDATE:
+                    EventBus.getDefault().post(new AddRvViewMessage(mode, position));
+                    EventBus.getDefault().post(new HomeMessage(HomeItemFieds.HOME_VIEW_UPDATE));
+                    break;
+                case ADD_ITEM_DELEGATE:
+                    EventBus.getDefault().post(new AddRvViewMessage(mode, position));
+                    EventBus.getDefault().post(new HomeMessage(HomeItemFieds.HOME_VIEW_UPDATE));
+                    break;
+                default:
+                    break;
+            }
         }
         super.rxGetData();
     }
 
     /**
      * 分发EvenBus
+     *
      * @param message
      */
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void modeState(AddMessage message) {
-        int mode = message.getMode();
-        updateViewMode=true;
-        if (mode == 0) {
-            mModel.addKind(message.getKindNew(), message.getCategory());
-        } else if (mode == 1) {
-            mModel.updateKind(message.getKindNew(), message.getKind(), message.getCategory());
-        } else {
-            mModel.delegate(message.getKind(), message.getCategory());
-        }
+        this.mode = message.getMode();
+        kind = message.getKind();
+        kindNew = message.getKindNew();
+        category = message.getCategory();
+        position = message.getPosition();
+        updateViewMode = true;
+        startRxData();
+    }
+
+
+    @Override
+    public void onResume(@NonNull LifecycleOwner owner) {
+        super.onResume(owner);
+        //通知清除ViewPager
+        EventBus.getDefault().post(new AddRvViewMessage(AddItemFileds.ADD_ITEM_REMOVE_VP));
     }
 
     @Override
     public void onDestroy(@NonNull LifecycleOwner owner) {
-        //更新view
-        if (updateViewMode){
-
-        }
         super.onDestroy(owner);
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void setTitleMode(String mode) {
+        mModel.setTitleMode(mode);
     }
 }

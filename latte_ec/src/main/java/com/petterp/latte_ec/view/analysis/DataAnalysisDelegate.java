@@ -191,6 +191,7 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
         chart.getLegend().setEnabled(false);
         chart.getDescription().setEnabled(false);
         chart.setExtraBottomOffset(5);
+        chart.setTouchEnabled(false);
     }
 
     /**
@@ -270,7 +271,6 @@ public class DataAnalysisDelegate extends BaseFragment<DataAnalysisPresenter> im
         pieChart.getLegend().setEnabled(false);
         pieChart.setAlpha(150);
         pieChart.getDescription().setEnabled(false);
-        pieChart.animateXY(2000, 2000);
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {

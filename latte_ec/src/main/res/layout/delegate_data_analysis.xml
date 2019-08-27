@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_back"
@@ -13,7 +14,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/app_title_color"
         android:gravity="center_vertical"
-        android:paddingLeft="20dp"
+        android:paddingLeft="15dp"
         app:layout_collapseMode="pin">
 
 
@@ -26,8 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:text="{fa-arrow-left}"
+                android:textSize="25sp"
+                android:text="{icon-back}"
                 android:textColor="@android:color/white" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -41,26 +42,17 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <com.joanzapata.iconify.widget.IconTextView
-                android:id="@+id/ic_analysis_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
-                android:text="{fa-arrow-left}"
-                android:textColor="@android:color/white" />
         </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
+
     <ViewStub
+        android:id="@+id/scr_stub_analysis"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scr_stub_analysis"
         android:background="@android:color/white"
-        android:layout="@layout/stub_analysis_data"
-        />
+        android:layout="@layout/stub_analysis_data" />
+
     <ScrollView
         android:id="@+id/scr_analysis_data"
         android:layout_width="match_parent"
@@ -297,20 +289,21 @@
                     android:layout_marginTop="5dp"
                     android:text="点击分类查看对应的消费记录"
                     android:textColor="@color/app_text_color_light"
-                    android:textSize="15sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/app_back" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_analysis_classify"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
 
+            <View
+                android:paddingTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/app_back" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_analysis_classify"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -327,7 +320,8 @@
                     android:layout_height="wrap_content"
                     android:text="每日账单统计"
                     android:textColor="@color/app_text_color_dark"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_analysis_day_consume"
@@ -335,28 +329,28 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="平均每日支出: -44.89"
                     android:textColor="@color/app_text_color_light"
                     android:textSize="15sp" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="#F0F1F2"/>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_analysis_bill"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F0F1F2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_analysis_bill"
+                android:layout_width="match_parent"
+                android:background="@android:color/white"
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:gravity="center"
-                android:text="———————到底了———————"
+                android:text="@string/analysis_bootom_text"
                 android:textColor="@color/app_text_color_light"
                 android:textSize="15sp" />
-
         </LinearLayout>
     </ScrollView>
 

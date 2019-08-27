@@ -9,6 +9,5 @@ import io.reactivex.disposables.Disposable;
   public   interface  IRxConsuming{
         void rxStart();
         void rxOver();
-        void rxDisposable(Disposable disposable);
     }
 

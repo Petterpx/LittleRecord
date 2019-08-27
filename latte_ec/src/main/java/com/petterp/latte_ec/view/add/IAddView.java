@@ -40,4 +40,10 @@ public interface IAddView extends IBaseView {
      */
     void UpdateRv();
 
+    void removeView();
+
+    void addRvItem();
+    void updateRvItem(int position);
+    void delegateRvItem();
+
 }

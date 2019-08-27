@@ -2,6 +2,7 @@ package com.petterp.latte_ec.view.add.topViewVp;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -58,12 +59,4 @@ public class RecordItemClickListener extends SimpleClickListener {
 
     }
 
-    /**
-     * 设置Item更新
-     */
-    public void updateItem(){
-        textView.setTextColor(Color.parseColor("#757575"));
-        iconTextView.setTextColor(Color.parseColor("#757575"));
-        iconTextView.setBackgroundResource(R.drawable.item_vp_add_to);
-    }
 }

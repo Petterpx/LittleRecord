@@ -42,7 +42,7 @@ public class DataAnalysisClassifyAdapter extends MultipleRecyclearAdapter {
 
     @Override
     public void convert(MultipleViewHolder holder, MultipleItemEntity entity) {
-//        holder.setText(R.id.ic_analysis_pie_icon, entity.getField(MultipleFidls.NAME));
+        holder.setText(R.id.ic_analysis_pie_icon, entity.getField(MultipleFidls.NAME));
         holder.setText(R.id.tv_analysis_pie_kind, entity.getField(AnalysisFields.KIND));
         holder.setText(R.id.tv_analysis_pie_sum, entity.getField(AnalysisFields.SUM)+"笔");
         float money = entity.getField(AnalysisFields.MONEY);

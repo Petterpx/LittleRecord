@@ -1,5 +1,8 @@
 package com.petterp.latte_core.mvp.rxutils;
 
+import com.example.rxretifoit.ui.LatteLoader;
+import com.petterp.latte_core.app.Latte;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -26,6 +29,7 @@ public class RxUtils {
 
 
     public void startRx(IRxConsuming rxconsuming){
+        LatteLoader.showLoading(Latte.getContext());
         disposable = Observable
                 .create(emitter -> {
                     rxconsuming.rxStart();
@@ -35,10 +39,10 @@ public class RxUtils {
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(() -> {
                     rxconsuming.rxOver();
+                    LatteLoader.stopLoading();
                     onDestoryRx();
                 })
                 .subscribe();
-        rxconsuming.rxDisposable(disposable);
     }
 
     public void onDestoryRx(){

@@ -11,7 +11,9 @@ public class ClassifyIncome extends LitePalSupport {
     private String icon;
     private String kind;
     private String mode;
+    public ClassifyIncome(){
 
+    }
     public ClassifyIncome(String icon, String kind, String mode) {
         this.icon = icon;
         this.kind = kind;

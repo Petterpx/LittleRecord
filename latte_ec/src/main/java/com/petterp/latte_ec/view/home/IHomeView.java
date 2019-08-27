@@ -53,4 +53,8 @@ public interface IHomeView extends IBaseView {
      */
     void updateDrawKeySum();
 
+    /**
+     * 更新update或者delegate分类后的数据
+     */
+    void updateItem();
 }

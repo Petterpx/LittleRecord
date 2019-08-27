@@ -1,13 +1,48 @@
 package com.petterp.latte_ec.view.home;
 
+import com.petterp.latte_ec.view.add.AddRvViewMessage;
+
 /**
- * @author by petterp
- * @date 2019-08-26
+ * @author Petterp on 2019/8/27
+ * Summary:EvenBus HomeData Message
+ * 邮箱：1509492795@qq.com
  */
 public class HomeMessage {
-    private int mode;
+    private String kind;
+    private String kindNew;
+    private String category;
+    private HomeItemFieds homeItemFieds;
 
-    public HomeMessage(int mode) {
-        this.mode = mode;
+    public HomeMessage(String kind, String kindNew, String category, HomeItemFieds homeItemFieds) {
+        this.kind = kind;
+        this.kindNew = kindNew;
+        this.category = category;
+        this.homeItemFieds = homeItemFieds;
+    }
+
+    public HomeMessage(String kind, String category, HomeItemFieds homeItemFieds) {
+        this.kind = kind;
+        this.category = category;
+        this.homeItemFieds = homeItemFieds;
+    }
+
+    public HomeMessage(HomeItemFieds homeItemFieds) {
+        this.homeItemFieds = homeItemFieds;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public String getKindNew() {
+        return kindNew;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public HomeItemFieds getHomeItemFieds() {
+        return homeItemFieds;
     }
 }

@@ -20,11 +20,10 @@
             android:id="@+id/ic_login_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
-            android:text="{fa-arrow-left}"
+            android:textSize="25sp"
+            android:text="{icon-back}"
             android:textColor="@android:color/white" />
 
         <androidx.appcompat.widget.AppCompatTextView

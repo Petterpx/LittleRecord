@@ -2,7 +2,12 @@ package com.petterp.latte_ec.view.add.topViewVp.rvItems;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatTextView;
@@ -12,10 +17,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.SimpleClickListener;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.petterp.latte_core.app.Latte;
+import com.petterp.latte_core.util.Context.ToastUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.model.home.IHomeRvFields;
+import com.petterp.latte_ec.view.add.AddItemFileds;
 import com.petterp.latte_ui.dialog.BaseDialogFragment;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * @author by petterp
@@ -26,8 +35,9 @@ public class AddTopRvItemClickListener extends SimpleClickListener {
     private FragmentManager manager;
     private BaseDialogFragment itemDialog;
     private BaseDialogFragment itemChildDialog;
-    private BaseDialogFragment itemChildDialogDelegate;
+    private BaseDialogFragment itemChildDelehate;
     private MultipleItemEntity entity;
+
     public AddTopRvItemClickListener(FragmentManager manager) {
         this.manager = manager;
     }
@@ -72,7 +82,7 @@ public class AddTopRvItemClickListener extends SimpleClickListener {
                         if (view.getId() == R.id.tv_dia_update) {
                             showUpdateDialog();
                         } else {
-
+                            showDelegateDialog();
                         }
                         viewHolder.dismiss();
                     });
@@ -92,12 +102,20 @@ public class AddTopRvItemClickListener extends SimpleClickListener {
                     })
                     .setOnClickListener((view, viewHolder) -> {
                         if (view.getId() == R.id.tv_dia_edit_ensure) {
-                            String kind = viewHolder.getText(R.id.edit_dia);
-                            if (kind.isEmpty()) {
+                            String kindNew = viewHolder.getText(R.id.edit_dia);
+                            if (kindNew.isEmpty()) {
                                 Toast.makeText(Latte.getContext(), "别名不能为null!", Toast.LENGTH_SHORT).show();
                             } else {
-                                entity.setFild(IHomeRvFields.KIND, kind);
-                                baseQuickAdapter.notifyItemChanged(mode);
+                                final String kind = entity.getField(IHomeRvFields.KIND);
+                                if (kind.equals("其他")){
+                                    ToastUtils.showCenterText("默认分类无法更改");
+                                }else{
+                                    final String category = entity.getField(IHomeRvFields.CATEGORY);
+                                    entity.setFild(IHomeRvFields.KIND, kindNew);
+                                    baseQuickAdapter.notifyItemChanged(mode);
+                                    EventBus.getDefault().post(new AddMessage(AddItemFileds.ADD_ITEM_UPDATE, kind, kindNew, category, mode));
+                                }
+
                             }
                         }
                         viewHolder.dismiss();
@@ -106,6 +124,38 @@ public class AddTopRvItemClickListener extends SimpleClickListener {
         itemChildDialog.show();
     }
 
-
-
+    private void showDelegateDialog() {
+        if (itemChildDelehate == null) {
+            itemChildDelehate = new BaseDialogFragment()
+                    .Builder(manager)
+                    .setLayout(R.layout.dialog_rv_item_select)
+                    .setWindowsView((view, viewHolder) -> {
+                        viewHolder.setText(R.id.tv_dia_title, "删除分类", false);
+                        viewHolder.setText(R.id.tv_dia_delegate, "确定", true);
+                        viewHolder.setText(R.id.tv_dia_cancel, "取消", true);
+                        TextView message = view.findViewById(R.id.tv_dia_message);
+                        SpannableStringBuilder style = new SpannableStringBuilder(
+                                "如果您的账单中 包含 此分类,如果删除，会将账单的分类改为 其他 ,确定吗？");
+                        ForegroundColorSpan span = new ForegroundColorSpan(Color.BLUE);
+                        style.setSpan(span, 8, 10, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        style.setSpan(span, 30, 32, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+                        message.setText(style);
+                    })
+                    .setOnClickListener((view, viewHolder) -> {
+                        if (view.getId() == R.id.tv_dia_delegate) {
+                            String kind = entity.getField(IHomeRvFields.KIND);
+                            if (kind.equals("其他")) {
+                                ToastUtils.showCenterText("默认分类无法更改");
+                            } else {
+                                String category = entity.getField(IHomeRvFields.CATEGORY);
+                                baseQuickAdapter.getData().remove(mode);
+                                baseQuickAdapter.notifyDataSetChanged();
+                                EventBus.getDefault().post(new AddMessage(AddItemFileds.ADD_ITEM_DELEGATE, kind, category));
+                            }
+                        }
+                        viewHolder.dismiss();
+                    });
+        }
+        itemChildDelehate.show();
+    }
 }

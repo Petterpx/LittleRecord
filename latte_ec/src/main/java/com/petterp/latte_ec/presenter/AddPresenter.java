@@ -1,14 +1,24 @@
 package com.petterp.latte_ec.presenter;
 
 import android.os.Bundle;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.petterp.latte_core.mvp.presenter.BasePresenter;
 import com.petterp.latte_ec.model.add.IAddBundleFields;
 import com.petterp.latte_ec.model.add.IAddImpl;
 import com.petterp.latte_ec.model.add.IAddModel;
 import com.petterp.latte_ec.model.home.IHomeStateType;
+import com.petterp.latte_ec.view.add.AddRvDataMessage;
+import com.petterp.latte_ec.view.add.AddRvViewMessage;
 import com.petterp.latte_ec.view.add.IAddView;
 import com.petterp.latte_ui.recyclear.MultipleItemEntity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -26,12 +36,7 @@ public class AddPresenter extends BasePresenter<IAddView> {
     public void getView(IAddView view) {
         this.mView = view;
         model = new IAddImpl();
-    }
-
-    public void showInfo(Bundle bundle) {
-        model.setBundle(bundle);
-        showTopVP();
-        showKeyInfo();
+        EventBus.getDefault().register(this);
     }
 
     private void updateAddRv() {
@@ -108,6 +113,9 @@ public class AddPresenter extends BasePresenter<IAddView> {
     public String[] getTitleRvKind() {
         return model.getTitleRvKind();
     }
+    public String[] getTitleRvKind(String mode) {
+        return model.getTitleRvKind(mode);
+    }
 
     public void setKeyRvSaveColor(boolean mode) {
         //更改颜色
@@ -125,8 +133,70 @@ public class AddPresenter extends BasePresenter<IAddView> {
         return model.getStateUpdate();
     }
 
-    public void setRvItemPosition(int position){
+    public void setRvItemPosition(int position) {
         model.setItemPosition(position);
     }
 
+    @Subscribe()
+    public void updateData(AddRvDataMessage addRvMessage) {
+        String kind = addRvMessage.getKind();
+        String kindNew = addRvMessage.getKindNew();
+        String category = addRvMessage.getCategory();
+        switch (addRvMessage.getMode()) {
+            case ADD_ITEM_ADD:
+                model.addRvItem(kindNew,category);
+                break;
+            case ADD_ITEM_UPDATE:
+                model.updateRvItem(kind,kindNew,category);
+                break;
+            case ADD_ITEM_DELEGATE:
+                model.delegateRvItem(kind,category);
+                break;
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateView(AddRvViewMessage addRvViewMessage) {
+        if (mView != null) {
+            switch (addRvViewMessage.getMode()) {
+                case ADD_ITEM_REMOVE_VP:
+                    mView.removeView();
+                    break;
+                case ADD_ITEM_ADD:
+                    mView.addRvItem();
+                    break;
+                case ADD_ITEM_UPDATE:
+                    mView.updateRvItem(addRvViewMessage.getPosition());
+                    break;
+                case ADD_ITEM_DELEGATE:
+                    mView.delegateRvItem();
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
+        super.onDestroy(owner);
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Override
+    public void rxPostData() {
+        model.queryInfo();
+    }
+
+    public void setBundle(Bundle bundle){
+        model.setBundle(bundle);
+        startRxData();
+    }
+
+
+    @Override
+    public void rxGetData() {
+        showTopVP();
+        showKeyInfo();
+        super.rxGetData();
+    }
 }

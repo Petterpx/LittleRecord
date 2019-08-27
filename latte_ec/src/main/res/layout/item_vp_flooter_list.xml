@@ -7,11 +7,11 @@
     android:orientation="vertical">
 
     <com.joanzapata.iconify.widget.IconTextView
-        android:layout_width="45dp"
+        android:layout_width="40dp"
         android:gravity="center"
         android:id="@+id/tv_item_vp_consume_icon"
         android:text="{fa-gear}"
-        android:layout_height="45dp"
+        android:layout_height="40dp"
         android:textSize="18sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
