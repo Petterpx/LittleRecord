@@ -1,6 +1,7 @@
 package com.petterp.latte_ec.model.add;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.petterp.latte_core.util.litepal.ClassifyConsume;
 import com.petterp.latte_core.util.litepal.ClassifyIncome;
@@ -50,7 +51,6 @@ public class IAddImpl implements IAddModel {
                     .build();
             itemConsumes.add(itemEntity);
         }
-        state = IHomeStateType.ADD;
         conSumekind = new String[]{itemConsumes.get(0).getField(MultipleFidls.NAME), itemConsumes.get(0).getField(IHomeRvFields.KIND)};
 
         itemIncome = new ArrayList<>();
@@ -162,6 +162,7 @@ public class IAddImpl implements IAddModel {
 
     @Override
     public int getStateMode() {
+        Log.e("demo",""+state);
         return state;
     }
 

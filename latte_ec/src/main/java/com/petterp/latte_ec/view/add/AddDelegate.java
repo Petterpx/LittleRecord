@@ -20,6 +20,7 @@ import com.fondesa.recyclerviewdivider.RecyclerViewDivider;
 import com.google.android.material.tabs.TabLayout;
 import com.petterp.latte_core.mvp.factory.CreatePresenter;
 import com.petterp.latte_core.mvp.base.BaseFragment;
+import com.petterp.latte_core.util.Context.ToastUtils;
 import com.petterp.latte_ec.R;
 import com.petterp.latte_ec.R2;
 import com.petterp.latte_ec.model.add.IAddBundleFields;

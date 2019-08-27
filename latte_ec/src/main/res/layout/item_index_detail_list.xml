@@ -21,13 +21,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_index_rv_consume_i"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:ignore="RtlHardcoded" />
 </androidx.appcompat.widget.LinearLayoutCompat>

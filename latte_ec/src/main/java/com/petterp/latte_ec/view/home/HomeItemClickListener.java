@@ -56,7 +56,7 @@ public class HomeItemClickListener extends SimpleClickListener implements IDialo
             presenter.setAddPosition(position + sum + 1);
             //设置key
             presenter.setKey(entity.getField(IHomeRvFields.KEY));
-            Navigation.findNavController(view).navigate(R.id.addDelegate);
+            presenter.getView().fragmentStart(R.id.action_homeDelegate_to_addDelegate);
         } else {
             diaQuery = new HomeDiaQuery(entity, this);
             diaQuery.show(fragmentManager, "dialog_query");
@@ -95,8 +95,7 @@ public class HomeItemClickListener extends SimpleClickListener implements IDialo
         diaQuery.dismiss();
         Bundle args = new Bundle();
         args.putParcelable(IAddBundleType.KEY_UPDATE_LIST, fields);
-        presenter.getView().fragmentStart(R.id.addDelegate,args);
-//        Navigation.findNavController(this.view).navigate();
+        presenter.getView().fragmentStart(R.id.action_homeDelegate_to_addDelegate,args);
     }
 
     @Override
