@@ -31,7 +31,7 @@
 
 ![image-20190829015741113](https://tva1.sinaimg.cn/large/006y8mN6ly1g6fxikr6qlj31gn0u0h48.jpg)
 
-![image-20190829020155257](/Users/petterp/Library/Application%20Support/typora-user-images/image-20190829020155257.png)
+![image-20190829020155257](https://tva1.sinaimg.cn/large/006y8mN6ly1g6fy9q1yndj31fy0u0h5w.jpg)
 
 ![image-20190829021333506](https://tva1.sinaimg.cn/large/006y8mN6ly1g6fxz3adgyj31he0u0ar9.jpg)
 
