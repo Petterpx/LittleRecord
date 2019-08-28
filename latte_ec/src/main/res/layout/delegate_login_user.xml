@@ -17,7 +17,6 @@
         app:layout_collapseMode="pin">
 
         <RelativeLayout
-            android:paddingRight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -25,6 +24,7 @@
                 android:id="@+id/ic_dia_radio_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:layout_centerVertical="true"
                 android:textSize="25sp"
                 android:text="{icon-back}"
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_toRightOf="@id/ic_dia_radio_back"
                 android:text="@string/tv_login_user_manage"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
